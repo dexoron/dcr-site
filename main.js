@@ -7,9 +7,9 @@ const installButtons = {
 const installShell = document.getElementById('install-shell');
 
 const installCommands = {
-  linux: 'curl -L dcr.zov.tatar | bash',
+  linux: 'curl -fsSL https://dcr.dexoron.su/install.sh | bash',
   windows: 'Временно не поддерживается',
-  macos: 'curl -L dcr.zov.tatar | bash',
+  macos: 'curl -fsSL https://dcr.dexoron.su/install.sh | bash',
 };
 
 function setActivePlatform(platform) {

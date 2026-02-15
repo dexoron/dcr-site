@@ -9,17 +9,39 @@
 </head>
 <body class="h-svh w-full flex flex-col gap-2">
     <header class="flex flex-row w-full border-b border-slate-900 fixed backdrop-blur">
-        <div class="flex flex-row max-w-[1024px] mx-auto w-full justify-between text-center gap-2 py-5 px-2">
-            <a href="#" class="text-xl font-bold">DCR</a>
-            <div class="flex flex-row gap-4">
+        <div class="flex flex-row max-w-[1024px] mx-auto w-full justify-between text-center gap-2 py-1 sm:py-5 px-2">
+            <a href="#" class="text-xl font-bold my-auto">DCR</a>
+            <div class="sm:flex flex-row gap-4 hidden">
                 <a href="#info" class="hover:text-blue-500">Information</a>
                 <a href="#install" class="hover:text-blue-500">Installation</a>
                 <a href="#commands" class="hover:text-blue-500">Commands</a>
                 <a href="#example" class="hover:text-blue-500">Examples</a>
             </div>
+            <div id="mobile-header-trigger" class="flex flex-col sm:hidden">
+                <button id="mobile-header-open" class="p-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" class="injected-svg" data-src="https://cdn.hugeicons.com/icons/menu-01-stroke-rounded.svg?v=1.0.1" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" color="#FFFFFF">
+                        <path d="M4 5L20 5" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M4 12L20 12" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M4 19L20 19" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
     </header>
-    
+    <div id="mobile-menu" class="fixed inset-0 hidden sm:hidden flex-col text-center w-full h-screen backdrop-blur z-50">
+        <div class="w-full flex flex-row justify-between py-1 px-2">
+            <span class="text-xl font-bold my-auto">DCR</span>
+            <button id="mobile-header-close" class="p-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" class="injected-svg" data-src="https://cdn.hugeicons.com/icons/cancel-01-stroke-rounded.svg?v=1.0.1" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" color="#FFFFFF">
+                    <path d="M18 6L6.00081 17.9992M17.9992 18L6 6.00085" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </button>
+        </div>
+        <a href="#info" class="hover:text-blue-500 w-full p-4 border-y border-slate-800 text-2xl">Information</a>
+        <a href="#install" class="hover:text-blue-500 w-full p-4 border-y border-slate-800 text-2xl">Installation</a>
+        <a href="#commands" class="hover:text-blue-500 w-full p-4 border-y border-slate-800 text-2xl">Commands</a>
+        <a href="#example" class="hover:text-blue-500 w-full p-4 border-y border-slate-800 text-2xl">Examples</a>
+    </div>
     <main class="flex-1 flex flex-col w-full pt-16 ">
         <div class="flex flex-col w-full">
             <div class="py-16 px-2 max-w-[720px] w-full mx-auto flex flex-col gap-4">

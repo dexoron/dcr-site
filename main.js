@@ -1,3 +1,4 @@
+// Install - Platform
 const installButtons = {
   linux: document.getElementById('linux'),
   windows: document.getElementById('windows'),
@@ -39,3 +40,41 @@ Object.entries(installButtons).forEach(([platform, button]) => {
 });
 
 setActivePlatform('linux');
+
+// Mobile Menu
+
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileMenuOpenButton = document.getElementById('mobile-header-open');
+const mobileMenuCloseButton = document.getElementById('mobile-header-close');
+
+mobileMenuOpenButton?.setAttribute('aria-controls', 'mobile-menu');
+mobileMenuOpenButton?.setAttribute('aria-expanded', 'false');
+
+function openMobileMenu() {
+  if (!mobileMenu) {
+    return;
+  }
+
+  mobileMenu.classList.remove('hidden');
+  mobileMenu.classList.add('flex');
+  document.body.classList.add('overflow-hidden');
+  mobileMenuOpenButton?.setAttribute('aria-expanded', 'true');
+}
+
+function closeMobileMenu() {
+  if (!mobileMenu) {
+    return;
+  }
+
+  mobileMenu.classList.remove('flex');
+  mobileMenu.classList.add('hidden');
+  document.body.classList.remove('overflow-hidden');
+  mobileMenuOpenButton?.setAttribute('aria-expanded', 'false');
+}
+
+mobileMenuOpenButton?.addEventListener('click', openMobileMenu);
+mobileMenuCloseButton?.addEventListener('click', closeMobileMenu);
+
+mobileMenu?.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener('click', closeMobileMenu);
+});

@@ -2,37 +2,33 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const rootDir = path.resolve(__dirname, '..');
+const docsLocalesConfigPath = path.join(rootDir, 'locales', 'docs.locales.json');
 
-const localeConfigs = [
-  {
-    code: 'en',
-    sourceRoot: path.join(rootDir, 'locales', 'en', 'docs'),
-    outputRoot: path.join(rootDir, 'docs'),
-    configPath: path.join(rootDir, 'locales', 'en', 'docs.config.json'),
-    docsUrlPrefix: '/docs/',
-    homeUrl: '/',
-    languageLabel: 'English',
-    docsLabel: 'Documentation',
-    overviewLabel: 'Overview',
-    tocLabel: 'On this page',
-    switchLabel: 'Русский',
-    switchTarget: 'ru',
-  },
-  {
-    code: 'ru',
-    sourceRoot: path.join(rootDir, 'locales', 'ru', 'docs'),
-    outputRoot: path.join(rootDir, 'ru', 'docs'),
-    configPath: path.join(rootDir, 'locales', 'ru', 'docs.config.json'),
-    docsUrlPrefix: '/ru/docs/',
-    homeUrl: '/ru/',
-    languageLabel: 'Русский',
-    docsLabel: 'Документация',
-    overviewLabel: 'Обзор',
-    tocLabel: 'На этой странице',
-    switchLabel: 'English',
-    switchTarget: 'en',
-  },
-];
+function loadLocaleConfigs() {
+  if (!fs.existsSync(docsLocalesConfigPath)) {
+    throw new Error('Missing locales/docs.locales.json');
+  }
+
+  const raw = fs.readFileSync(docsLocalesConfigPath, 'utf8');
+  const parsed = JSON.parse(raw);
+
+  if (!Array.isArray(parsed) || parsed.length === 0) {
+    throw new Error('locales/docs.locales.json must contain a non-empty array.');
+  }
+
+  return parsed.map((locale) => {
+    if (!locale.code || !locale.sourceRoot || !locale.outputRoot || !locale.docsUrlPrefix || !locale.homeUrl) {
+      throw new Error(`Invalid locale entry in locales/docs.locales.json: ${JSON.stringify(locale)}`);
+    }
+
+    return {
+      ...locale,
+      sourceRoot: path.join(rootDir, locale.sourceRoot),
+      outputRoot: path.join(rootDir, locale.outputRoot),
+      configPath: locale.configPath ? path.join(rootDir, locale.configPath) : null,
+    };
+  });
+}
 
 function loadLocaleUiConfig(configPath) {
   if (!configPath || !fs.existsSync(configPath)) {
@@ -939,6 +935,8 @@ function clearGeneratedHtml(outputRoot) {
 }
 
 function main() {
+  const localeConfigs = loadLocaleConfigs();
+
   for (const locale of localeConfigs) {
     const uiConfig = loadLocaleUiConfig(locale.configPath);
     Object.assign(locale, uiConfig);
@@ -1005,7 +1003,7 @@ function main() {
     }
   }
 
-  console.log('Built docs');
+  console.log(`Built docs for locales: ${localeConfigs.map((locale) => locale.code).join(', ')}`);
 }
 
 main();

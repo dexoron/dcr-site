@@ -1,0 +1,20 @@
+[
+  {
+    "code": "en",
+    "sourceRoot": "locales/en/docs",
+    "outputRoot": "docs",
+    "configPath": "locales/en/docs.config.json",
+    "docsUrlPrefix": "/docs/",
+    "homeUrl": "/",
+    "switchTarget": "ru"
+  },
+  {
+    "code": "ru",
+    "sourceRoot": "locales/ru/docs",
+    "outputRoot": "ru/docs",
+    "configPath": "locales/ru/docs.config.json",
+    "docsUrlPrefix": "/ru/docs/",
+    "homeUrl": "/ru/",
+    "switchTarget": "en"
+  }
+]

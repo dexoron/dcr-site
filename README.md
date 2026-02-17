@@ -1,3 +1,5 @@
+[ENG](./README.md) | [РУС](./README_ru.md)
+
 # DCR Site
 
 Landing page for **DCR (Dexoron Cargo Realization)**:
@@ -15,6 +17,7 @@ The site is static and built from a single HTML template plus JSON translations.
 - `locales/ru/index.json` - Russian texts.
 - `scripts/build-i18n.js` - generates pages from locale files.
 - `scripts/build-docs.js` - generates docs HTML from Markdown.
+- `locales/docs.locales.json` - docs locales registry (source/output paths and routing).
 - `main.js` - UI logic, including language switcher.
 - `locales/en/docs/**/*.md` - English docs source.
 - `locales/ru/docs/**/*.md` - Russian docs source.

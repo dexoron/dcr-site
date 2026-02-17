@@ -9,7 +9,7 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DCR</title>
-    <meta name="description" content="DCR — утилита для управления C/C++ проектами. Единый формат, простые команды и конфигурация через dcr.toml">
+    <meta name="description" content="DCR — утилита для управления C/C++ проектами в стиле Cargo. Реализация на Rust, кроссплатформенность и обновление через GitHub Releases.">
     <link rel="icon" type="image/x-icon" href="/public/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
@@ -59,11 +59,11 @@
                 <span class="text-blue-500 font-bold">Open-Source Project</span>
                 <h1 class="text-5xl font-bold">DCR - Dexoron Cargo Realization</h1>
                 <p class="text-white/50">
-                    DCR — это утилита для управления проектами на C/C++. Она задает единый формат проекта, дает команды для управления, и использует один конфигурационный файл dcr.toml
+                    DCR — утилита для управления C/C++ проектами в стиле Cargo. Текущая версия написана на Rust, поддерживает Linux, macOS и Windows, и использует один конфигурационный файл: dcr.toml.
                 </p>
                 <div class="flex flex-row gap-4">
                     <a href="https://github.com/dexoron/dcr" class="px-6 py-2 bg-blue-500 text-black text-xl font-semibold rounded-lg hover:bg-blue-600">GitHub</a>
-                    <a href="#" class="px-6 py-2 rounded-lg border border-slate-900 text-xl font-semibold hover:border-blue-500 hover:text-blue-500">Документация</a>
+                    <a href="https://github.com/dexoron/dcr/blob/master/README.md" class="px-6 py-2 rounded-lg border border-slate-900 text-xl font-semibold hover:border-blue-500 hover:text-blue-500">Документация</a>
                 </div>
             </div>
 
@@ -81,8 +81,17 @@
                     <h2 class="text-2xl font-semibold">Возможности</h2>
                     <ul class="list-disc list-inside">
                         <li>Создание/Инициализация проекта</li>
-                        <li>Сборка проекта(разные профили сборки)</li>
-                        <li>Управление зависимостями(в разработке)</li>
+                        <li>Сборка и запуск в профилях debug/release</li>
+                        <li>Обновление бинарника через dcr --update</li>
+                    </ul>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <h2 class="text-2xl font-semibold">Платформы</h2>
+                    <ul class="list-disc list-inside">
+                        <li>Linux (x86_64)</li>
+                        <li>macOS (Intel и Apple Silicon)</li>
+                        <li>Windows (x86_64)</li>
                     </ul>
                 </div>
             </div>
@@ -101,7 +110,7 @@
                     </div>
                     <div class="rounded-lg rounded-tl-none p-4 bg-slate-800 flex flex-col gap-4">
                         <!-- <p id="install-desc"></p> -->
-                        <pre id="install-shell" class="bg-slate-950 p-4 rounded-lg whitespace-pre-line">curl -fsSL https://dcr.dexoron.su/install.sh | bash</pre>
+                        <pre id="install-shell" class="bg-slate-950 p-4 rounded-lg whitespace-pre-line">curl -fsSL https://raw.githubusercontent.com/dexoron/dcr/master/install.sh | bash</pre>
                     </div>                    
                 </div>
 
@@ -152,8 +161,13 @@
                         </tr>
                         <tr>
                             <td class="border border-slate-800 p-2">dcr clean</td>
-                            <td class="border border-slate-800 p-2">dcr clean release</td>
+                            <td class="border border-slate-800 p-2">dcr clean --release</td>
                             <td class="border border-slate-800 p-2">Удаляет профиль из target. Если не указан профиль, удаляется вся папка</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-slate-800 p-2">dcr --update</td>
+                            <td class="border border-slate-800 p-2">dcr --update</td>
+                            <td class="border border-slate-800 p-2">Обновляет DCR до последней версии из GitHub Releases</td>
                         </tr>
                     </tbody>
                 </table>

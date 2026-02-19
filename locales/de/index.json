@@ -1,0 +1,89 @@
+{
+  "site": {
+    "lang": "de",
+    "description": "DCR — ein Cargo-ähnliches Werkzeug für C/C++-Projekte. In Rust implementiert, plattformübergreifend und mit Selbstaktualisierung über GitHub Releases."
+  },
+  "nav": {
+    "info": "Informationen",
+    "install": "Installation",
+    "commands": "Befehle",
+    "example": "Beispiele"
+  },
+  "hero": {
+    "badge": "Open-Source-Projekt",
+    "title": "DCR - Dexoron Cargo Realization",
+    "description": "DCR ist ein Cargo-ähnliches Werkzeug für C/C++-Projekte. Die aktuelle Version ist in Rust geschrieben, unterstützt Linux, macOS und Windows und verwendet eine einzige Konfigurationsdatei: dcr.toml.",
+    "docs_button": "Dokumentation"
+  },
+  "info": {
+    "why": {
+      "title": "Warum DCR",
+      "point1": "Einheitliche Projektstruktur",
+      "point2": "Einfache Verwaltungsbefehle",
+      "point3": "Unkomplizierte Einrichtung und Nutzung"
+    },
+    "features": {
+      "title": "Funktionen",
+      "point1": "Projekterstellung / Initialisierung",
+      "point2": "Build und Ausführung in debug/release-Profilen",
+      "point3": "Binär-Selbstaktualisierung über dcr --update"
+    },
+    "platforms": {
+      "title": "Plattformen",
+      "point1": "Linux (x86_64)",
+      "point2": "macOS (Intel und Apple Silicon)",
+      "point3": "Windows (x86_64)"
+    }
+  },
+  "install": {
+    "title": "Installation",
+    "intro": "Um DCR zu installieren, verwende das Terminal deines Systems:",
+    "test_intro": "War die Installation erfolgreich, führe folgenden Befehl zur Überprüfung aus:"
+  },
+  "commands": {
+    "title": "Befehle",
+    "intro": "Darunterliegend sind die grundlegenden Befehle gelistet. Alle Befehle sind in der Dokumentation zu finden.",
+    "headers": {
+      "command": "Befehl",
+      "usage": "Verwendung",
+      "description": "Beschreibung"
+    },
+    "rows": {
+      "help": "Hilfeinformationen anzeigen",
+      "new": "Erstellt ein Projekt mit dem Namen hello im aktuellen Verzeichnis",
+      "init": "Erstellt ein Projekt im aktuellen Verzeichnis. Der Projektname entspricht dem Verzeichnisnamen",
+      "build": "Baut das Projekt. Wird kein Profil angegeben, wird --debug verwendet.",
+      "run": "Baut das Projekt und führt die Binärdatei aus. Wird kein Profil angegeben, wird --debug verwendet.",
+      "clean": "Entfernt ein Build-Profil aus target. Wird kein Profil angegeben, wird der gesamte Ordner gelöscht.",
+      "update": "Aktualisiert DCR auf die neueste Version aus GitHub Releases."
+    }
+  },
+  "example": {
+    "title": "Beispiel",
+    "intro": "Dieser Abschnitt zeigt ein Anwendungsbeispiel für DCR.",
+    "create": {
+      "title": "1. Projekt erstellen",
+      "desc": "Wir erstellen ein Projekt mit dem Namen hello.",
+      "structure_label": "Die resultierende Struktur sieht so aus:"
+    },
+    "build": {
+      "title": "2. Projekt bauen",
+      "desc": "Wechsle in das Projektverzeichnis:",
+      "command_label": "Baue das Projekt mit dem Flag --release:",
+      "structure_label": "Die resultierende Struktur sieht so aus:"
+    },
+    "run": {
+      "title": "3. Projekt ausführen",
+      "intro": "Es gibt zwei Möglichkeiten, das Projekt auszuführen:",
+      "first": {
+        "title": "Erste Methode (empfohlen)",
+        "desc": "Dieser Befehl baut das Projekt (falls nötig) und führt es aus."
+      },
+      "second": {
+        "title": "Zweite Methode",
+        "desc": "Damit wird die Binärdatei direkt ausgeführt."
+      }
+    },
+    "outro": "Bei Fragen zu einem der Schritte lies bitte die Dokumentation."
+  }
+}

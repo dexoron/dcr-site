@@ -81,28 +81,48 @@ mobileMenu?.querySelectorAll('a[href^="#"]').forEach((link) => {
 
 // New block: language switcher (bottom-right)
 const languageOptions = [
-  { key: 'en', label: 'English', href: '/' },
-  { key: 'ru', label: 'Русский', href: '/ru/' },
+  { key: 'ru', label: 'Русский', href: '/ru/', version: 'v0.2.1', verified: true, authors: ['@dexoron'] },
+  { key: 'en', label: 'English', href: '/', version: 'v0.2.1', verified: true, authors: ['@dexoron'], use_translator: 'partial'},
+  { key: 'de', label: 'Deutsch', href: '/de/', version: 'v0.2.1', verified: false, authors: ['@emexos'], use_translator: 'partial' },
 ];
+// key — language code (ISO 639-1)
+// label — display name
+// href — base path for this language
+// version — documentation version
+// verified — whether the translation is verified
+// authors — list of translators
+// use_translator:
+//   "full"    — mostly machine translated
+//   "partial" — partially machine translated
+//   "none"    — fully human translated
 
 function normalizePath(pathname) {
   return pathname.endsWith('/') ? pathname : `${pathname}/`;
 }
 
+function docsPrefixForLanguage(langKey) {
+  const lang = languageOptions.find(item => item.key === langKey);
+  if (!lang || !lang.href) return null;
+
+  if (lang.href === '/') return '/docs/';
+
+  const normalizedHref = normalizePath(lang.href);
+  return `${normalizedHref}docs/`;
+}
+
 function mapDocsPathToLanguage(pathname, targetLanguage) {
   const normalizedPath = normalizePath(pathname);
-  const enDocsPrefix = '/docs/';
-  const ruDocsPrefix = '/ru/docs/';
+  const docsPrefixes = languageOptions
+    .map(item => docsPrefixForLanguage(item.key))
+    .filter(Boolean);
 
-  if (!normalizedPath.startsWith(enDocsPrefix) && !normalizedPath.startsWith(ruDocsPrefix)) {
-    return null;
-  }
+  const currentPrefix = docsPrefixes.find(prefix => normalizedPath.startsWith(prefix));
+  if (!currentPrefix) return null;
 
-  const suffix = normalizedPath.startsWith(ruDocsPrefix)
-    ? normalizedPath.slice(ruDocsPrefix.length)
-    : normalizedPath.slice(enDocsPrefix.length);
+  const suffix = normalizedPath.slice(currentPrefix.length);
+  const targetPrefix = docsPrefixForLanguage(targetLanguage);
+  if (!targetPrefix) return null;
 
-  const targetPrefix = targetLanguage === 'ru' ? ruDocsPrefix : enDocsPrefix;
   return `${targetPrefix}${suffix}`;
 }
 

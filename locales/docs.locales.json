@@ -16,5 +16,14 @@
     "docsUrlPrefix": "/ru/docs/",
     "homeUrl": "/ru/",
     "switchTarget": "en"
+  },
+    {
+    "code": "de",
+    "sourceRoot": "locales/de/docs",
+    "outputRoot": "de/docs",
+    "configPath": "locales/de/docs.config.json",
+    "docsUrlPrefix": "/de/docs/",
+    "homeUrl": "/de/",
+    "switchTarget": "en"
   }
 ]

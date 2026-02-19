@@ -12,7 +12,7 @@
   "hero": {
     "badge": "Open-Source-Projekt",
     "title": "DCR - Dexoron Cargo Realization",
-    "description": "DCR ist ein Cargo-ähnliches Werkzeug für C/C++-Projekte. Die aktuelle Version ist in Rust geschrieben, unterstützt Linux, macOS und Windows und verwendet eine einzige Konfigurationsdatei: dcr.toml.",
+    "description": "DCR ist ein Cargo-ähnliches Werkzeug für C/C++-Projekte. Die aktuelle Version ist in Rust geschrieben, unterstützt Linux, macOS und Windows und verwendet eine einzige Konfigurationsdatei namens dcr.toml.",
     "docs_button": "Dokumentation"
   },
   "info": {
@@ -52,10 +52,10 @@
       "help": "Hilfeinformationen anzeigen",
       "new": "Erstellt ein Projekt mit dem Namen hello im aktuellen Verzeichnis",
       "init": "Erstellt ein Projekt im aktuellen Verzeichnis. Der Projektname entspricht dem Verzeichnisnamen",
-      "build": "Baut das Projekt. Wird kein Profil angegeben, wird --debug verwendet.",
+      "build": "Baut das Projekt. Wenn kein Profil angegeben wird, wird --debug verwendet.",
       "run": "Baut das Projekt und führt die Binärdatei aus. Wird kein Profil angegeben, wird --debug verwendet.",
       "clean": "Entfernt ein Build-Profil aus target. Wird kein Profil angegeben, wird der gesamte Ordner gelöscht.",
-      "update": "Aktualisiert DCR auf die neueste Version aus GitHub Releases."
+      "update": "Aktualisiert DCR auf die neueste Version aus den GitHub Releases."
     }
   },
   "example": {
@@ -84,6 +84,6 @@
         "desc": "Damit wird die Binärdatei direkt ausgeführt."
       }
     },
-    "outro": "Bei Fragen zu einem der Schritte lies bitte die Dokumentation."
+    "outro": "Bei Fragen zu einem der Schritte lesen sie bitte die Dokumentation."
   }
 }

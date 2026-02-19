@@ -1,0 +1,87 @@
+{
+  "languageLabel": "Deutsch",
+  "docsLabel": "Dokumentation",
+  "overviewLabel": "Übersicht",
+  "tocLabel": "Auf dieser Seite",
+  "switchLabel": "English",
+  "sidebar": [
+    {
+      "path": "index.md",
+      "label": "Übersicht"
+    },
+    {
+      "path": "getting-started/index.md",
+      "label": "Erste Schritte",
+      "children": [
+        {
+          "path": "getting-started/installation.md",
+          "label": "Installation"
+        },
+        {
+          "path": "getting-started/first-steps.md",
+          "label": "Erste Schritte"
+        }
+      ]
+    },
+    {
+      "path": "commands/index.md",
+      "label": "Befehle",
+      "children": [
+        {
+          "path": "commands/new.md",
+          "label": "dcr new"
+        },
+        {
+          "path": "commands/init.md",
+          "label": "dcr init"
+        },
+        {
+          "path": "commands/build.md",
+          "label": "dcr build"
+        },
+        {
+          "path": "commands/run.md",
+          "label": "dcr run"
+        },
+        {
+          "path": "commands/clean.md",
+          "label": "dcr clean"
+        },
+        {
+          "path": "commands/update.md",
+          "label": "dcr --update"
+        },
+        {
+          "path": "commands/help-and-version.md",
+          "label": "dcr --help / --version"
+        }
+      ]
+    },
+    {
+      "path": "reference/index.md",
+      "label": "Referenz",
+      "children": [
+        {
+          "path": "reference/configuration.md",
+          "label": "dcr.toml-Konfiguration"
+        },
+        {
+          "path": "reference/build-profiles.md",
+          "label": "Build-Profile"
+        },
+        {
+          "path": "reference/project-layout.md",
+          "label": "Projektstruktur"
+        },
+        {
+          "path": "reference/platforms-and-installers.md",
+          "label": "Plattformen und Installation"
+        }
+      ]
+    },
+    {
+      "path": "faq.md",
+      "label": "FAQ"
+    }
+  ]
+}

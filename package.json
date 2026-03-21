@@ -4,9 +4,8 @@
     "i18n": "^0.15.3"
   },
   "scripts": {
-    "build": "npm run i18n:build && npm run docs:build && npm run tailwind:build",
+    "build": "npm run i18n:build && npm run tailwind:build",
     "i18n:build": "node scripts/build-i18n.js",
-    "docs:build": "node scripts/build-docs.js",
     "tailwind:watch": "npx tailwindcss -i ./tailwind.css -o ./style.css --watch",
     "tailwind:build": "npx tailwindcss -i ./tailwind.css -o ./style.css --minify"
   }

@@ -16,12 +16,13 @@
 <body class="h-svh w-full flex flex-col gap-2">
     <header class="flex flex-row w-full border-b border-slate-900 fixed backdrop-blur">
         <div class="flex flex-row max-w-[1024px] mx-auto w-full justify-between text-center gap-2 py-1 sm:py-5 px-2">
-            <a href="#" class="text-xl font-bold my-auto">DCR</a>
+            <a href="/" class="text-xl font-bold my-auto">DCR</a>
             <div class="sm:flex flex-row gap-4 hidden">
                 <a href="#info" class="hover:text-blue-500">Information</a>
                 <a href="#install" class="hover:text-blue-500">Installation</a>
                 <a href="#commands" class="hover:text-blue-500">Commands</a>
                 <a href="#example" class="hover:text-blue-500">Examples</a>
+                <a href="/playbook/" class="hover:text-blue-500">Playbook</a>
             </div>
             <div id="mobile-header-trigger" class="flex flex-col sm:hidden">
                 <button id="mobile-header-open" class="p-1">
@@ -47,6 +48,7 @@
         <a href="#install" class="hover:text-blue-500 w-full p-4 border-y border-slate-800 text-2xl">Installation</a>
         <a href="#commands" class="hover:text-blue-500 w-full p-4 border-y border-slate-800 text-2xl">Commands</a>
         <a href="#example" class="hover:text-blue-500 w-full p-4 border-y border-slate-800 text-2xl">Examples</a>
+        <a href="/playbook/" class="hover:text-blue-500 w-full p-4 border-y border-slate-800 text-2xl">Playbook</a>
     </div>
     <main class="flex-1 flex flex-col w-full pt-16 ">
         <div class="flex flex-col w-full">
@@ -54,11 +56,11 @@
                 <span class="text-blue-500 font-bold">Open-Source Project</span>
                 <h1 class="text-5xl font-bold">DCR - Dexoron Cargo Realization</h1>
                 <p class="text-white/50">
-                    DCR is a Cargo-style utility for C/C++ projects. The current implementation is written in Rust, supports Linux, macOS, and Windows, and uses a single configuration file: dcr.toml.
+                    DCR is a practical build and workflow tool for C/C++ projects. It provides Cargo-like commands, reproducible builds, and a single project config file: dcr.toml.
                 </p>
                 <div class="flex flex-row gap-4">
                     <a href="https://github.com/dexoron/dcr" class="px-6 py-2 bg-blue-500 text-black text-xl font-semibold rounded-lg hover:bg-blue-600">GitHub</a>
-                    <a href="./docs/" class="px-6 py-2 rounded-lg border border-slate-900 text-xl font-semibold hover:border-blue-500 hover:text-blue-500">Documentation</a>
+                    <a href="https://dexoron-studio.gitbook.io/dcr/" class="px-6 py-2 rounded-lg border border-slate-900 text-xl font-semibold hover:border-blue-500 hover:text-blue-500">Open GitBook Docs</a>
                 </div>
             </div>
 
@@ -66,17 +68,17 @@
                 <div class="flex flex-col gap-2">
                     <h2 class="text-2xl font-semibold">Why</h2>
                     <ul class="list-disc list-inside">
-                        <li>Unified project structure</li>
-                        <li>Simple management commands</li>
-                        <li>Easy setup and usage</li>
+                        <li>Unified project layout for C and C++</li>
+                        <li>Familiar command flow similar to Cargo</li>
+                        <li>Fast onboarding for new and existing repos</li>
                     </ul>
                 </div>
                 <div class="flex flex-col gap-2">
                     <h2 class="text-2xl font-semibold">Features</h2>
                     <ul class="list-disc list-inside">
-                        <li>Project creation / initialization</li>
-                        <li>Build and run in debug/release profiles</li>
-                        <li>Binary self-update via dcr --update</li>
+                        <li>Project creation and initialization</li>
+                        <li>Build and run with debug/release profiles</li>
+                        <li>Self-update with dcr --update</li>
                     </ul>
                 </div>
                 <div class="flex flex-col gap-2">
@@ -107,6 +109,11 @@
                     </div>
                 </div>
 
+                <h3 class="text-xl font-semibold">Arch Linux (AUR)</h3>
+                <p>On Arch Linux, you can install DCR directly via AUR:</p>
+                <pre class="bg-slate-950 p-4 rounded-lg whitespace-pre-line">paru -S dcr
+yay -S dcr</pre>
+
                 <p>If the installation was successful, run the following command to test:</p>
                 <pre class="bg-slate-950 p-4 rounded-lg whitespace-pre-line">
                     dcr --version
@@ -117,7 +124,7 @@
         <div id="commands" class="flex flex-col w-full">
             <div class="py-16 px-2 max-w-[1024px] w-full mx-auto flex flex-col gap-4">
                 <h2 class="text-2xl font-semibold">Commands</h2>
-                <p>Below are the basic commands. All available commands can be found in the documentation.</p>
+                <p>Below are the core commands. The complete reference is available in the GitBook documentation.</p>
 
                 <table class="border-collapse border bg-slate-900 border-slate-800">
                     <thead class="bg-slate-800">
@@ -171,7 +178,7 @@
         <div id="example" class="bg-slate-900 flex flex-col w-full">
             <div class="py-16 px-2 max-w-[1024px] w-full mx-auto flex flex-col gap-4">
                 <h2 class="text-2xl font-semibold">Example</h2>
-                <p>This section shows an example of using DCR.</p>
+                <p>This section shows a typical DCR workflow.</p>
 
                 <div class="flex flex-col gap-2">
                     <h3 class="text-xl font-semibold">1. Creating a project</h3>
@@ -232,7 +239,7 @@
                     </div>
                 </div>
 
-                <p>If you have questions about any of the steps, please refer to the documentation.</p>
+                <p>Need more details? See the full guides in the GitBook documentation.</p>
             </div>
         </div>
     </main>

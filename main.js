@@ -81,50 +81,20 @@ mobileMenu?.querySelectorAll('a[href^="#"]').forEach((link) => {
 
 // New block: language switcher (bottom-right)
 const languageOptions = [
-  { key: 'ru', label: 'Русский', href: '/ru/', version: 'v0.2.1', verified: true, authors: ['@dexoron'] },
-  { key: 'en', label: 'English', href: '/', version: 'v0.2.1', verified: true, authors: ['@dexoron'], use_translator: 'partial'},
-  { key: 'de', label: 'Deutsch', href: '/de/', version: 'v0.2.1', verified: false, authors: ['@emexos'], use_translator: 'partial' },
+  { key: 'ru', label: 'Русский', href: '/ru/', version: 'v0.3.0', verified: true, authors: ['@dexoron'] },
+  { key: 'en', label: 'English', href: '/', version: 'v0.3.0', verified: true, authors: ['@dexoron'], use_translator: 'partial'},
+  { key: 'de', label: 'Deutsch', href: '/de/', version: 'v0.3.0', verified: false, authors: ['@emexos'], use_translator: 'partial' },
 ];
 // key — language code (ISO 639-1)
 // label — display name
 // href — base path for this language
-// version — documentation version
+// version — site content version
 // verified — whether the translation is verified
 // authors — list of translators
 // use_translator:
 //   "full"    — mostly machine translated
 //   "partial" — partially machine translated
 //   "none"    — fully human translated
-
-function normalizePath(pathname) {
-  return pathname.endsWith('/') ? pathname : `${pathname}/`;
-}
-
-function docsPrefixForLanguage(langKey) {
-  const lang = languageOptions.find(item => item.key === langKey);
-  if (!lang || !lang.href) return null;
-
-  if (lang.href === '/') return '/docs/';
-
-  const normalizedHref = normalizePath(lang.href);
-  return `${normalizedHref}docs/`;
-}
-
-function mapDocsPathToLanguage(pathname, targetLanguage) {
-  const normalizedPath = normalizePath(pathname);
-  const docsPrefixes = languageOptions
-    .map(item => docsPrefixForLanguage(item.key))
-    .filter(Boolean);
-
-  const currentPrefix = docsPrefixes.find(prefix => normalizedPath.startsWith(prefix));
-  if (!currentPrefix) return null;
-
-  const suffix = normalizedPath.slice(currentPrefix.length);
-  const targetPrefix = docsPrefixForLanguage(targetLanguage);
-  if (!targetPrefix) return null;
-
-  return `${targetPrefix}${suffix}`;
-}
 
 function detectCurrentLanguage() {
   const path = window.location.pathname;
@@ -150,6 +120,32 @@ function detectCurrentLanguage() {
   }
 
   return languageOptions[0].key;
+}
+
+function normalizePath(pathname) {
+  return pathname.endsWith('/') ? pathname : `${pathname}/`;
+}
+
+function mapKnownPagePath(pathname, targetLanguage) {
+  const normalizedPath = normalizePath(pathname);
+  const target = languageOptions.find(item => item.key === targetLanguage);
+  if (!target || !target.href) return null;
+
+  const pageSuffixes = ['playbook/'];
+
+  for (const source of languageOptions) {
+    if (!source.href) continue;
+
+    const sourceBase = normalizePath(source.href);
+    for (const suffix of pageSuffixes) {
+      const sourcePath = `${sourceBase}${suffix}`;
+      if (normalizedPath === sourcePath) {
+        return `${normalizePath(target.href)}${suffix}`;
+      }
+    }
+  }
+
+  return null;
 }
 
 function createLanguageSwitcher() {
@@ -197,8 +193,7 @@ function createLanguageSwitcher() {
     optionButton.addEventListener('click', () => {
       if (item.disabled || !item.href) return;
 
-      const mappedDocsPath = mapDocsPathToLanguage(window.location.pathname, item.key);
-      const targetPath = mappedDocsPath || item.href;
+      const targetPath = mapKnownPagePath(window.location.pathname, item.key) || item.href;
       const target = new URL(targetPath, window.location.origin);
       target.search = window.location.search;
       target.hash = window.location.hash;

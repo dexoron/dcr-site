@@ -3,7 +3,7 @@
 # DCR Site
 
 Лендинг проекта **DCR (Dexoron Cargo Realization)**:
-- описание инструмента и ссылки на документацию,
+- описание инструмента и ссылка на GitBook-документацию,
 - команды и примеры использования,
 - команды установки для Linux/Windows/macOS,
 - переключатель языка.
@@ -13,16 +13,11 @@
 ## Структура
 
 - `templates/index.tpl.html` - общий HTML-шаблон.
+- `templates/playbook.tpl.html` - шаблон страницы playbook.
 - `locales/en/index.json` - английские тексты (язык по умолчанию).
 - `locales/ru/index.json` - русские тексты.
 - `scripts/build-i18n.js` - генерирует страницы сайта из локалей.
-- `scripts/build-docs.js` - генерирует HTML-документацию из Markdown.
-- `locales/docs.locales.json` - реестр docs-локалей (пути источников/выхода и роутинг).
 - `main.js` - UI-логика, включая переключатель языка.
-- `locales/en/docs/**/*.md` - английские исходники docs.
-- `locales/ru/docs/**/*.md` - русские исходники docs.
-- `locales/en/docs.config.json` - UI-конфиг английской docs (порядок sidebar, названия).
-- `locales/ru/docs.config.json` - UI-конфиг русской docs (порядок sidebar, названия).
 
 ## Сборка
 
@@ -32,7 +27,9 @@ npm run i18n:build
 
 Результат:
 - `index.html` для `en` (маршрут `/`)
+- `playbook/index.html` для `en` (маршрут `/playbook/`)
 - `ru/index.html` для `ru` (маршрут `/ru/`)
+- `ru/playbook/index.html` для `ru` (маршрут `/ru/playbook/`)
 
 Полная сборка (i18n + стили):
 
@@ -40,15 +37,6 @@ npm run i18n:build
 npm run build
 ```
 
-Только документация:
-
-```bash
-npm run docs:build
-```
-
-Выход документации:
-- `docs/...` для английских страниц (`/docs/...`)
-- `ru/docs/...` для русских страниц (`/ru/docs/...`)
 
 ## Добавление нового языка
 

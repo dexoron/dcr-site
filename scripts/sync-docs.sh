@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DCR_REPO="../dcr"
+DCR_REPO="${DCR_REPO:-../dcr}"
 DOCS_DIR="docs"
 
 if [ ! -d "$DCR_REPO/docs" ]; then

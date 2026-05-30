@@ -20,11 +20,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Checkout dcr repo for docs
-        uses: actions/checkout@v4
-        with:
-          repository: dexoron/dcr
-          path: ./_dcr
+      - name: Clone dcr docs
+        run: |
+          git clone --depth 1 --filter=blob:none --sparse \
+            https://github.com/dexoron/dcr.git _dcr
+          git -C _dcr sparse-checkout set docs
 
       - uses: oven-sh/setup-bun@v2
 

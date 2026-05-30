@@ -1,22 +1,27 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DCR_REPO="${DCR_REPO:-../dcr}"
 DOCS_DIR="docs"
 
-if [ ! -d "$DCR_REPO/docs" ]; then
-  echo "Error: dcr repo not found at $DCR_REPO"
-  echo "Make sure dcr-site and dcr are sibling directories."
-  exit 1
+# If DCR_REPO is provided explicitly or ../dcr exists locally — use local copy
+if [ -n "${DCR_REPO:-}" ] || [ -d "../dcr/docs" ]; then
+  DCR_REPO="${DCR_REPO:-../dcr}"
+  echo "Syncing docs from $DCR_REPO/docs/ to $DOCS_DIR/..."
+  rm -rf "$DOCS_DIR"
+  cp -r "$DCR_REPO/docs" "$DOCS_DIR"
+
+else
+  # Clone only docs/ from GitHub (CI / fresh environment)
+  echo "No local dcr repo found, cloning docs from GitHub..."
+  rm -rf _dcr_tmp "$DOCS_DIR"
+  git clone --depth 1 --filter=blob:none --sparse \
+    https://github.com/dexoron/dcr.git _dcr_tmp
+  git -C _dcr_tmp sparse-checkout set docs
+  mv _dcr_tmp/docs "$DOCS_DIR"
+  rm -rf _dcr_tmp
 fi
 
-echo "Syncing docs from $DCR_REPO/docs/ to $DOCS_DIR/..."
-
-rm -rf "$DOCS_DIR"
-cp -r "$DCR_REPO/docs" "$DOCS_DIR"
-
 # Fix autolinks (<https://...>) for MDX compatibility
-# Docusaurus/MDX treats <...> as JSX tags, breaks on URLs
 find "$DOCS_DIR" -name '*.md' -exec sed -i \
   's~<\(https\?://[^>]\+\)>~[\1](\1)~g' {} \;
 

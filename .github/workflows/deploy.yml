@@ -20,21 +20,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Clone dcr docs
-        run: |
-          git clone --depth 1 --filter=blob:none --sparse \
-            https://github.com/dexoron/dcr.git _dcr
-          git -C _dcr sparse-checkout set docs
-
       - uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
         run: bun install
 
-      - name: Sync docs
-        run: DCR_REPO=./_dcr bun run sync
-
-      - name: Build
+      - name: Sync docs & build
         run: bun run build
 
       - name: Upload artifact

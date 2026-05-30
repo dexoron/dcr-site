@@ -1,0 +1,26 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Getting started": {
+    "message": "Начало работы",
+    "description": "The label for category 'Getting started' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Configuration": {
+    "message": "Конфигурация",
+    "description": "The label for category 'Configuration' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Commands": {
+    "message": "Команды",
+    "description": "The label for category 'Commands' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Dependencies & Build": {
+    "message": "Зависимости и сборка",
+    "description": "The label for category 'Dependencies & Build' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Reference & Help": {
+    "message": "Справка и помощь",
+    "description": "The label for category 'Reference & Help' in sidebar 'docs'"
+  }
+}

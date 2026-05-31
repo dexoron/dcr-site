@@ -48,6 +48,7 @@ const config = {
       logo: {
         alt: 'DCR Logo',
         src: 'img/logo.svg',
+        srcDark: 'img/logo-dark.svg',
       },
       items: [
         {

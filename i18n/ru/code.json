@@ -367,5 +367,8 @@
   },
   "View Docs": {
     "message": "Документация"
+  },
+  "A Cargo-style build tool for C/C++ projects": {
+    "message": "Инструмент сборки C/C++ в стиле Cargo"
   }
 }

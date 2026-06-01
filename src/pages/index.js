@@ -82,7 +82,9 @@ function Hero() {
         <Heading as="h1" className={styles.heroTitle}>
           {siteConfig.title}
         </Heading>
-        <p className={styles.heroSubtitle}>{siteConfig.tagline}</p>
+        <p className={styles.heroSubtitle}>
+          <Translate>A Cargo-style build tool for C/C++ projects</Translate>
+        </p>
         <div className={styles.buttons}>
           <Link className={styles.buttonPrimary} to="/docs/getting-started/installation">
             <Translate>Get Started</Translate>

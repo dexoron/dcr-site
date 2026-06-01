@@ -165,7 +165,7 @@ const config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Dexoron. Built with Docusaurus.`,
+      copyright: `<a href="https://github.com/dexoron/dexoron/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">GPL-3.0 License © ${new Date().getFullYear()}</a> <a href="https://github.com/dexoron/dcr" target="_blank" rel="noopener noreferrer">Dexoron</a> & <a href="https://github.com/dexoron/dcr/graphs/contributors" target="_blank" rel="noopener noreferrer">DCR Contributors</a>`,
     },
     prism: {
       theme: prismThemes.github,

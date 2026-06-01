@@ -40,7 +40,7 @@
     "description": "The label of footer link with label=Releases linking to https://github.com/dexoron/dcr/releases"
   },
   "copyright": {
-    "message": "Copyright © 2026 Dexoron. Built with Docusaurus.",
+    "message": "<a href=\"https://github.com/dexoron/dexoron/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener noreferrer\">Лицензия GPL-3.0 © 2026</a> <a href=\"https://github.com/dexoron/dcr\" target=\"_blank\" rel=\"noopener noreferrer\">Dexoron</a> и <a href=\"https://github.com/dexoron/dcr/graphs/contributors\" target=\"_blank\" rel=\"noopener noreferrer\">участники DCR</a>",
     "description": "The footer copyright"
   }
 }

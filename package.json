@@ -1,12 +1,47 @@
 {
-  "devDependencies": {
-    "tailwindcss": "^3.4.19",
-    "i18n": "^0.15.3"
-  },
+  "name": "dcr-site",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "build": "npm run i18n:build && npm run tailwind:build",
-    "i18n:build": "node scripts/build-i18n.js",
-    "tailwind:watch": "npx tailwindcss -i ./tailwind.css -o ./style.css --watch",
-    "tailwind:build": "npx tailwindcss -i ./tailwind.css -o ./style.css --minify"
+    "sync": "./scripts/sync-docs.sh",
+    "docusaurus": "docusaurus",
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids"
+  },
+  "dependencies": {
+    "@docusaurus/core": "3.10.1",
+    "@docusaurus/faster": "3.10.1",
+    "@docusaurus/plugin-pwa": "^3.10.1",
+    "@docusaurus/preset-classic": "3.10.1",
+    "@mdx-js/react": "^3.0.0",
+    "clsx": "^2.0.0",
+    "prism-react-renderer": "^2.3.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "3.10.1",
+    "@docusaurus/types": "3.10.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=20.0"
   }
 }

@@ -1,0 +1,50 @@
+---
+sidebar_label: Участие в проекте
+---
+
+# Участие в проекте
+
+## Настройка окружения
+
+```bash
+git clone https://github.com/dexoron/dcr
+cd dcr
+cargo build
+```
+
+## Code style
+
+Весь код форматируется через `cargo fmt`:
+
+```bash
+cargo fmt
+```
+
+## Линтер
+
+```bash
+cargo clippy --all-targets -- -D warnings
+```
+
+## Тесты
+
+```bash
+cargo test --all-targets
+```
+
+## PR process
+
+1. Форкните репозиторий
+2. Создайте ветку: `git checkout -b feature/description`
+3. Внесите изменения
+4. Запустите `cargo fmt && cargo clippy --all-targets -- -D warnings && cargo test --all-targets`
+5. Откройте Pull Request
+
+## CI
+
+В CI запускаются:
+- `cargo fmt --check`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo test --all-targets`
+- Сборка под Linux, macOS, Windows, FreeBSD, OpenBSD, NetBSD
+- Интеграционные тесты

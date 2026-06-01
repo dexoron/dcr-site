@@ -1,0 +1,56 @@
+---
+sidebar_label: Интеграция с IDE
+---
+
+# Интеграция с IDE
+
+## VS Code
+
+```bash
+dcr gen vscode
+```
+
+Генерирует в `.vscode/`:
+
+| Файл | Назначение |
+|------|-----------|
+| `tasks.json` | Задача `build` (dcr build) |
+| `launch.json` | Debug-запуск бинарника |
+| `settings.json` | clangd/IntelliSense: include пути, стандарт |
+| `extensions.json` | Рекомендует clangd, C/C++ |
+
+## CLion
+
+```bash
+dcr gen clion
+```
+
+Генерирует в `.idea/`:
+
+| Файл | Назначение |
+|------|-----------|
+| `externalTools.xml` | Build, Run, Clean, Test как внешние инструменты |
+| `customTargets.xml` | Кастомные цели сборки |
+| `misc.xml` | Настройки C/C++ проекта |
+| `runConfigurations/dcr_build_and_run.xml` | Запуск с авто-сборкой |
+
+## compile_commands.json
+
+```bash
+dcr gen compile-commands
+```
+
+Генерирует `compile_commands.json` в корне проекта. Стандартный формат для:
+
+- clangd (LSP)
+- C/C++ IntelliSense
+- Статические анализаторы (clang-tidy, cppcheck)
+- Инструменты рефакторинга
+
+## project-info
+
+```bash
+dcr gen project-info
+```
+
+Выводит JSON с метаданными проекта (см. [gen-commands](/docs/commands/gen-commands)).

@@ -1,0 +1,54 @@
+---
+sidebar_label: Переменные среды
+---
+
+# Переменные среды
+
+## DCR_COMPILER
+
+Переопределяет компилятор для всех языков.
+
+```bash
+export DCR_COMPILER=clang
+dcr build
+```
+
+Приоритет: `[toolchain]` > `DCR_COMPILER` > `DCR_CC` > `PATH`.
+
+## DCR_CC / DCR_CXX / DCR_AS
+
+Переопределение по языку.
+
+```bash
+export DCR_CC=gcc-14
+export DCR_CXX=g++-14
+export DCR_AS=arm-linux-gnueabihf-as
+```
+
+## DCR_LD / DCR_AR
+
+Переопределение линкера и архиватора.
+
+```bash
+export DCR_LD=ld.lld
+export DCR_AR=llvm-ar
+```
+
+## DCR_DEBUG
+
+Включает режим отладки — печатает все команды компиляции перед выполнением.
+
+```bash
+export DCR_DEBUG=1
+dcr build
+```
+
+## DCR_INDEX_PATH
+
+Переопределяет путь к index.json реестра.
+
+```bash
+export DCR_INDEX_PATH=/custom/path/index.json
+```
+
+По умолчанию: `~/.dcr/index.json`.

@@ -1,0 +1,72 @@
+---
+sidebar_label: Первые шаги
+---
+
+# Первые шаги
+
+## Создать проект
+
+```bash
+dcr new my-app
+cd my-app
+```
+
+Будет создана структура:
+
+```
+my-app/
+├── dcr.toml
+└── src/
+    └── main.c
+```
+
+`dcr.toml`:
+```toml
+[package]
+name = "my-app"
+version = "0.1.0"
+type = "none"
+description=""
+author=""
+license = "GPL-3.0-or-later"
+
+[build]
+language = "c"
+standard = "c11"
+compiler = "clang"
+kind = "bin"
+
+[dependencies]
+```
+
+## Собрать
+
+```bash
+dcr build
+```
+
+Профиль:
+```bash
+dcr build --release       # релизная сборка
+dcr build --debug         # дебажная (по умолчанию)
+```
+
+## Запустить
+
+```bash
+dcr run
+```
+
+Профиль:
+```bash
+dcr run --release       # релизная сборка
+dcr run --debug         # дебажная (по умолчанию)
+```
+
+Собирает (если нужно) и запускает бинарник.
+
+## Форматирование
+
+```bash
+dcr fmt              # clang-format по .clang-format
+```

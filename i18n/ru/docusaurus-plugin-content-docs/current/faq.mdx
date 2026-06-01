@@ -1,0 +1,76 @@
+---
+sidebar_label: Часто задаваемые вопросы
+---
+
+# Часто задаваемые вопросы
+
+## Registry not found
+
+```
+error: registry not found
+```
+
+**Решение:** Выполните `dcr setup` для создания `~/.dcr/index.json`.
+
+Если реестр кастомный, проверьте `DCR_INDEX_PATH`:
+
+```bash
+echo $DCR_INDEX_PATH
+```
+
+## Compiler not found
+
+```
+error: compiler not found
+```
+
+**Решение:** Убедитесь, что компилятор установлен и доступен в PATH.
+
+```bash
+which gcc
+which clang
+```
+
+Или укажите явно через `[toolchain]` или `DCR_COMPILER`.
+
+## openssl-sys build failed
+
+При сборке DCR из исходников:
+
+```
+error: failed to run custom build command for openssl-sys
+```
+
+**Решение:** Установите OpenSSL development headers:
+
+```bash
+# Ubuntu/Debian
+sudo apt install libssl-dev
+
+# Fedora
+sudo dnf install openssl-devel
+
+# macOS
+brew install openssl
+```
+
+## Ctrl+C во время сборки
+
+DCR корректно обрабатывает SIGINT: прерывает текущую компиляцию и завершает процесс с ненулевым кодом.
+
+## Как создать библиотеку?
+
+См. [Library Recipe](/docs/recipes/library-project).
+
+## Как собрать под Windows на Linux?
+
+См. [Cross-Compile Recipe](/docs/recipes/cross-to-windows).
+
+## Как сделать мультипакетный проект?
+
+См. [Workspace Recipe](/docs/recipes/multi-package-workspace).
+
+## Lock-файл устарел
+
+При изменении зависимостей `dcr.lock` автоматически обновляется при следующем `dcr add`.
+Если нужно принудительно обновить — удалите `dcr.lock` и выполните `dcr build`.

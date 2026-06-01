@@ -3,7 +3,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const config = {
   title: 'DCR',
   tagline: 'A Cargo-style build tool for C/C++ projects',
-  favicon: 'img/favicon.ico',
+  favicon: 'brand/dcr-icon.svg',
 
   url: 'https://dcr.dexoron.su',
   baseUrl: '/',
@@ -22,6 +22,44 @@ const config = {
     },
   },
 
+  plugins: [
+    [
+      '@docusaurus/plugin-pwa',
+      {
+        offlineModeActivationStrategies: [
+          'appInstalled',
+          'standalone',
+          'queryString',
+        ],
+        pwaHead: [
+          {tagName: 'link', rel: 'icon', href: '/brand/dcr-icon.svg'},
+          {tagName: 'link', rel: 'manifest', href: '/manifest.json'},
+          {tagName: 'meta', name: 'apple-mobile-web-app-capable', content: 'yes'},
+          {tagName: 'meta', name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent'},
+          {tagName: 'link', rel: 'apple-touch-icon', href: '/brand/dcr-app-icon-light.png', sizes: '180x180'},
+          {tagName: 'link', rel: 'apple-touch-icon', href: '/brand/dcr-app-icon-light.png', sizes: '152x152'},
+          {tagName: 'link', rel: 'apple-touch-icon', href: '/brand/dcr-app-icon-light.png', sizes: '120x120'},
+          {tagName: 'meta', name: 'theme-color', content: '#181818'},
+          {tagName: 'link', rel: 'mask-icon', href: '/brand/dcr-icon.svg', color: '#5C8DBC'},
+          {tagName: 'meta', name: 'msapplication-TileColor', content: '#181818'},
+          {tagName: 'script', innerHTML: `
+(function(){
+  var mq = window.matchMedia('(prefers-color-scheme:dark)');
+  var dark = mq.matches;
+
+  var icon = dark ? '/brand/dcr-app-icon-dark.png' : '/brand/dcr-app-icon-light.png';
+  document.querySelectorAll('link[rel="apple-touch-icon"]').forEach(function(l){ l.href = icon; });
+
+  var color = dark ? '#181818' : '#ffffff';
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = color;
+})();
+          `},
+        ],
+      },
+    ],
+  ],
+
   presets: [
     [
       'classic',
@@ -39,7 +77,22 @@ const config = {
   ],
 
   themeConfig: {
-    image: 'img/logo.png',
+    image: 'brand/banner.png',
+    pwa: {
+      manifest: {
+        name: 'DCR',
+        short_name: 'DCR',
+        description: 'A Cargo-style build tool for C/C++ projects',
+        theme_color: '#181818',
+        background_color: '#181818',
+        display: 'standalone',
+        icons: [
+          {src: '/brand/dcr-app-icon-light.png', sizes: '192x192', type: 'image/png'},
+          {src: '/brand/dcr-app-icon-light.png', sizes: '512x512', type: 'image/png'},
+          {src: '/brand/dcr-icon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any maskable'},
+        ],
+      },
+    },
     colorMode: {
       respectPrefersColorScheme: true,
     },
@@ -77,11 +130,11 @@ const config = {
             },
             {
               label: 'Commands',
-              to: '/docs/commands/dcr-init-or-new',
+              to: '/docs/commands/project-commands',
             },
             {
-              label: 'Configuration',
-              to: '/docs/configuration/dcr.toml-overview',
+              label: 'Reference',
+              to: '/docs/reference/dcr-toml',
             },
           ],
         },

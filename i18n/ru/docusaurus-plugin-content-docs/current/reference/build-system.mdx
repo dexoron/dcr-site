@@ -1,0 +1,90 @@
+---
+sidebar_label: Система сборки
+---
+
+# Build System
+
+## Система сборки
+
+DCR поддерживает 4 бэкенда компиляции. Выбор происходит автоматически на основе расширения файла и target triple.
+
+| Бэкенд | Файлы | Когда используется |
+|--------|-------|-------------------|
+| `unix_cc` | `.c`, `.cpp`, `.cxx`, `.cc`, `.s`, `.S` | gcc/clang на Linux/macOS/BSD |
+| `msvc` | `.c`, `.cpp`, `.cxx`, `.cc` | Windows (cl, clang-cl) |
+| `gas` | `.s`, `.S` | ARM/ARM64 ассемблер |
+| `nasm` | `.asm` | x86/x86_64 ассемблер |
+
+### Unix CC
+
+- Компилятор определяется через `resolve_compiler()`: CC/CXX из [toolchain], DCR_COMPILER/env, PATH
+- Поддерживает генерацию `.d` файлов для header dependency tracking
+- Флаги: `-std=`, `-MMD -MF`, `-c -o`, `-I`, `-L`, `-l`
+
+### MSVC
+
+- Поддерживает cl.exe и clang-cl.exe
+- Флаги: `/std:`, `/Fo:`, `/Fe:`, `/I`, `/link`
+
+### GAS / NASM
+
+- GAS: `-I`, `-c -o`, `--defsym`
+- NASM: `-I`, `-c -o`, `-D`, `-f` (формат: win64/elf64/macho64/macho32/elf32)
+
+## Incremental Builds
+
+Три уровня инкрементальности:
+
+1. **mtime** — если выходной файл новее всех входных, файл не перекомпилируется
+2. **`.d` files** — отслеживание изменений в заголовочных файлах (включая транзитивные)
+3. **SHA256 fingerprint** — если флаги компиляции изменились, файл перекомпилируется (fingerprint хранится в `.dcr_fingerprint`)
+
+## Parallel Compilation
+
+- Используется `thread::scope` для создания пула потоков
+- Атомарная очередь задач (`AtomicU64`)
+- Мьютекс на запись в stdout (`OUTPUT_MUTEX`)
+- Количество потоков = `available_parallelism()`
+
+## Build Kinds
+
+| Kind | Тип | Выход |
+|------|-----|-------|
+| `bin` | Исполняемый файл | `target/<profile>/<name>` (.exe) |
+| `staticlib` | Статическая библиотека | `target/<profile>/lib<name>.a` (.lib) |
+| `sharedlib` | Динамическая библиотека | `target/<profile>/lib<name>.so` (.dll/.dylib) |
+| `efi` | UEFI приложение | `target/<profile>/<name>.efi` |
+| `elf` | ELF без стандартной библиотеки | `target/<profile>/<name>` |
+| `none` | Только компиляция, без линковки | — |
+| `custom` | Полный контроль filename + extension | `target/<profile>/<filename>.<extension>` |
+
+## Build Steps
+
+DCR поддерживает pre-build и post-build шаги через Qt codegen:
+
+- `moc` — Meta-Object Compiler: `{stem}.h → moc_{stem}.cpp`
+- `uic` — UI Compiler: `{stem}.ui → ui_{stem}.h`
+- `rcc` — Resource Compiler: `{stem}.qrc → qrc_{stem}.cpp`
+
+Подстановки: `{stem}`, `{in}`, `{out}`.
+
+## pkg-config
+
+Автоматический поиск:
+
+```toml
+[build]
+pkg_config = ["sdl2", "gl"]
+```
+
+DCR вызывает `pkg-config --cflags sdl2 gl` и `pkg-config --libs sdl2 gl` и добавляет результат в флаги компиляции/линковки.
+
+## Variable Substitution
+
+В полях `cflags`, `ldflags`, `filename`, `extension`, `out_dir`, `cmd` поддерживаются подстановки:
+
+| Переменная | Описание |
+|-----------|----------|
+| `{version}` | Версия пакета |
+| `{profile}` | Имя профиля (debug/release/...) |
+| `{name}` | Имя пакета |

@@ -1,0 +1,62 @@
+---
+sidebar_label: Команды Gen (vscode, clion, ...)
+---
+
+# Команды Gen
+
+## `dcr gen <target>`
+
+Генерирует файлы для IDE и инструментов разработки.
+
+### vscode
+
+```bash
+dcr gen vscode
+```
+
+Создаёт:
+- `.vscode/tasks.json` — задача `build` (dcr build)
+- `.vscode/launch.json` — конфигурация запуска в отладчике
+- `.vscode/settings.json` — настройки C/C++ (clangd пути, инклюды)
+- `.vscode/extensions.json` — рекомендуемые расширения
+
+### clion
+
+```bash
+dcr gen clion
+```
+
+Создаёт:
+- `.idea/externalTools.xml` — внешние инструменты (build, run, clean, test)
+- `.idea/customTargets.xml` — кастомные цели
+- `.idea/misc.xml` — настройки C/C++ проекта
+- `.idea/runConfigurations/dcr_build_and_run.xml` — конфигурация запуска
+
+### compile-commands
+
+```bash
+dcr gen compile-commands
+```
+
+Генерирует `compile_commands.json` — стандартный формат для clangd, cpptools, анализаторов.
+
+### project-info
+
+```bash
+dcr gen project-info
+```
+
+Выводит JSON с метаданными проекта:
+
+```json
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "profile": "debug",
+  "compiler": "/usr/bin/gcc",
+  "cflags": ["-std=c17", "-O0", "-g"],
+  "sources": ["src/main.c"],
+  "include_dirs": ["src"],
+  "output": "target/debug/my-app"
+}
+```

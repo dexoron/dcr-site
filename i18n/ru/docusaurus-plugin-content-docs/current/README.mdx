@@ -1,0 +1,50 @@
+---
+sidebar_label: Введение
+---
+
+# DCR — Инструмент сборки C/C++ & Пакетный менеджер
+
+<details>
+<summary>Быстрая справка</summary>
+
+```bash
+# Установка(Linux/MacOS скрипт)
+curl -fsSL https://dcr.dexoron.su/install.sh | sh
+
+# Создать проект
+dcr new my-app
+cd my-app
+
+# Собрать и запустить
+dcr run
+```
+
+</details>
+
+## Содержание
+
+| Раздел | Описание |
+|--------|----------|
+| [Getting Started](/docs/getting-started/installation) | Установка и первые шаги |
+| [Commands](/docs/commands/project-commands) | Все CLI-команды DCR |
+| [Reference](/docs/reference/dcr-toml) | Конфигурация, сборка, зависимости, платформы |
+| [Testing](/docs/testing/test-framework) | Встроенный фреймворк тестирования |
+| [Recipes](/docs/recipes/cross-to-windows) | Типовые сценарии |
+| [IDE Integration](/docs/ide-integration) | VS Code, CLion, compile_commands.json |
+| [Self Update](/docs/self-update) | Автообновление |
+| [FAQ](/docs/faq) | Частые вопросы |
+| [Changelog](/docs/changelog) | История версий |
+| [Contributing](/docs/contributing) | Разработка DCR |
+
+## Особенности
+
+- **Инкрементальная сборка** — mtime + `.d` headers + SHA256 fingerprint
+- **Параллельная компиляция** — thread::scope, атомарная очередь задач
+- **4 бэкенда** — gcc/clang, MSVC/clang-cl, GAS, NASM
+- **7 типов проекта** — bin, staticlib, sharedlib, efi, elf, none, custom
+- **Cross-compilation** — short names (linux, windows, macos) и полные triples
+- **Профили** — debug / release с переопределением любого поля
+- **Workspaces** — мультипакетные проекты с топологической сортировкой
+- **Registry + Git + Path** — три механизма зависимостей
+- **Генерация IDE** — VS Code, CLion, compile_commands.json, JSON metadata
+- **pkg-config** — автоматический поиск системных библиотек

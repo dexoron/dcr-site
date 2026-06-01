@@ -1,0 +1,77 @@
+---
+sidebar_label: Установка
+---
+
+# Установка
+
+## Linux (Dexoron Packages)
+
+Настройте менеджер пакетов на https://dcr.dexoron.su и установите:
+
+**Arch Linux**
+```sh
+sudo pacman -Sy dcr
+```
+
+**Debian/Ubuntu**
+```sh
+sudo apt update && sudo apt install dcr
+```
+
+**Fedora/RHEL**
+```sh
+sudo dnf install dcr
+```
+
+## Arch Linux (AUR)
+
+```sh
+yay -S dcr
+```
+
+## macOS / Linux (Homebrew)
+
+```sh
+brew tap dexoron/dexoron
+brew install dcr
+```
+
+## Cargo (crates.io)
+
+```sh
+cargo install dcr
+```
+
+## Linux / macOS (script)
+
+```sh
+curl -fsSL https://dcr.dexoron.su/install.sh | bash
+```
+
+## BSD (script)
+
+```sh
+curl -fsSL https://dcr.dexoron.su/install_bsd.sh | bash
+```
+
+## Windows (PowerShell)
+
+```powershell
+irm https://dcr.dexoron.su/install.ps1 | iex
+```
+
+## From source
+
+```sh
+git clone https://github.com/dexoron/dcr.git
+cd dcr && cargo build --release
+ln -sf "$PWD/target/release/dcr" ~/.local/bin/dcr
+```
+
+## Post-install
+
+```bash
+dcr setup
+```
+
+Команда создаёт `~/.dcr/` с дефолтным `config.toml` и скачивает публичный реестр.

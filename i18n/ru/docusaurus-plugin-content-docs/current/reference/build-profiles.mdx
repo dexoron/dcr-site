@@ -1,0 +1,59 @@
+---
+sidebar_label: Профили сборки
+---
+
+# Профили сборки
+
+Профили позволяют переопределять любые поля секции `[build]` для конкретного режима сборки.
+
+## Конфигурация
+
+```toml
+[build]
+language = "c"
+standard = "c17"
+cflags = ["-Wall"]
+
+[build.debug]
+cflags = ["-O0", "-g"]
+
+[build.release]
+cflags = ["-O3", "-flto"]
+```
+
+## Правила
+
+- Поля из `[build.<profile>]` **мержатся поверх** `[build]`
+- Массивы (`cflags`, `ldflags`, ...) **заменяются полностью**, а не дополняются
+- Если поле не указано в профиле — используется значение из `[build]`
+
+## Встроенные профили
+
+| Профиль | Default cflags |
+|---------|---------------|
+| `debug` | `-O0 -g` |
+| `release` | `-O3 -DNDEBUG` |
+
+## Кастомные профили
+
+```toml
+[build.lto]
+cflags = ["-O3", "-flto"]
+ldflags = ["-flto"]
+```
+
+```bash
+dcr build --profile lto
+```
+
+## Target-specific профили
+
+```toml
+[build.linux]
+cflags = ["-DLINUX"]
+
+[build.windows.debug]
+cflags = ["-DWIN32", "-O0", "-g"]
+```
+
+Формат: `[build.<target>.<profile>]` или `[build.<target>]`.

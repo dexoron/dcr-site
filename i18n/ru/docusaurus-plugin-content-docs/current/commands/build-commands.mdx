@@ -1,0 +1,41 @@
+---
+sidebar_label: Команды сборки (build, run, clean)
+---
+
+# Команды сборки
+
+## `dcr build`
+
+Собирает проект по `dcr.toml`.
+
+```bash
+dcr build                         # debug профиль
+dcr build --release               # release профиль
+dcr build --debug                 # явно debug
+dcr build --profile custom        # произвольный профиль
+dcr build --target aarch64-unknown-linux-gnu
+dcr build --force                 # пересобрать всё с нуля
+dcr build --clean                 # clean + build
+dcr build --verbose               # показать команды компиляции
+dcr build --workspace pkg-a       # собрать конкретный пакет в workspace
+```
+
+Артефакты: `target/<profile>/<binary-name>`.
+
+## `dcr run`
+
+Собирает (если исходники новее артефакта) и запускает бинарник. Прокидывает аргументы после `--`:
+
+```bash
+dcr run
+dcr run -- --arg1 value
+```
+
+## `dcr clean`
+
+Удаляет директорию `target/`.
+
+```bash
+dcr clean
+dcr clean --all        # очистить все пакеты workspace
+```

@@ -1,9 +1,24 @@
+import {useEffect} from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Translate from '@docusaurus/Translate';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import styles from './index.module.css';
+
+const LOCALE_KEY = 'dcr-locale';
+
+function redirectToLocale(locales, defaultLocale) {
+  if (typeof window === 'undefined') return;
+  if (window.location.pathname !== '/') return;
+  if (localStorage.getItem(LOCALE_KEY)) return;
+  const lang = navigator.language?.split('-')[0] || '';
+  const match = locales.find((l) => l === lang);
+  if (match && match !== defaultLocale) {
+    localStorage.setItem(LOCALE_KEY, match);
+    window.location.replace(`/${match}/`);
+  }
+}
 
 const features = [
   {
@@ -72,7 +87,7 @@ function Hero() {
           <Link className={styles.buttonPrimary} to="/docs/getting-started/installation">
             <Translate>Get Started</Translate>
           </Link>
-          <Link className={styles.buttonSecondary} to="/docs/commands/dcr-init-or-new">
+          <Link className={styles.buttonSecondary} to="/docs/">
             <Translate>View Docs</Translate>
           </Link>
         </div>
@@ -98,6 +113,8 @@ function Features() {
 
 export default function Home() {
   const {siteConfig} = useDocusaurusContext();
+  const {locales, defaultLocale} = siteConfig.i18n;
+  useEffect(() => { redirectToLocale(locales, defaultLocale); }, []);
   return (
     <Layout
       title={siteConfig.title}

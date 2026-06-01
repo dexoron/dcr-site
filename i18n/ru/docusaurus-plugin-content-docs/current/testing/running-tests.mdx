@@ -1,0 +1,42 @@
+---
+sidebar_label: Запуск тестов
+---
+
+# Запуск тестов
+
+## Запуск
+
+```bash
+dcr test
+```
+
+Собирает тестовый бинарник (все сорцы из `tests/` + `dcr_test.h`) и запускает его.
+
+## Профили
+
+```bash
+dcr test                     # debug (по умолчанию)
+dcr test --release           # release
+dcr test --debug             # явно debug
+```
+
+## Вывод
+
+```
+[PASS] test_addition
+[SKIP] test_windows_feature  (not implemented on Windows yet)
+[FAIL] test_division         (expected 2, got 3)
+
+Results: 3 passed, 1 skipped, 1 failed
+```
+
+## Код возврата
+
+- 0 — все тесты пройдены (FAIL = 0)
+- 1 — есть упавшие тесты
+
+## Что собирается
+
+- Все C/C++ файлы из `tests/`
+- Include path: `tests/` (для `dcr_test.h`)
+- Линкуется с основным проектом (если `type = "lib"`)

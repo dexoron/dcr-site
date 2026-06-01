@@ -3,64 +3,64 @@ const sidebars = {
   "README",
   {
     "type": "category",
-    "label": "Getting started",
+    "label": "Getting Started",
     "items": [
       "getting-started/installation",
-      "getting-started/create-your-first-project",
-      "getting-started/project-structure",
-      "getting-started/build-and-run"
-    ]
-  },
-  {
-    "type": "category",
-    "label": "Configuration",
-    "items": [
-      "configuration/dcr.toml-overview",
-      "configuration/package-section",
-      "configuration/build-section",
-      "configuration/dependencies-section",
-      "configuration/build-profiles"
+      "getting-started/first-steps"
     ]
   },
   {
     "type": "category",
     "label": "Commands",
     "items": [
-      "commands/global-options",
-      "commands/dcr-init-or-new",
-      "commands/dcr-add",
-      "commands/dcr-build",
-      "commands/dcr-run",
-      "commands/dcr-clean",
-      "commands/dcr-gen",
-      "commands/dcr-test",
-      "commands/dcr-fmt",
-      "commands/dcr-tree"
+      "commands/project-commands",
+      "commands/build-commands",
+      "commands/dependency-commands",
+      "commands/quality-commands",
+      "commands/gen-commands",
+      "commands/system-commands"
     ]
   },
   {
     "type": "category",
-    "label": "Dependencies & Build",
+    "label": "Reference",
     "items": [
-      "dependencies-and-build/dependency-format",
-      "dependencies-and-build/local-dependencies",
-      "dependencies-and-build/versioning-and-lock-file",
-      "dependencies-and-build/target-directory",
-      "dependencies-and-build/cross-compilation",
-      "dependencies-and-build/compilers-and-linking"
+      "reference/dcr-toml",
+      "reference/build-profiles",
+      "reference/dependencies",
+      "reference/workspaces",
+      "reference/build-system",
+      "reference/cross-compilation",
+      "reference/environment-variables",
+      "reference/platform-support"
     ]
   },
   {
     "type": "category",
-    "label": "Reference & Help",
+    "label": "Testing",
     "items": [
-      "reference-and-help/cli-reference",
-      "reference-and-help/config-reference",
-      "reference-and-help/workspace-guide",
-      "reference-and-help/flags-and-environment",
-      "reference-and-help/troubleshooting-map",
-      "reference-and-help/faq",
-      "reference-and-help/contributing-and-bug-reports"
+      "testing/test-framework",
+      "testing/running-tests"
+    ]
+  },
+  {
+    "type": "category",
+    "label": "Recipes",
+    "items": [
+      "recipes/cross-to-windows",
+      "recipes/library-project",
+      "recipes/multi-package-workspace"
+    ]
+  },
+  {
+    "type": "category",
+    "label": "Other",
+    "items": [
+      "ide-integration",
+      "self-update",
+      "faq",
+      "changelog",
+      "contributing"
     ]
   }
 ],

@@ -17,7 +17,7 @@
   },
   "link.item.label.Commands": {
     "message": "Команды",
-    "description": "The label of footer link with label=Commands linking to /docs/commands/dcr-init-or-new"
+    "description": "The label of footer link with label=Commands linking to /docs/commands/project-commands"
   },
   "link.item.label.Configuration": {
     "message": "Конфигурация",
@@ -42,5 +42,29 @@
   "copyright": {
     "message": "<a href=\"https://github.com/dexoron/dexoron/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener noreferrer\">Лицензия GPL-3.0 © 2026</a> <a href=\"https://github.com/dexoron/dcr\" target=\"_blank\" rel=\"noopener noreferrer\">Dexoron</a> и <a href=\"https://github.com/dexoron/dcr/graphs/contributors\" target=\"_blank\" rel=\"noopener noreferrer\">участники DCR</a>",
     "description": "The footer copyright"
+  },
+  "link.title.Social": {
+    "message": "Соц. сети",
+    "description": "The title of the footer links column with title=Social in the footer"
+  },
+  "link.item.label.Reference": {
+    "message": "Структура",
+    "description": "The label of footer link with label=Reference linking to /docs/reference/dcr-toml"
+  },
+  "link.item.label.Telegram": {
+    "message": "Telegram",
+    "description": "The label of footer link with label=Telegram linking to https://t.me/dcr_tool"
+  },
+  "link.item.label.Facebook": {
+    "message": "Facebook",
+    "description": "The label of footer link with label=Facebook linking to https://www.facebook.com/groups/dcrtool"
+  },
+  "link.item.label.X": {
+    "message": "X",
+    "description": "The label of footer link with label=X linking to https://x.com/dcr_tool"
+  },
+  "link.item.label.VK": {
+    "message": "ВК",
+    "description": "The label of footer link with label=VK linking to https://vk.com/dcr_tool"
   }
 }

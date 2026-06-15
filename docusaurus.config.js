@@ -139,15 +139,23 @@ const config = {
           ],
         },
         {
-          title: 'Community',
+          title: 'Social',
           items: [
             {
-              label: 'GitHub Issues',
-              href: 'https://github.com/dexoron/dcr/issues',
+              label: 'Telegram',
+              href: 'https://t.me/dcr_tool',
             },
             {
-              label: 'Discussions',
-              href: 'https://github.com/dexoron/dcr/discussions',
+              label: 'Facebook',
+              href: 'https://www.facebook.com/groups/dcrtool',
+            },
+            {
+              label: 'X',
+              href: 'https://x.com/dcr_tool',
+            },
+            {
+              label: 'VK',
+              href: 'https://vk.com/dcr_tool',
             },
           ],
         },
@@ -161,6 +169,10 @@ const config = {
             {
               label: 'Releases',
               href: 'https://github.com/dexoron/dcr/releases',
+            },
+            {
+              label: 'GitHub Issues',
+              href: 'https://github.com/dexoron/dcr/issues',
             },
           ],
         },

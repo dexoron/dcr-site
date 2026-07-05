@@ -1,0 +1,30 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Getting Started": {
+    "message": "Getting Started",
+    "description": "The label for category 'Getting Started' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Commands": {
+    "message": "Commands",
+    "description": "The label for category 'Commands' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Reference": {
+    "message": "Reference",
+    "description": "The label for category 'Reference' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Testing": {
+    "message": "Testing",
+    "description": "The label for category 'Testing' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Recipes": {
+    "message": "Recipes",
+    "description": "The label for category 'Recipes' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Other": {
+    "message": "Other",
+    "description": "The label for category 'Other' in sidebar 'docs'"
+  }
+}

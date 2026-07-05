@@ -15,10 +15,10 @@ const config = {
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'ru'],
+    locales: ['en', 'ru-RU'],
     localeConfigs: {
       en: { label: 'English' },
-      ru: { label: 'Русский' },
+      ru-RU: { label: 'Русский' },
     },
   },
 

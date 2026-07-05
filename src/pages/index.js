@@ -12,8 +12,10 @@ function redirectToLocale(locales, defaultLocale) {
   if (typeof window === 'undefined') return;
   if (window.location.pathname !== '/') return;
   if (localStorage.getItem(LOCALE_KEY)) return;
-  const lang = navigator.language?.split('-')[0] || '';
-  const match = locales.find((l) => l === lang);
+
+  const browserLang = navigator.language?.split('-')[0] || '';
+  const match = locales.find((l) => l.split('-')[0] === browserLang);
+
   if (match && match !== defaultLocale) {
     localStorage.setItem(LOCALE_KEY, match);
     window.location.replace(`/${match}/`);

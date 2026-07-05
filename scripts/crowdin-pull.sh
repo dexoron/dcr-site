@@ -7,4 +7,6 @@ fi
 bunx @crowdin/cli pull \
   --token "$CROWDIN_TOKEN" \
   --project-id "$CROWDIN_PROJECT_ID" \
-  --base-url "https://dcr.api.crowdin.com"
+  --base-url "https://dcr.api.crowdin.com" \
+  --branch main \
+  || echo "crowdin pull: nothing to download yet, continuing build"

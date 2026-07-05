@@ -18,7 +18,7 @@ const config = {
     locales: ['en', 'ru-RU'],
     localeConfigs: {
       en: { label: 'English' },
-      ru-RU: { label: 'Русский' },
+      'ru-RU': { label: 'Русский' },
     },
   },
 

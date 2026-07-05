@@ -1,0 +1,6 @@
+files:
+  - source: /docs/**/*.mdx
+    translation: /i18n/%locale%/docusaurus-plugin-content-docs/current/%original_path%/%original_file_name%.%file_extension%
+
+  - source: /src/pages/**/*.{js}
+    translation: /i18n/%locale%/docusaurus-plugin-content-pages/%original_path%/%original_file_name%.%file_extension%

@@ -1,6 +1,16 @@
 files:
-  - source: /docs/**/*.mdx
-    translation: /i18n/%locale%/docusaurus-plugin-content-docs/current/%original_path%/%original_file_name%.%file_extension%
+  - source: /i18n/en/docusaurus-plugin-content-docs/current.json
+    translation: /i18n/%locale%/docusaurus-plugin-content-docs/current.json
+    type: json
 
-  - source: /src/pages/**/*.{js}
-    translation: /i18n/%locale%/docusaurus-plugin-content-pages/%original_path%/%original_file_name%.%file_extension%
+  - source: /i18n/en/code.json
+    translation: /i18n/%locale%/code.json
+    type: json
+
+  - source: /i18n/en/docusaurus-theme-classic/navbar.json
+    translation: /i18n/%locale%/docusaurus-theme-classic/navbar.json
+    type: json
+
+  - source: /i18n/en/docusaurus-theme-classic/footer.json
+    translation: /i18n/%locale%/docusaurus-theme-classic/footer.json
+    type: json

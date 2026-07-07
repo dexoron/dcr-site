@@ -1,4 +1,49 @@
 {
+  "No Boilerplate": {
+    "message": "Без шаблонного кода"
+  },
+  "One config file, predictable structure. Get started in seconds with a single command.": {
+    "message": "Один конфиг-файл, предсказуемая структура. Начните работу за секунды одной командой."
+  },
+  "Cargo-like Workflow": {
+    "message": "Рабочий процесс как в Cargo"
+  },
+  "Familiar commands — build, run, clean, test, add. If you know Cargo, you already know DCR.": {
+    "message": "Знакомые команды — build, run, clean, test, add. Если вы знаете Cargo, вы уже знаете DCR."
+  },
+  "Cross-compilation": {
+    "message": "Кросс-компиляция"
+  },
+  "Full target triple support with short names. Build for Linux, macOS, Windows, and more.": {
+    "message": "Полная поддержка целевых триплетов с короткими именами. Сборка для Linux, macOS, Windows и других платформ."
+  },
+  "IDE Integration": {
+    "message": "Интеграция с IDE"
+  },
+  "VS Code, CLion, compile_commands.json generation out of the box.": {
+    "message": "VS Code, CLion, генерация compile_commands.json из коробки."
+  },
+  "Dependency Management": {
+    "message": "Управление зависимостями"
+  },
+  "Path, git, and registry-based dependencies with lock file support.": {
+    "message": "Путевые, git и реестровые зависимости с поддержкой lock-файла."
+  },
+  "Built for C/C++": {
+    "message": "Создан для C/C++"
+  },
+  "Native support for C and C++ with configurable standards and compilers.": {
+    "message": "Встроенная поддержка C и C++ с настраиваемыми стандартами и компиляторами."
+  },
+  "A Cargo-style build tool for C/C++ projects": {
+    "message": "Инструмент сборки C/C++ в стиле Cargo"
+  },
+  "Get Started": {
+    "message": "Начать"
+  },
+  "View Docs": {
+    "message": "Документация"
+  },
   "theme.ErrorPageContent.title": {
     "message": "На странице произошёл сбой.",
     "description": "The title of the fallback page when the page crashed"
@@ -325,50 +370,5 @@
   "theme.tags.tagsPageTitle": {
     "message": "Теги",
     "description": "The title of the tag list page"
-  },
-  "No Boilerplate": {
-    "message": "Без шаблонного кода"
-  },
-  "One config file, predictable structure. Get started in seconds with a single command.": {
-    "message": "Один конфиг-файл, предсказуемая структура. Начните работу за секунды одной командой."
-  },
-  "Cargo-like Workflow": {
-    "message": "Рабочий процесс как в Cargo"
-  },
-  "Familiar commands — build, run, clean, test, add. If you know Cargo, you already know DCR.": {
-    "message": "Знакомые команды — build, run, clean, test, add. Если вы знаете Cargo, вы уже знаете DCR."
-  },
-  "Cross-compilation": {
-    "message": "Кросс-компиляция"
-  },
-  "Full target triple support with short names. Build for Linux, macOS, Windows, and more.": {
-    "message": "Полная поддержка целевых триплетов с короткими именами. Сборка для Linux, macOS, Windows и других платформ."
-  },
-  "IDE Integration": {
-    "message": "Интеграция с IDE"
-  },
-  "VS Code, CLion, compile_commands.json generation out of the box.": {
-    "message": "VS Code, CLion, генерация compile_commands.json из коробки."
-  },
-  "Dependency Management": {
-    "message": "Управление зависимостями"
-  },
-  "Path, git, and registry-based dependencies with lock file support.": {
-    "message": "Путевые, git и реестровые зависимости с поддержкой lock-файла."
-  },
-  "Built for C/C++": {
-    "message": "Создан для C/C++"
-  },
-  "Native support for C and C++ with configurable standards and compilers.": {
-    "message": "Встроенная поддержка C и C++ с настраиваемыми стандартами и компиляторами."
-  },
-  "Get Started": {
-    "message": "Начать"
-  },
-  "View Docs": {
-    "message": "Документация"
-  },
-  "A Cargo-style build tool for C/C++ projects": {
-    "message": "Инструмент сборки C/C++ в стиле Cargo"
   }
 }

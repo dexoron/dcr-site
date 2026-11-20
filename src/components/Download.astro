@@ -1,0 +1,170 @@
+---
+import { useTranslations } from '../i18n';
+
+const t = useTranslations();
+const copy = t.download;
+---
+
+<section class="download" id="download" aria-labelledby="download-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title" id="download-title">{copy.title}</h2>
+      <p class="section-lead">{copy.lead}</p>
+    </div>
+
+    <div class="download__panel">
+      <div
+        class="platform-tabs"
+        role="tablist"
+        aria-label="Installation platform"
+      >
+        {copy.platforms.map((platform, index) => (
+          <button
+            class="platform-tab"
+            type="button"
+            role="tab"
+            id={`platform-tab-${platform.id}`}
+            aria-controls={`platform-panel-${platform.id}`}
+            aria-selected={index === 0 ? 'true' : 'false'}
+            tabindex={index === 0 ? 0 : -1}
+            data-platform-tab={platform.id}
+          >
+            {platform.label}
+          </button>
+        ))}
+      </div>
+
+      <div class="install-panel">
+        <div class="install-panel__body">
+          {copy.platforms.map((platform, index) => (
+            <div
+              class="platform-panel"
+              id={`platform-panel-${platform.id}`}
+              role="tabpanel"
+              aria-labelledby={`platform-tab-${platform.id}`}
+              data-platform-panel={platform.id}
+              hidden={index !== 0}
+            >
+              {platform.commands.map((command) => (
+                <div class="install-row">
+                  <code>{command}</code>
+                  <button
+                    class="copy-button"
+                    type="button"
+                    data-copy={command}
+                    data-copied-message={copy.copied}
+                  >
+                    {copy.copy}
+                  </button>
+                </div>
+              ))}
+            </div>
+          ))}
+
+          <p class="install-panel__then">{copy.then}</p>
+
+          <div class="install-row">
+            <code>{copy.verifyCommand}</code>
+            <button
+              class="copy-button"
+              type="button"
+              data-copy={copy.verifyCommand}
+              data-copied-message={copy.copied}
+            >
+              {copy.copy}
+            </button>
+          </div>
+
+          <p class="install-panel__note">{copy.note}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <span class="sr-only" role="status" aria-live="polite" data-copy-status></span>
+</section>
+
+<script>
+  const tabs = Array.from(
+    document.querySelectorAll<HTMLButtonElement>('[data-platform-tab]'),
+  );
+  const panels = Array.from(
+    document.querySelectorAll<HTMLElement>('[data-platform-panel]'),
+  );
+
+  const activate = (id: string, moveFocus = false): void => {
+    tabs.forEach((tab) => {
+      const active = tab.dataset.platformTab === id;
+      tab.setAttribute('aria-selected', String(active));
+      tab.tabIndex = active ? 0 : -1;
+      if (active && moveFocus) tab.focus();
+    });
+
+    panels.forEach((panel) => {
+      panel.hidden = panel.dataset.platformPanel !== id;
+    });
+  };
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => {
+      activate(tab.dataset.platformTab ?? '');
+    });
+
+    tab.addEventListener('keydown', (event) => {
+      let nextIndex: number | null = null;
+
+      if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+      if (event.key === 'ArrowLeft') {
+        nextIndex = (index - 1 + tabs.length) % tabs.length;
+      }
+      if (event.key === 'Home') nextIndex = 0;
+      if (event.key === 'End') nextIndex = tabs.length - 1;
+
+      if (nextIndex !== null) {
+        event.preventDefault();
+        const next = tabs[nextIndex];
+        activate(next.dataset.platformTab ?? '', true);
+      }
+    });
+  });
+
+  const status = document.querySelector<HTMLElement>('[data-copy-status]');
+
+  const announce = (message: string): void => {
+    if (!status) return;
+    status.textContent = message;
+    window.setTimeout(() => {
+      if (status.textContent === message) status.textContent = '';
+    }, 2000);
+  };
+
+  const copyText = async (text: string): Promise<boolean> => {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      const copied = document.execCommand('copy');
+      area.remove();
+      return copied;
+    }
+  };
+
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const text = button.getAttribute('data-copy') ?? '';
+      if (!text) return;
+
+      const copied = await copyText(text);
+      if (copied) {
+        announce(button.getAttribute('data-copied-message') ?? 'Copied');
+      }
+    });
+  });
+</script>

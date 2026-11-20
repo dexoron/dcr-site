@@ -1,0 +1,35 @@
+---
+import type { CodeLine } from '../i18n/en';
+
+interface Props {
+  title: string;
+  lines: readonly CodeLine[];
+  class?: string;
+  animated?: boolean;
+}
+
+const { title, lines, class: className, animated = false } = Astro.props;
+
+const toneClass = (tone?: string): string | undefined =>
+  tone && tone !== 'default' ? `tone-${tone}` : undefined;
+---
+
+<div
+  class:list={['terminal', className, animated && 'terminal--animated']}
+  data-animated-terminal={animated ? 'true' : undefined}
+>
+  <div class="terminal__bar">
+    <div class="terminal__dots" aria-hidden="true">
+      <span class="terminal__dot terminal__dot--red"></span>
+      <span class="terminal__dot terminal__dot--yellow"></span>
+      <span class="terminal__dot terminal__dot--green"></span>
+    </div>
+    <span class="terminal__title">{title}</span>
+  </div>
+  <div class="terminal__divider" aria-hidden="true"></div>
+  <div class="terminal__body">
+    {lines.map((line) => (
+      <p class="terminal__line">{line.segments.map((segment) => <span class={toneClass(segment.tone)}>{segment.text}</span>)}</p>
+    ))}
+  </div>
+</div>

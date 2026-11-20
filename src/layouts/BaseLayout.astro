@@ -1,0 +1,55 @@
+---
+import '../styles/global.css';
+import en from '../i18n/en';
+import { defaultLang } from '../i18n';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = en.meta.title,
+  description = en.meta.description,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={defaultLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1a1a1f" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href="/fonts/unbounded.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/onest.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/jetbrains-mono.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <title>{title}</title>
+  </head>
+  <body id="top">
+    <div class="page-bg" aria-hidden="true"></div>
+    <slot />
+  </body>
+</html>

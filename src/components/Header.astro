@@ -1,0 +1,128 @@
+---
+import data from '../data/dcr.json';
+import { useTranslations } from '../i18n';
+import { DOCS_URL, DONATE_URL, GITHUB_URL, ISSUES_URL } from '../config';
+import Icon from './Icon.astro';
+
+const t = useTranslations();
+const version = data.version;
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <div class="site-header__start">
+      <a class="brand" href="#top" aria-label="DCR — home">
+        <img
+          class="brand__icon"
+          src="/assets/brand/dcr-icon.svg"
+          alt=""
+          width="26"
+          height="26"
+        />
+        <span class="brand__name">DCR</span>
+        <span class="brand__version">v{version}</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <a href="#top">{t.nav.home}</a>
+        <a href={DOCS_URL} target="_blank" rel="noopener noreferrer">
+          {t.nav.documentation}
+        </a>
+        <a href="#download">{t.nav.download}</a>
+        <a href={ISSUES_URL} target="_blank" rel="noopener noreferrer">
+          {t.nav.support}
+        </a>
+      </nav>
+    </div>
+
+    <div class="site-header__actions">
+      <details class="lang">
+        <summary aria-label="Language: English">
+          <span>{t.nav.language}</span>
+          <Icon name="chevronDown" />
+        </summary>
+        <div class="lang__menu">
+          <span aria-current="true">{t.nav.language}</span>
+        </div>
+      </details>
+
+      <a
+        class="header-link"
+        href={GITHUB_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icon name="github" />
+        <span>{t.nav.github}</span>
+      </a>
+
+      <a
+        class="header-link"
+        href={DONATE_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icon name="coffee" />
+        <span>{t.nav.donate}</span>
+      </a>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        data-menu-toggle
+      >
+        <span class="sr-only">{t.nav.menu}</span>
+        <span class="menu-toggle__bars" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav" data-mobile-nav hidden>
+    <a href="#top">{t.nav.home}</a>
+    <a href={DOCS_URL} target="_blank" rel="noopener noreferrer">
+      {t.nav.documentation}
+    </a>
+    <a href="#download">{t.nav.download}</a>
+    <a href={ISSUES_URL} target="_blank" rel="noopener noreferrer">
+      {t.nav.support}
+    </a>
+    <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+      {t.nav.github}
+    </a>
+    <a href={DONATE_URL} target="_blank" rel="noopener noreferrer">
+      {t.nav.donate}
+    </a>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const panel = document.querySelector<HTMLElement>('[data-mobile-nav]');
+
+  if (toggle && panel) {
+    const setOpen = (open: boolean): void => {
+      toggle.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    panel.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    });
+  }
+
+  document.querySelectorAll<HTMLDetailsElement>('details.lang').forEach((details) => {
+    document.addEventListener('click', (event) => {
+      if (!details.contains(event.target as Node)) details.open = false;
+    });
+  });
+</script>

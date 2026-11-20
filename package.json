@@ -1,0 +1,22 @@
+{
+  "name": "dcr-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "predev": "node scripts/fetch-dcr-version.ts",
+    "prebuild": "node scripts/fetch-dcr-version.ts",
+    "build": "astro build",
+    "preview": "astro preview",
+    "precheck": "node scripts/fetch-dcr-version.ts",
+    "check": "astro check",
+    "fetch:dcr": "node scripts/fetch-dcr-version.ts"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@types/node": "^26.6.6",
+    "astro": "^7.4.13",
+    "typescript": "^6.0.3"
+  }
+}

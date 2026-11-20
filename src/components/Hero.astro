@@ -1,0 +1,226 @@
+---
+import data from '../data/dcr.json';
+import { useTranslations } from '../i18n';
+import { GITHUB_URL } from '../config';
+import Icon from './Icon.astro';
+import Terminal from './Terminal.astro';
+
+const t = useTranslations();
+---
+
+<section class="hero" id="hero" aria-labelledby="hero-title">
+  <div class="hero__grid" aria-hidden="true"></div>
+
+  <div class="hero__badge">
+    <span class="hero__badge-group">
+      <Icon name="star" size={16} />
+      <span>{data.stars}</span>
+    </span>
+    <span class="hero__badge-group">
+      <Icon name="scale" size={16} />
+      <span>{t.hero.license}</span>
+    </span>
+  </div>
+
+  <div class="hero__inner">
+    <div class="hero__heading">
+      <h1 class="hero__title" id="hero-title">
+        {t.hero.titleLines.map((line, index) => (
+          <>
+            <span class="hero__line">{line}</span>
+            {index < t.hero.titleLines.length - 1 ? ' ' : null}
+          </>
+        ))}
+      </h1>
+      <p class="hero__description">{t.hero.description}</p>
+    </div>
+
+    <div class="hero__actions">
+      <a class="button button--primary" href="#quick-start">
+        <span>{t.hero.primaryAction}</span>
+        <span class="icon-frame" aria-hidden="true">
+          <Icon name="arrowRight" size={16} />
+        </span>
+      </a>
+      <a
+        class="button button--secondary"
+        href={GITHUB_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icon name="github" size={24} />
+        <span>{t.hero.secondaryAction}</span>
+      </a>
+    </div>
+
+    <Terminal
+      class="hero__terminal"
+      title={t.terminal.title}
+      lines={t.terminal.newProject}
+      animated
+    />
+
+    <script is:inline>
+      (() => {
+        const terminal = document.querySelector('[data-animated-terminal]');
+        if (!terminal) return;
+
+        const body = terminal.querySelector('.terminal__body');
+        if (!body) return;
+
+        const blocks = Array.from(
+          body.querySelectorAll(':scope > .terminal__line'),
+        );
+        if (!blocks.length) return;
+
+        const lastBlock = blocks[blocks.length - 1];
+
+        const addCursor = (line) => {
+          if (line.querySelector('.terminal__cursor')) return;
+          const cursor = document.createElement('span');
+          cursor.className = 'terminal__cursor';
+          cursor.setAttribute('aria-hidden', 'true');
+          line.appendChild(cursor);
+        };
+
+        const reduceMotion = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches;
+
+        if (reduceMotion) {
+          addCursor(lastBlock);
+          return;
+        }
+
+        const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+        // Turn one multi-line output block into visual lines so it can be
+        // revealed line by line without changing the terminal height.
+        const splitIntoLines = (block) => {
+          const lines = [];
+          let current = document.createElement('span');
+          current.className = 'terminal__visual-line';
+
+          const push = () => {
+            lines.push(current);
+            current = document.createElement('span');
+            current.className = 'terminal__visual-line';
+          };
+
+          const append = (text, className) => {
+            const parts = text.split('\n');
+            for (let index = 0; index < parts.length; index += 1) {
+              const part = parts[index];
+              if (part) {
+                if (className) {
+                  const span = document.createElement('span');
+                  span.className = className;
+                  span.textContent = part;
+                  current.appendChild(span);
+                } else {
+                  current.appendChild(document.createTextNode(part));
+                }
+              }
+              if (index < parts.length - 1) push();
+            }
+          };
+
+          for (const node of Array.from(block.childNodes)) {
+            if (node.nodeType === Node.TEXT_NODE) {
+              append(node.textContent || '', '');
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+              append(
+                node.textContent || '',
+                typeof node.className === 'string' ? node.className : '',
+              );
+            }
+          }
+
+          lines.push(current);
+          block.replaceChildren(...lines);
+          return lines;
+        };
+
+        const commands = [];
+        const outputs = [];
+
+        for (const block of blocks) {
+          const isCommand = (block.textContent || '')
+            .trimStart()
+            .startsWith('$');
+
+          if (isCommand) {
+            const spans = Array.from(block.querySelectorAll('span')).map(
+              (span) => {
+                const text = span.textContent || '';
+                span.dataset.fullText = text;
+                span.textContent = '';
+                return span;
+              },
+            );
+            block.style.visibility = 'hidden';
+            commands.push({ block, spans });
+          } else {
+            const lines = splitIntoLines(block);
+            for (const line of lines) {
+              line.style.opacity = '0';
+              line.style.visibility = 'hidden';
+            }
+            outputs.push({ block, lines });
+          }
+        }
+
+        const typeBlock = async ({ block, spans }, speed = 38) => {
+          block.style.visibility = 'visible';
+          for (const span of spans) {
+            const text = span.dataset.fullText || '';
+            for (const character of text) {
+              span.textContent += character;
+              await sleep(speed);
+            }
+          }
+        };
+
+        const reveal = async (lines, options = {}) => {
+          const delay = options.delay ?? 110;
+          const pauseAfter = options.pauseAfter ?? {};
+
+          for (let index = 0; index < lines.length; index += 1) {
+            const line = lines[index];
+            line.style.visibility = 'visible';
+            line.style.opacity = '1';
+            await sleep(delay);
+            if (pauseAfter[index]) await sleep(pauseAfter[index]);
+          }
+        };
+
+        const run = async () => {
+          await document.fonts.ready;
+          await sleep(350);
+
+          await typeBlock(commands[0]);
+          await sleep(250);
+          await reveal(outputs[0].lines, { delay: 110 });
+
+          await sleep(220);
+          await typeBlock(commands[1]);
+
+          await sleep(220);
+          await typeBlock(commands[2]);
+
+          await sleep(160);
+          await reveal(outputs[1].lines, {
+            delay: 110,
+            pauseAfter: { 1: 240 },
+          });
+
+          await typeBlock(commands[3], 44);
+          addCursor(commands[3].block);
+          terminal.classList.add('is-complete');
+        };
+
+        run();
+      })();
+    </script>
+  </div>
+</section>

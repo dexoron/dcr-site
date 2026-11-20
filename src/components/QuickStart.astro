@@ -1,0 +1,56 @@
+---
+import { useTranslations } from '../i18n';
+import { DOCS_URL } from '../config';
+import Icon from './Icon.astro';
+import Terminal from './Terminal.astro';
+
+const t = useTranslations();
+const copy = t.quickStart;
+---
+
+<section
+  class="quickstart"
+  id="quick-start"
+  aria-labelledby="quick-start-title"
+>
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title" id="quick-start-title">{copy.title}</h2>
+      <p class="section-lead">{copy.lead}</p>
+    </div>
+
+    <div class="quickstart__steps">
+      {copy.steps.map((step) => (
+        <div class="step">
+          <div class="step__info">
+            <div class="step__title-row">
+              <span class="step__number" aria-hidden="true">{step.number}</span>
+              <h3 class="step__title">{step.title}</h3>
+            </div>
+            <p class="step__text">{step.description}</p>
+          </div>
+          <div class="step__code">
+            <Terminal title={step.terminal.title} lines={step.terminal.lines} />
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="quickstart__cta">
+      <p class="quickstart__question">{copy.cta.question}</p>
+      <a
+        class="button button--primary"
+        href={DOCS_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span>{copy.cta.action}</span>
+        <span class="icon-frame" aria-hidden="true">
+          <Icon name="arrowRight" size={16} />
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <div class="section-rule" aria-hidden="true"></div>
+</section>

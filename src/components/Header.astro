@@ -66,6 +66,7 @@ const languageEntries = (Object.keys(languages) as Lang[]).map((code) => ({
                 href={entry.href}
                 hreflang={entry.lang}
                 lang={entry.lang}
+                data-lang-code={entry.code}
                 aria-current={entry.code === lang ? 'true' : undefined}
               >
                 {entry.label}
@@ -130,6 +131,7 @@ const languageEntries = (Object.keys(languages) as Lang[]).map((code) => ({
           href={entry.href}
           hreflang={entry.lang}
           lang={entry.lang}
+          data-lang-code={entry.code}
           aria-current={entry.code === lang ? 'true' : undefined}
         >
           {entry.label}

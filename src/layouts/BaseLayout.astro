@@ -26,10 +26,104 @@ const alternates = (Object.keys(languages) as Lang[]).map((code) => ({
 ---
 
 <!doctype html>
-<html lang={t.meta.lang}>
+<html
+  lang={t.meta.lang}
+  data-lang={lang}
+  data-default-lang={defaultLang}
+  data-locales={Object.keys(languages).join(',')}
+  data-base={import.meta.env.BASE_URL}
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const storageKey = 'dcr-lang';
+
+        // Remember an explicit choice so auto-detection never overrides it.
+        document.addEventListener('click', (event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+
+          const link = target.closest('a[data-lang-code]');
+          if (!link) return;
+
+          const code = link.getAttribute('data-lang-code');
+          if (!code) return;
+
+          try {
+            localStorage.setItem(storageKey, code);
+          } catch {
+            // Storage can be unavailable in private mode.
+          }
+        });
+
+        const current = root.dataset.lang;
+        const defaultLang = root.dataset.defaultLang;
+
+        // Only the default-language landing page redirects. Deep links to a
+        // localized page are always left alone.
+        if (!current || current !== defaultLang) return;
+
+        let base = root.dataset.base || '/';
+        if (!base.endsWith('/')) base += '/';
+
+        const path = window.location.pathname;
+        const isRoot =
+          path === base ||
+          path === `${base}index.html` ||
+          (base !== '/' && path === base.slice(0, -1));
+
+        if (!isRoot) return;
+
+        const supported = (root.dataset.locales || '')
+          .split(',')
+          .filter(Boolean);
+
+        const resolve = (tag) => {
+          if (!tag) return null;
+
+          const value = String(tag).toLowerCase();
+          if (supported.includes(value)) return value;
+
+          const baseTag = value.split('-')[0];
+          if (supported.includes(baseTag)) return baseTag;
+
+          return (
+            supported.find((code) => code.split('-')[0] === baseTag) || null
+          );
+        };
+
+        let target = null;
+
+        try {
+          target = resolve(localStorage.getItem(storageKey));
+        } catch {
+          target = null;
+        }
+
+        if (!target) {
+          const languages =
+            navigator.languages && navigator.languages.length
+              ? navigator.languages
+              : [navigator.language];
+
+          for (const language of languages) {
+            target = resolve(language);
+            if (target) break;
+          }
+        }
+
+        if (!target || target === current) return;
+
+        const prefix = target === defaultLang ? '' : `${target}/`;
+
+        window.location.replace(
+          `${base}${prefix}${window.location.search}${window.location.hash}`,
+        );
+      })();
+    </script>
     <meta name="description" content={pageDescription} />
     <meta name="theme-color" content="#1a1a1f" />
     <meta property="og:type" content="website" />

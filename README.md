@@ -47,7 +47,7 @@ The development server runs at <http://localhost:4321>.
 │   ├── data/
 │   │   ├── fallback-dcr.json       # Committed placeholder data
 │   │   └── dcr.json                # Generated, gitignored
-│   ├── i18n/                       # Dictionaries: en, ru, de, pl, pt, uk, zh
+│   ├── i18n/                       # Dictionaries for every locale
 │   ├── layouts/                    # BaseLayout and LandingPage
 │   ├── pages/
 │   │   ├── index.astro             # English at /
@@ -95,7 +95,17 @@ The `pt` and `zh` dictionaries declare `pt-BR` and `zh-CN` in `meta.lang`; those
 - `src/pages/[lang]/index.astro` generates every non-default locale automatically from that map.
 - The header language menu links between locales and the document head emits `hreflang` alternates.
 
-To add a locale, create `src/i18n/<code>.ts`, import it in `src/i18n/index.ts`, and add its native name to `languages`. The route is generated on the next build without further changes.
+### Automatic language detection
+
+On the English root (`/`), a small inline script reads `navigator.languages` and redirects visitors to the best matching locale unless they have already made an explicit choice. It runs in `<head>` before the page is painted, and only on the default-language root; direct links to `/<code>/` are never redirected.
+
+- Matching uses the primary subtag: `ru-RU` → `ru`, `pt-BR` → `pt`, `zh-TW` → `zh`, `de-AT` → `de`, and so on.
+- Unsupported browser languages leave the visitor on English.
+- An explicit choice in the language switcher is stored in `localStorage` under `dcr-lang` and always wins over detection. Choosing English opts out of detection.
+- Query strings and hashes are preserved: `/?utm=…#download` becomes `/ru/?utm=…#download`.
+- Detection is client-side because the site is static; there is no `Accept-Language` server hook.
+
+To add a locale, create `src/i18n/<code>.ts`, import it in `src/i18n/index.ts`, and add its native name to `languages`. The route and browser-language matching update on the next build without further changes.
 
 ## Assets and fonts
 

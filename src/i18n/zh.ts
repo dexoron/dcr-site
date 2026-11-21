@@ -1,0 +1,235 @@
+import type { CodeLine, Dictionary } from './en';
+
+// Translated with the help of Claude Sonnet 5.5. Native-speaker review welcome.
+const zh: Dictionary = {
+  meta: {
+    lang: 'zh-CN',
+    title: 'DCR — 类 Cargo 风格的 C/C++ 构建工具',
+    description:
+      'DCR 为 C 和 C++ 带来现代、可预测的工作流。只需定义一次项目,即可管理依赖,并在任何环境下使用同样简单的命令进行构建。',
+  },
+  nav: {
+    home: '首页',
+    documentation: '文档',
+    download: '下载',
+    support: '支持',
+    github: 'GitHub',
+    donate: '捐赠',
+    language: '中文',
+    menu: '菜单',
+  },
+  hero: {
+    titleLines: ['告别构建系统的烦恼,', '轻松构建 C/C++。'],
+    description:
+      'DCR 为 C 和 C++ 带来现代、可预测的工作流。只需定义一次项目,即可管理依赖,并在任何环境下使用同样简单的命令进行构建。',
+    primaryAction: '开始使用',
+    secondaryAction: 'GitHub',
+    license: 'GPLv3',
+  },
+  terminal: {
+    title: '终端',
+    newProject: [
+      { segments: [{ text: '$', tone: 'prompt' }, { text: ' dcr new myapp' }] },
+      {
+        segments: [
+          { text: 'Creating a Project `' },
+          { text: 'myapp', tone: 'cyan' },
+          { text: '`...\nProject `' },
+          { text: 'myapp', tone: 'green' },
+          { text: '` successfully created\n\n' },
+          { text: 'Next step:\n', tone: 'green' },
+          { text: '    cd myapp\n    dcr run', tone: 'cyan' },
+        ],
+      },
+      { segments: [{ text: '$', tone: 'prompt' }, { text: ' cd myapp' }] },
+      { segments: [{ text: '$', tone: 'prompt' }, { text: ' dcr run' }] },
+      {
+        segments: [
+          { text: '  ' },
+          { text: 'project', tone: 'cyan' },
+          { text: '   myapp  (debug, x86_64-unknown-linux-gnu)\n  ' },
+          { text: 'compile', tone: 'green' },
+          { text: '   myapp v0.1.0  [1/1]\n  ' },
+          { text: 'done', tone: 'green' },
+          { text: '      in 0.24s\n  ' },
+          { text: 'run', tone: 'green' },
+          { text: '       /home/dexoron/tmp/myapp/target/debug/myapp\nHello World!' },
+        ],
+      },
+      { segments: [{ text: '$ ', tone: 'prompt' }] },
+    ] satisfies CodeLine[],
+  },
+  features: {
+    title: '特性',
+    lead: ['构建所需的一切。', '一个工具,一份配置,一套流程。'],
+    items: [
+      {
+        icon: 'terminal',
+        title: '熟悉的命令',
+        description:
+          'Build、run、test、clean、add、fmt 等等。没有神秘的命令链。',
+      },
+      {
+        icon: 'gitBranch',
+        title: '开箱即用的依赖',
+        description:
+          '支持本地路径、Git 仓库或注册表。DCR 通过锁文件确保依赖可复现。',
+      },
+      {
+        icon: 'globe',
+        title: '随处构建',
+        description:
+          '无需重写项目配置,即可面向 Linux、Windows、macOS、BSD 等平台构建。',
+      },
+      {
+        icon: 'codeXml',
+        title: '兼容你的 IDE',
+        description:
+          '生成 compile_commands.json,继续使用 VS Code、CLion 或任何你喜欢的编辑器。',
+      },
+      {
+        icon: 'fileCog',
+        title: '单一项目文件',
+        description:
+          '将构建配置集中在 dcr.toml 中。没有零散脚本,无需考古式排查配置。',
+      },
+      {
+        icon: 'bookOpen',
+        title: '自带文档',
+        description:
+          '需要离线帮助?man dcr 就能满足你。',
+      },
+    ],
+  },
+  quickStart: {
+    title: '快速开始',
+    lead: '不到一分钟,让你的 C/C++ 项目跑起来。',
+    steps: [
+      {
+        number: '1',
+        title: '初始化',
+        description: '创建一个具有标准目录结构的干净 C/C++ 工作区。',
+        terminal: {
+          title: '终端',
+          lines: [
+            { segments: [{ text: '$', tone: 'prompt' }, { text: ' dcr new myapp' }] },
+            {
+              segments: [
+                { text: 'Creating a Project `' },
+                { text: 'myapp', tone: 'cyan' },
+                { text: '`...\nProject `' },
+                { text: 'myapp', tone: 'green' },
+                { text: '` successfully created\n\n' },
+                { text: 'Next step:\n', tone: 'green' },
+                { text: '    cd myapp\n    dcr run', tone: 'cyan' },
+              ],
+            },
+            { segments: [{ text: '$', tone: 'prompt' }, { text: ' cd myapp' }] },
+          ],
+        },
+      },
+      {
+        number: '2',
+        title: '声明',
+        description: '简单易读的配置,无需 CMake 语法。',
+        terminal: {
+          title: 'nvim dcr.toml',
+          lines: [
+            {
+              segments: [
+                { text: '[package]\n', tone: 'amber' },
+                { text: 'name = ' },
+                { text: '"myapp"\n', tone: 'green' },
+                { text: 'version = ' },
+                { text: '"0.1.0"\n', tone: 'green' },
+                { text: 'dcr-version = ' },
+                { text: '"0.9.1"\n', tone: 'green' },
+                { text: '\n[build]\n', tone: 'amber' },
+                { text: 'language = ' },
+                { text: '"c"\n', tone: 'green' },
+                { text: 'standard = ' },
+                { text: '"c11"\n', tone: 'green' },
+                { text: 'compiler = ' },
+                { text: '"clang"\n', tone: 'green' },
+                { text: 'kind = ' },
+                { text: '"bin"\n', tone: 'green' },
+                { text: '\n[dependencies]', tone: 'amber' },
+              ],
+            },
+          ],
+        },
+      },
+      {
+        number: '3',
+        title: '执行',
+        description: '一条命令即可编译依赖并运行可执行文件。',
+        terminal: {
+          title: '终端',
+          lines: [
+            { segments: [{ text: '$', tone: 'prompt' }, { text: ' dcr run' }] },
+            {
+              segments: [
+                { text: '  ' },
+                { text: 'project', tone: 'cyan' },
+                { text: '   myapp  (debug)\n  ' },
+                { text: 'compile', tone: 'green' },
+                { text: '   myapp v0.1.0  [1/1]\n  ' },
+                { text: 'done', tone: 'green' },
+                { text: '      in 0.24s\n  ' },
+                { text: 'run', tone: 'green' },
+                { text: '       target/debug/myapp\nHello World!' },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+    cta: {
+      question: '需要自定义构建参数、Qt / MO 支持或裸机(bare-metal)环境?',
+      action: '查看文档',
+    },
+  },
+  download: {
+    title: '下载',
+    lead: '准备好开始构建了吗?',
+    platforms: [
+      {
+        id: 'linux',
+        label: 'Linux',
+        commands: ['curl -fsSL https://sh.dcr-tool.ru | sh'],
+      },
+      {
+        id: 'windows',
+        label: 'Windows',
+        commands: ['irm https://ps1.dcr-tool.ru | iex'],
+      },
+      {
+        id: 'macos',
+        label: 'macOS',
+        commands: ['curl -fsSL https://sh.dcr-tool.ru | sh'],
+      },
+      {
+        id: 'package-manager',
+        label: '包管理器',
+        commands: [
+          'yay -S dcr',
+          'brew tap dexoron/dexoron && brew install dcr',
+          'sudo snap install dcrup',
+          'nix profile install github:dexoron/dcr',
+          'cargo install dcr',
+        ],
+      },
+    ],
+    then: '然后:',
+    verifyCommand: 'dcr --version',
+    copy: '复制',
+    copied: '已复制到剪贴板',
+    note: 'DCR — C/C++ 与理智构建流程之间缺失的一环。',
+  },
+  footer: {
+    license: 'GPL-3.0 · 不适用于使用 DCR 构建的项目',
+    copyright: '(c) Dexoron.tech 2026',
+  },
+};
+
+export default zh;

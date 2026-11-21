@@ -312,24 +312,65 @@ button {
 
 .lang__menu {
   position: absolute;
-  top: calc(100% + 6px);
+  top: calc(100% + 10px);
   right: 0;
   min-width: 132px;
+  max-height: calc(100vh - 72px);
+  max-height: calc(100dvh - 72px);
+  overflow-y: auto;
+  margin: 0;
   padding: 6px;
+  list-style: none;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: rgba(33, 33, 38, 0.98);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
-.lang__menu span {
+.lang__menu a {
   display: block;
   padding: 6px 10px;
   border-radius: 4px;
+  color: var(--text);
   font-size: 15px;
   font-weight: 500;
-  color: var(--text);
+}
+
+.lang__menu a:hover {
   background: rgba(255, 255, 255, 0.06);
+}
+
+.lang__menu a[aria-current='true'] {
+  color: var(--amber);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mobile-nav__langs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 10px;
+  border-top: 1px solid var(--hairline);
+}
+
+.mobile-nav__langs a {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.mobile-nav__langs a:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.mobile-nav__langs a[aria-current='true'] {
+  color: var(--amber);
+  border-color: rgba(234, 179, 8, 0.45);
 }
 
 .menu-toggle {
@@ -395,6 +436,9 @@ button {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  max-height: calc(100vh - var(--header-height));
+  max-height: calc(100dvh - var(--header-height));
+  overflow-y: auto;
   padding: 12px;
   border-bottom: 1px solid var(--hairline);
   background: rgba(22, 22, 27, 0.98);

@@ -1,0 +1,235 @@
+import type { CodeLine, Dictionary } from './en';
+
+// Translated with the help of Claude Sonnet 5.5. Native-speaker review welcome.
+const tr: Dictionary = {
+  meta: {
+    lang: 'tr',
+    title: 'DCR — C/C++ için Cargo tarzı derleme aracı',
+    description:
+      'DCR, C ve C++ için modern ve öngörülebilir bir iş akışı sunar. Projenizi bir kez tanımlayın, bağımlılıkları yönetin ve nerede olursanız olun aynı basit komutlarla derleyin.',
+  },
+  nav: {
+    home: 'Ana Sayfa',
+    documentation: 'Dokümantasyon',
+    download: 'İndir',
+    support: 'Destek',
+    github: 'GitHub',
+    donate: 'Bağış Yap',
+    language: 'Türkçe',
+    menu: 'Menü',
+  },
+  hero: {
+    titleLines: ['Derleme sistemi derdi olmadan', 'C/C++ derleyin.'],
+    description:
+      'DCR, C ve C++ için modern ve öngörülebilir bir iş akışı sunar. Projenizi bir kez tanımlayın, bağımlılıkları yönetin ve nerede olursanız olun aynı basit komutlarla derleyin.',
+    primaryAction: 'Başla',
+    secondaryAction: 'GitHub',
+    license: 'GPLv3',
+  },
+  terminal: {
+    title: 'Terminal',
+    newProject: [
+      { segments: [{ text: '$', tone: 'prompt' }, { text: ' dcr new myapp' }] },
+      {
+        segments: [
+          { text: 'Creating a Project `' },
+          { text: 'myapp', tone: 'cyan' },
+          { text: '`...\nProject `' },
+          { text: 'myapp', tone: 'green' },
+          { text: '` successfully created\n\n' },
+          { text: 'Next step:\n', tone: 'green' },
+          { text: '    cd myapp\n    dcr run', tone: 'cyan' },
+        ],
+      },
+      { segments: [{ text: '$', tone: 'prompt' }, { text: ' cd myapp' }] },
+      { segments: [{ text: '$', tone: 'prompt' }, { text: ' dcr run' }] },
+      {
+        segments: [
+          { text: '  ' },
+          { text: 'project', tone: 'cyan' },
+          { text: '   myapp  (debug, x86_64-unknown-linux-gnu)\n  ' },
+          { text: 'compile', tone: 'green' },
+          { text: '   myapp v0.1.0  [1/1]\n  ' },
+          { text: 'done', tone: 'green' },
+          { text: '      in 0.24s\n  ' },
+          { text: 'run', tone: 'green' },
+          { text: '       /home/dexoron/tmp/myapp/target/debug/myapp\nHello World!' },
+        ],
+      },
+      { segments: [{ text: '$ ', tone: 'prompt' }] },
+    ] satisfies CodeLine[],
+  },
+  features: {
+    title: 'Özellikler',
+    lead: ['Derlemek için ihtiyacınız olan her şey.', 'Tek araç. Tek yapılandırma. Tek iş akışı.'],
+    items: [
+      {
+        icon: 'terminal',
+        title: 'Tanıdık komutlar',
+        description:
+          'Build, run, test, clean, add, fmt ve daha fazlası. Gizemli komut zincirleri yok.',
+      },
+      {
+        icon: 'gitBranch',
+        title: 'Sorunsuz çalışan bağımlılıklar',
+        description:
+          'Yerel yolları, Git depolarını veya kayıt defterlerini kullanın. DCR, kilit (lock) dosyasıyla bağımlılıklarınızı tekrarlanabilir tutar.',
+      },
+      {
+        icon: 'globe',
+        title: 'Her yere derleyin',
+        description:
+          'Proje yapılandırmanızı yeniden yazmadan Linux, Windows, macOS, BSD ve diğer platformları hedefleyin.',
+      },
+      {
+        icon: 'codeXml',
+        title: 'IDE\'nizle uyumlu',
+        description:
+          'compile_commands.json üretin ve VS Code, CLion veya tercih ettiğiniz editörü kullanmaya devam edin.',
+      },
+      {
+        icon: 'fileCog',
+        title: 'Tek proje dosyası',
+        description:
+          'Derleme yapılandırmanızı dcr.toml içinde tutun. Dağınık betikler yok. Yapılandırma arkeolojisi yok.',
+      },
+      {
+        icon: 'bookOpen',
+        title: 'Dokümantasyon dahil',
+        description:
+          'Çevrimdışıyken yardıma mı ihtiyacınız var? man dcr yanınızda.',
+      },
+    ],
+  },
+  quickStart: {
+    title: 'Hızlı Başlangıç',
+    lead: 'C/C++ projenizi bir dakikadan kısa sürede çalıştırın.',
+    steps: [
+      {
+        number: '1',
+        title: 'Başlat',
+        description: 'Standart dizin yapısına sahip temiz bir C/C++ çalışma alanı oluşturun.',
+        terminal: {
+          title: 'Terminal',
+          lines: [
+            { segments: [{ text: '$', tone: 'prompt' }, { text: ' dcr new myapp' }] },
+            {
+              segments: [
+                { text: 'Creating a Project `' },
+                { text: 'myapp', tone: 'cyan' },
+                { text: '`...\nProject `' },
+                { text: 'myapp', tone: 'green' },
+                { text: '` successfully created\n\n' },
+                { text: 'Next step:\n', tone: 'green' },
+                { text: '    cd myapp\n    dcr run', tone: 'cyan' },
+              ],
+            },
+            { segments: [{ text: '$', tone: 'prompt' }, { text: ' cd myapp' }] },
+          ],
+        },
+      },
+      {
+        number: '2',
+        title: 'Tanımla',
+        description: 'Basit, okunabilir yapılandırma. CMake sözdizimine gerek yok.',
+        terminal: {
+          title: 'nvim dcr.toml',
+          lines: [
+            {
+              segments: [
+                { text: '[package]\n', tone: 'amber' },
+                { text: 'name = ' },
+                { text: '"myapp"\n', tone: 'green' },
+                { text: 'version = ' },
+                { text: '"0.1.0"\n', tone: 'green' },
+                { text: 'dcr-version = ' },
+                { text: '"0.9.1"\n', tone: 'green' },
+                { text: '\n[build]\n', tone: 'amber' },
+                { text: 'language = ' },
+                { text: '"c"\n', tone: 'green' },
+                { text: 'standard = ' },
+                { text: '"c11"\n', tone: 'green' },
+                { text: 'compiler = ' },
+                { text: '"clang"\n', tone: 'green' },
+                { text: 'kind = ' },
+                { text: '"bin"\n', tone: 'green' },
+                { text: '\n[dependencies]', tone: 'amber' },
+              ],
+            },
+          ],
+        },
+      },
+      {
+        number: '3',
+        title: 'Çalıştır',
+        description: 'Bağımlılıkları derlemek ve çalıştırılabilir dosyanızı başlatmak için tek komut.',
+        terminal: {
+          title: 'Terminal',
+          lines: [
+            { segments: [{ text: '$', tone: 'prompt' }, { text: ' dcr run' }] },
+            {
+              segments: [
+                { text: '  ' },
+                { text: 'project', tone: 'cyan' },
+                { text: '   myapp  (debug)\n  ' },
+                { text: 'compile', tone: 'green' },
+                { text: '   myapp v0.1.0  [1/1]\n  ' },
+                { text: 'done', tone: 'green' },
+                { text: '      in 0.24s\n  ' },
+                { text: 'run', tone: 'green' },
+                { text: '       target/debug/myapp\nHello World!' },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+    cta: {
+      question: 'Özel derleme bayrakları, Qt / MO desteği veya bare-metal kurulumlar mı gerekiyor?',
+      action: 'Dokümantasyonu Keşfedin',
+    },
+  },
+  download: {
+    title: 'İndir',
+    lead: 'Derlemeye hazır mısınız?',
+    platforms: [
+      {
+        id: 'linux',
+        label: 'Linux',
+        commands: ['curl -fsSL https://sh.dcr-tool.ru | sh'],
+      },
+      {
+        id: 'windows',
+        label: 'Windows',
+        commands: ['irm https://ps1.dcr-tool.ru | iex'],
+      },
+      {
+        id: 'macos',
+        label: 'macOS',
+        commands: ['curl -fsSL https://sh.dcr-tool.ru | sh'],
+      },
+      {
+        id: 'package-manager',
+        label: 'Paket Yöneticisi',
+        commands: [
+          'yay -S dcr',
+          'brew tap dexoron/dexoron && brew install dcr',
+          'sudo snap install dcrup',
+          'nix profile install github:dexoron/dcr',
+          'cargo install dcr',
+        ],
+      },
+    ],
+    then: 'Ardından:',
+    verifyCommand: 'dcr --version',
+    copy: 'Kopyala',
+    copied: 'Panoya kopyalandı',
+    note: 'DCR — C/C++ ile sağlıklı bir derleme iş akışı arasındaki eksik halka.',
+  },
+  footer: {
+    license: 'GPL-3.0 · DCR ile derlenen projeleri kapsamaz',
+    copyright: '(c) Dexoron.tech 2026',
+  },
+};
+
+export default tr;

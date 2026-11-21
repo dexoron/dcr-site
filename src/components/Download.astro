@@ -1,7 +1,12 @@
 ---
-import { useTranslations } from '../i18n';
+import { useTranslations, type Lang } from '../i18n';
 
-const t = useTranslations();
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 const copy = t.download;
 ---
 
@@ -16,7 +21,7 @@ const copy = t.download;
       <div
         class="platform-tabs"
         role="tablist"
-        aria-label="Installation platform"
+        aria-labelledby="download-title"
       >
         {copy.platforms.map((platform, index) => (
           <button

@@ -1,29 +1,48 @@
 ---
 import '../styles/global.css';
-import en from '../i18n/en';
-import { defaultLang } from '../i18n';
+import {
+  defaultLang,
+  languages,
+  localizedPath,
+  useTranslations,
+  type Lang,
+} from '../i18n';
 
 interface Props {
+  lang: Lang;
   title?: string;
   description?: string;
 }
 
-const {
-  title = en.meta.title,
-  description = en.meta.description,
-} = Astro.props;
+const { lang, title, description } = Astro.props;
+const t = useTranslations(lang);
+const pageTitle = title ?? t.meta.title;
+const pageDescription = description ?? t.meta.description;
+const alternates = (Object.keys(languages) as Lang[]).map((code) => ({
+  code,
+  lang: useTranslations(code).meta.lang,
+  href: localizedPath(code),
+}));
 ---
 
 <!doctype html>
-<html lang={defaultLang}>
+<html lang={t.meta.lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
+    <meta name="description" content={pageDescription} />
     <meta name="theme-color" content="#1a1a1f" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    {alternates.map((alternate) => (
+      <link
+        rel="alternate"
+        hreflang={alternate.lang}
+        href={alternate.href}
+      />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={localizedPath(defaultLang)} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link
       rel="preload"
@@ -46,7 +65,7 @@ const {
       type="font/woff2"
       crossorigin
     />
-    <title>{title}</title>
+    <title>{pageTitle}</title>
   </head>
   <body id="top">
     <div class="page-bg" aria-hidden="true"></div>

@@ -1,0 +1,30 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Features from '../components/Features.astro';
+import QuickStart from '../components/QuickStart.astro';
+import Download from '../components/Download.astro';
+import Footer from '../components/Footer.astro';
+import { useTranslations, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<BaseLayout lang={lang} title={t.meta.title} description={t.meta.description}>
+  <div class="page">
+    <Header lang={lang} />
+    <main>
+      <Hero lang={lang} />
+      <Features lang={lang} />
+      <QuickStart lang={lang} />
+      <Download lang={lang} />
+    </main>
+    <Footer lang={lang} />
+  </div>
+</BaseLayout>

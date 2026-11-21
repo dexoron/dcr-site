@@ -1,17 +1,35 @@
 ---
 import data from '../data/dcr.json';
-import { useTranslations } from '../i18n';
+import {
+  languages,
+  localizedPath,
+  useTranslations,
+  type Lang,
+} from '../i18n';
 import { DOCS_URL, DONATE_URL, GITHUB_URL, ISSUES_URL } from '../config';
 import Icon from './Icon.astro';
 
-const t = useTranslations();
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 const version = data.version;
+
+const homeHref = localizedPath(lang);
+const languageEntries = (Object.keys(languages) as Lang[]).map((code) => ({
+  code,
+  label: languages[code],
+  lang: useTranslations(code).meta.lang,
+  href: localizedPath(code),
+}));
 ---
 
 <header class="site-header">
   <div class="site-header__inner">
     <div class="site-header__start">
-      <a class="brand" href="#top" aria-label="DCR — home">
+      <a class="brand" href={homeHref} aria-label="DCR">
         <img
           class="brand__icon"
           src="/assets/brand/dcr-icon.svg"
@@ -23,8 +41,8 @@ const version = data.version;
         <span class="brand__version">v{version}</span>
       </a>
 
-      <nav class="nav" aria-label="Primary">
-        <a href="#top">{t.nav.home}</a>
+      <nav class="nav">
+        <a href={homeHref}>{t.nav.home}</a>
         <a href={DOCS_URL} target="_blank" rel="noopener noreferrer">
           {t.nav.documentation}
         </a>
@@ -37,13 +55,24 @@ const version = data.version;
 
     <div class="site-header__actions">
       <details class="lang">
-        <summary aria-label="Language: English">
-          <span>{t.nav.language}</span>
+        <summary>
+          <span>{languages[lang]}</span>
           <Icon name="chevronDown" />
         </summary>
-        <div class="lang__menu">
-          <span aria-current="true">{t.nav.language}</span>
-        </div>
+        <ul class="lang__menu">
+          {languageEntries.map((entry) => (
+            <li>
+              <a
+                href={entry.href}
+                hreflang={entry.lang}
+                lang={entry.lang}
+                aria-current={entry.code === lang ? 'true' : undefined}
+              >
+                {entry.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </details>
 
       <a
@@ -80,7 +109,7 @@ const version = data.version;
   </div>
 
   <div class="mobile-nav" id="mobile-nav" data-mobile-nav hidden>
-    <a href="#top">{t.nav.home}</a>
+    <a href={homeHref}>{t.nav.home}</a>
     <a href={DOCS_URL} target="_blank" rel="noopener noreferrer">
       {t.nav.documentation}
     </a>
@@ -94,6 +123,19 @@ const version = data.version;
     <a href={DONATE_URL} target="_blank" rel="noopener noreferrer">
       {t.nav.donate}
     </a>
+
+    <div class="mobile-nav__langs">
+      {languageEntries.map((entry) => (
+        <a
+          href={entry.href}
+          hreflang={entry.lang}
+          lang={entry.lang}
+          aria-current={entry.code === lang ? 'true' : undefined}
+        >
+          {entry.label}
+        </a>
+      ))}
+    </div>
   </div>
 </header>
 

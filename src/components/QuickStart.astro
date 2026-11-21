@@ -1,10 +1,15 @@
 ---
-import { useTranslations } from '../i18n';
+import { useTranslations, type Lang } from '../i18n';
 import { DOCS_URL } from '../config';
 import Icon from './Icon.astro';
 import Terminal from './Terminal.astro';
 
-const t = useTranslations();
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 const copy = t.quickStart;
 ---
 

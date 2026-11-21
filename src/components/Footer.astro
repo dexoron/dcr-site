@@ -1,7 +1,12 @@
 ---
-import { useTranslations } from '../i18n';
+import { useTranslations, type Lang } from '../i18n';
 
-const t = useTranslations();
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <footer class="site-footer">

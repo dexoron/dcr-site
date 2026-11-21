@@ -47,9 +47,11 @@ The development server runs at <http://localhost:4321>.
 │   ├── data/
 │   │   ├── fallback-dcr.json       # Committed placeholder data
 │   │   └── dcr.json                # Generated, gitignored
-│   ├── i18n/                       # English dictionary and helpers
-│   ├── layouts/                    # Base document layout
-│   ├── pages/                      # index.astro
+│   ├── i18n/                       # Dictionaries: en, ru, de, pl, pt, uk, zh
+│   ├── layouts/                    # BaseLayout and LandingPage
+│   ├── pages/
+│   │   ├── index.astro             # English at /
+│   │   └── [lang]/index.astro      # Other locales at /<code>/
 │   └── styles/                     # Global CSS and design tokens
 ├── astro.config.mjs
 ├── package.json
@@ -67,11 +69,33 @@ The header version and the hero star count are not hardcoded. Before `dev`, `bui
 
 The resolved values are written to `src/data/dcr.json`, which is generated and gitignored. GitHub is never called from the browser.
 
-## Content and i18n
+## Languages
 
-- The site ships with English only.
-- All copy lives in `src/i18n/en.ts`; components read it through `useTranslations()`.
-- Additional locales can be added to `languages` in `src/i18n/index.ts` without changing components.
+The site is multilingual. English is the default locale and is served at `/`; every other locale lives at `/<code>/`:
+
+| Code | Language | URL |
+| --- | --- | --- |
+| `en` | English | `/` |
+| `ru` | Русский | `/ru/` |
+| `de` | Deutsch | `/de/` |
+| `pl` | Polski | `/pl/` |
+| `pt` | Português | `/pt/` |
+| `uk` | Українська | `/uk/` |
+| `zh` | 中文 | `/zh/` |
+| `es` | Español | `/es/` |
+| `fr` | Français | `/fr/` |
+| `ja` | 日本語 | `/ja/` |
+| `ko` | 한국어 | `/ko/` |
+| `tr` | Türkçe | `/tr/` |
+
+The `pt` and `zh` dictionaries declare `pt-BR` and `zh-CN` in `meta.lang`; those tags are used for `<html lang>` and the `hreflang` alternates.
+
+- All copy lives in `src/i18n/<code>.ts` and implements the `Dictionary` type exported by `src/i18n/en.ts`.
+- `src/i18n/index.ts` registers the dictionaries in the `languages` map and exposes `useTranslations()` and `localizedPath()`.
+- `src/pages/[lang]/index.astro` generates every non-default locale automatically from that map.
+- The header language menu links between locales and the document head emits `hreflang` alternates.
+
+To add a locale, create `src/i18n/<code>.ts`, import it in `src/i18n/index.ts`, and add its native name to `languages`. The route is generated on the next build without further changes.
 
 ## Assets and fonts
 

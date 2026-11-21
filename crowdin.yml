@@ -1,0 +1,5 @@
+"files":
+  - source: /src/i18n/en.json
+    translation: /src/i18n/%locale%.json
+    type: json
+    update_option: update_as_unapproved

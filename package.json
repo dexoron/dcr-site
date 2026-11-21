@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "precheck": "node scripts/fetch-dcr-version.ts",
-    "check": "astro check",
+    "check": "npm run check:i18n && astro check",
+    "check:i18n": "node --experimental-strip-types scripts/check-i18n.ts",
     "fetch:dcr": "node scripts/fetch-dcr-version.ts"
   },
   "devDependencies": {

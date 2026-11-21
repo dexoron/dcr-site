@@ -1,78 +1,88 @@
-import en from "./en";
+import enData from './en.json';
 
 // Europe
-import de from "./de";
-import es from "./es";
-import fr from "./fr";
-import pl from "./pl";
-import pt from "./pt";
-import ru from "./ru";
-import tr from "./tr";
-import uk from "./uk";
+import deDEData from './de-DE.json';
+import esESData from './es-ES.json';
+import frFRData from './fr-FR.json';
+import plPLData from './pl-PL.json';
+import ptBRData from './pt-BR.json';
+import ruRUData from './ru-RU.json';
+import trTRData from './tr-TR.json';
+import ukUAData from './uk-UA.json';
 
 // Asia
-import ja from "./ja";
-import ko from "./ko";
-import zh from "./zh";
+import jaJPData from './ja-JP.json';
+import koKRData from './ko-KR.json';
+import zhCNData from './zh-CN.json';
+import { defaultLang, locales, type Lang } from './locales';
+import type { Dictionary } from './types';
 
-export const languages = {
-  en: "English",
+export { defaultLang, locales };
+export type { Lang };
+export type {
+  CodeLine,
+  CodeSegment,
+  Dictionary,
+  TerminalContent,
+  Tone,
+} from './types';
+
+// The JSON files are validated by `scripts/check-i18n.ts`, which runs as part of
+// `npm run check`, so these assertions only undo JSON's widened string types.
+const en = enData as Dictionary;
+const deDE = deDEData as Dictionary;
+const esES = esESData as Dictionary;
+const frFR = frFRData as Dictionary;
+const plPL = plPLData as Dictionary;
+const ptBR = ptBRData as Dictionary;
+const ruRU = ruRUData as Dictionary;
+const trTR = trTRData as Dictionary;
+const ukUA = ukUAData as Dictionary;
+const jaJP = jaJPData as Dictionary;
+const koKR = koKRData as Dictionary;
+const zhCN = zhCNData as Dictionary;
+
+const dictionaries: Record<Lang, Dictionary> = {
+  en,
 
   // Europe
-  de: "Deutsch",
-  es: "Español",
-  fr: "Français",
-  pl: "Polski",
-  pt: "Português",
-  ru: "Русский",
-  tr: "Türkçe",
-  uk: "Українська",
+  'de-DE': deDE,
+  'es-ES': esES,
+  'fr-FR': frFR,
+  'pl-PL': plPL,
+  'pt-BR': ptBR,
+  'ru-RU': ruRU,
+  'tr-TR': trTR,
+  'uk-UA': ukUA,
 
   // Asia
-  ja: "日本語",
-  ko: "한국어",
-  zh: "中文",
-} as const;
+  'ja-JP': jaJP,
+  'ko-KR': koKR,
+  'zh-CN': zhCN,
+};
 
-export type Lang = keyof typeof languages;
-
-export const defaultLang: Lang = "en";
-
-const dictionaries = {
-  en,
-  de,
-  es,
-  fr,
-  pl,
-  pt,
-  ru,
-  tr,
-  uk,
-  ja,
-  ko,
-  zh,
-} satisfies Record<Lang, typeof en>;
-
-export type Dictionary = typeof en;
+export const languages = Object.fromEntries(
+  Object.entries(locales).map(([code, meta]) => [code, meta.label]),
+) as Record<Lang, string>;
 
 export function useTranslations(lang: Lang = defaultLang): Dictionary {
   return dictionaries[lang];
 }
 
 export function isLang(value: string): value is Lang {
-  return Object.prototype.hasOwnProperty.call(dictionaries, value);
+  return Object.prototype.hasOwnProperty.call(locales, value);
 }
 
 /**
  * Build a URL for a localized page.
  * English lives at the site root, every other locale at /<code>/.
  */
-export function localizedPath(lang: Lang, path = ""): string {
-  const base = import.meta.env.BASE_URL.endsWith("/")
+export function localizedPath(lang: Lang, path = ''): string {
+  const base = import.meta.env.BASE_URL.endsWith('/')
     ? import.meta.env.BASE_URL
     : `${import.meta.env.BASE_URL}/`;
-  const clean = path.replace(/^\/+/, "");
-  const prefix = lang === defaultLang ? "" : `${lang}/`;
+  const clean = path.replace(/^\/+/, '');
+  const prefix = lang === defaultLang ? '' : `${lang}/`;
 
   return `${base}${prefix}${clean}`;
 }

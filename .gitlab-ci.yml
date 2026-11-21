@@ -8,6 +8,9 @@ build:
   stage: build
   script:
     - npm ci
+    - chmod +x scripts/crowdin-pull.sh
+    - ./scripts/crowdin-pull.sh || echo "Crowdin pull skipped or failed, using committed translations"
+    - npm run check
     - npm run build
   artifacts:
     paths:

@@ -27,7 +27,8 @@ The development server runs at <http://localhost:4321>.
 | `npm run dev` | Start the Astro development server |
 | `npm run build` | Build the static site into `dist/` |
 | `npm run preview` | Preview the production build locally |
-| `npm run check` | Run Astro and TypeScript diagnostics |
+| `npm run check` | Run Astro diagnostics and the i18n consistency check |
+| `npm run check:i18n` | Validate the locale dictionaries only |
 | `npm run fetch:dcr` | Refresh `src/data/dcr.json` manually |
 
 `predev`, `prebuild` and `precheck` run the version fetch automatically.
@@ -41,19 +42,27 @@ The development server runs at <http://localhost:4321>.
 │   ├── favicon.svg                 # Same icon used as favicon
 │   └── fonts/                      # Self-hosted variable fonts
 ├── scripts/
-│   └── fetch-dcr-version.ts        # Build-time GitHub data
+│   ├── fetch-dcr-version.ts        # Build-time GitHub data
+│   ├── check-i18n.ts               # Locale consistency validation
+│   └── crowdin-pull.sh             # Optional Crowdin pull (token-gated)
 ├── src/
 │   ├── components/                 # Header, Hero, Features, Quick Start, Download, Footer
 │   ├── data/
 │   │   ├── fallback-dcr.json       # Committed placeholder data
 │   │   └── dcr.json                # Generated, gitignored
-│   ├── i18n/                       # Dictionaries for every locale
+│   ├── i18n/
+│   │   ├── en.json                 # Crowdin source dictionary
+│   │   ├── <locale>.json           # Translated dictionaries
+│   │   ├── locales.ts              # URL codes, native labels, html lang
+│   │   ├── types.ts                # Dictionary shape
+│   │   └── index.ts                # Dictionaries, useTranslations, localizedPath
 │   ├── layouts/                    # BaseLayout and LandingPage
 │   ├── pages/
 │   │   ├── index.astro             # English at /
 │   │   └── [lang]/index.astro      # Other locales at /<code>/
 │   └── styles/                     # Global CSS and design tokens
 ├── astro.config.mjs
+├── crowdin.yml
 ├── package.json
 └── tsconfig.json
 ```
@@ -71,41 +80,71 @@ The resolved values are written to `src/data/dcr.json`, which is generated and g
 
 ## Languages
 
-The site is multilingual. English is the default locale and is served at `/`; every other locale lives at `/<code>/`:
+The site is multilingual. English is the default locale and is served at `/`; every other locale lives at `/<code>/`, where `<code>` is the Crowdin locale code:
 
 | Code | Language | URL |
 | --- | --- | --- |
 | `en` | English | `/` |
-| `ru` | Русский | `/ru/` |
-| `de` | Deutsch | `/de/` |
-| `pl` | Polski | `/pl/` |
-| `pt` | Português | `/pt/` |
-| `uk` | Українська | `/uk/` |
-| `zh` | 中文 | `/zh/` |
-| `es` | Español | `/es/` |
-| `fr` | Français | `/fr/` |
-| `ja` | 日本語 | `/ja/` |
-| `ko` | 한국어 | `/ko/` |
-| `tr` | Türkçe | `/tr/` |
+| `de-DE` | Deutsch | `/de-DE/` |
+| `es-ES` | Español | `/es-ES/` |
+| `fr-FR` | Français | `/fr-FR/` |
+| `pl-PL` | Polski | `/pl-PL/` |
+| `pt-BR` | Português | `/pt-BR/` |
+| `ru-RU` | Русский | `/ru-RU/` |
+| `tr-TR` | Türkçe | `/tr-TR/` |
+| `uk-UA` | Українська | `/uk-UA/` |
+| `ja-JP` | 日本語 | `/ja-JP/` |
+| `ko-KR` | 한국어 | `/ko-KR/` |
+| `zh-CN` | 中文 | `/zh-CN/` |
 
-The `pt` and `zh` dictionaries declare `pt-BR` and `zh-CN` in `meta.lang`; those tags are used for `<html lang>` and the `hreflang` alternates.
+### Data and types
 
-- All copy lives in `src/i18n/<code>.ts` and implements the `Dictionary` type exported by `src/i18n/en.ts`.
-- `src/i18n/index.ts` registers the dictionaries in the `languages` map and exposes `useTranslations()` and `localizedPath()`.
-- `src/pages/[lang]/index.astro` generates every non-default locale automatically from that map.
-- The header language menu links between locales and the document head emits `hreflang` alternates.
+- Copy lives in `src/i18n/<code>.json` and matches the `Dictionary` type in `src/i18n/types.ts`.
+- Locale metadata lives in `src/i18n/locales.ts`: the URL code, the native label for the switcher, and the BCP 47 `htmlLang` used by `<html lang>` and `hreflang`. None of it is translatable, so none of it reaches Crowdin.
+- `src/i18n/index.ts` binds the JSON files to `locales.ts` and exposes `useTranslations()`, `languages`, `locales` and `localizedPath()`.
+- `src/pages/[lang]/index.astro` generates every non-default locale from `locales.ts`.
+- JSON imports are cast to `Dictionary` because JSON widens literal strings; `scripts/check-i18n.ts` is the real validator and runs inside `npm run check`.
+
+### Validating translations
+
+`npm run check:i18n` (also part of `npm run check`) verifies that every locale:
+
+- has the same key structure and value types as `en.json`, with no missing or unexpected keys;
+- uses only valid `tone` values;
+- keeps terminal code samples and install commands identical to English, so code never drifts between locales;
+- has no duplicate platform ids and a valid `htmlLang`.
+
+Any locale file that is not registered in `locales.ts`, or any registered locale without a JSON file, fails the check.
 
 ### Automatic language detection
 
 On the English root (`/`), a small inline script reads `navigator.languages` and redirects visitors to the best matching locale unless they have already made an explicit choice. It runs in `<head>` before the page is painted, and only on the default-language root; direct links to `/<code>/` are never redirected.
 
-- Matching uses the primary subtag: `ru-RU` → `ru`, `pt-BR` → `pt`, `zh-TW` → `zh`, `de-AT` → `de`, and so on.
+- Exact tags win, then the primary subtag, then the first locale with the same subtag: `ru-RU` → `/ru-RU/`, `ru` → `/ru-RU/`, `pt-BR` → `/pt-BR/`, `pt` → `/pt-BR/`, `zh-TW` → `/zh-CN/`, `de-AT` → `/de-DE/`.
 - Unsupported browser languages leave the visitor on English.
 - An explicit choice in the language switcher is stored in `localStorage` under `dcr-lang` and always wins over detection. Choosing English opts out of detection.
-- Query strings and hashes are preserved: `/?utm=…#download` becomes `/ru/?utm=…#download`.
+- Query strings and hashes are preserved: `/?utm=…#download` becomes `/ru-RU/?utm=…#download`.
 - Detection is client-side because the site is static; there is no `Accept-Language` server hook.
 
-To add a locale, create `src/i18n/<code>.ts`, import it in `src/i18n/index.ts`, and add its native name to `languages`. The route and browser-language matching update on the next build without further changes.
+To add a locale, create `src/i18n/<code>.json` and add the code, native label and `htmlLang` to `src/i18n/locales.ts`. The route, switcher and browser-language matching update on the next build without further changes.
+
+## Crowdin
+
+`crowdin.yml` maps the source dictionary to every locale file:
+
+```yaml
+files:
+  - source: /src/i18n/en.json
+    translation: /src/i18n/%locale%.json
+    type: json
+```
+
+Because the file names use Crowdin locale codes (`ru-RU`, `pt-BR`, `zh-CN`, …), no per-language configuration is needed. `%locale%` expands to the code that is also used in `locales.ts`.
+
+- English is the only source language. Edit `src/i18n/en.json`, push, and let Crowdin pick it up; do not translate `en.json` by hand.
+- `scripts/crowdin-pull.sh` downloads the latest translations before a build. It reads `CROWDIN_TOKEN` and `CROWDIN_PROJECT_ID` and exits quietly when they are not set, so local builds and forks keep working.
+- In GitLab, define `CROWDIN_TOKEN` (masked) and `CROWDIN_PROJECT_ID` as CI/CD variables. The build job pulls translations, runs `npm run check`, then builds.
+- The check in `npm run check:i18n` fails when a pulled locale is not registered in `locales.ts`, so a new Crowdin language is added consciously rather than silently ignored.
 
 ## Assets and fonts
 

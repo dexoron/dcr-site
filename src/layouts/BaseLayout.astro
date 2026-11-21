@@ -4,6 +4,7 @@ import {
   defaultLang,
   languages,
   localizedPath,
+  locales,
   useTranslations,
   type Lang,
 } from '../i18n';
@@ -16,18 +17,19 @@ interface Props {
 
 const { lang, title, description } = Astro.props;
 const t = useTranslations(lang);
+const htmlLang = locales[lang].htmlLang;
 const pageTitle = title ?? t.meta.title;
 const pageDescription = description ?? t.meta.description;
 const alternates = (Object.keys(languages) as Lang[]).map((code) => ({
   code,
-  lang: useTranslations(code).meta.lang,
+  lang: locales[code].htmlLang,
   href: localizedPath(code),
 }));
 ---
 
 <!doctype html>
 <html
-  lang={t.meta.lang}
+  lang={htmlLang}
   data-lang={lang}
   data-default-lang={defaultLang}
   data-locales={Object.keys(languages).join(',')}

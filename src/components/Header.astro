@@ -3,6 +3,7 @@ import data from '../data/dcr.json';
 import {
   languages,
   localizedPath,
+  locales,
   useTranslations,
   type Lang,
 } from '../i18n';
@@ -21,7 +22,7 @@ const homeHref = localizedPath(lang);
 const languageEntries = (Object.keys(languages) as Lang[]).map((code) => ({
   code,
   label: languages[code],
-  lang: useTranslations(code).meta.lang,
+  lang: locales[code].htmlLang,
   href: localizedPath(code),
 }));
 ---

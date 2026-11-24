@@ -1,6 +1,6 @@
 ---
 import { useTranslations, type Lang } from '../i18n';
-import { DOCS_URL } from '../config';
+import { docsHomePath } from '../docs/nav';
 import Icon from './Icon.astro';
 import Terminal from './Terminal.astro';
 
@@ -45,9 +45,7 @@ const copy = t.quickStart;
       <p class="quickstart__question">{copy.cta.question}</p>
       <a
         class="button button--primary"
-        href={DOCS_URL}
-        target="_blank"
-        rel="noopener noreferrer"
+        href={docsHomePath()}
       >
         <span>{copy.cta.action}</span>
         <span class="icon-frame" aria-hidden="true">

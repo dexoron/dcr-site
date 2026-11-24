@@ -13,9 +13,13 @@ interface Props {
   lang: Lang;
   title?: string;
   description?: string;
+  /** Render a plain page background (docs) instead of the landing gradient. */
+  plain?: boolean;
+  /** Do not emit landing-page hreflang alternates (docs). */
+  noAlternates?: boolean;
 }
 
-const { lang, title, description } = Astro.props;
+const { lang, title, description, plain = false, noAlternates = false } = Astro.props;
 const t = useTranslations(lang);
 const htmlLang = locales[lang].htmlLang;
 const pageTitle = title ?? t.meta.title;
@@ -131,14 +135,16 @@ const alternates = (Object.keys(languages) as Lang[]).map((code) => ({
     <meta property="og:type" content="website" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
-    {alternates.map((alternate) => (
+    {!noAlternates && alternates.map((alternate) => (
       <link
         rel="alternate"
         hreflang={alternate.lang}
         href={alternate.href}
       />
     ))}
-    <link rel="alternate" hreflang="x-default" href={localizedPath(defaultLang)} />
+    {!noAlternates && (
+      <link rel="alternate" hreflang="x-default" href={localizedPath(defaultLang)} />
+    )}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link
       rel="preload"
@@ -164,7 +170,7 @@ const alternates = (Object.keys(languages) as Lang[]).map((code) => ({
     <title>{pageTitle}</title>
   </head>
   <body id="top">
-    <div class="page-bg" aria-hidden="true"></div>
+    {!plain && <div class="page-bg" aria-hidden="true"></div>}
     <slot />
   </body>
 </html>

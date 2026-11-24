@@ -5,13 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "predev": "node scripts/fetch-dcr-version.ts",
+    "predev": "node scripts/fetch-dcr-version.ts && node scripts/sync-docs.ts",
     "prebuild": "node scripts/fetch-dcr-version.ts",
     "build": "astro build",
     "preview": "astro preview",
     "precheck": "node scripts/fetch-dcr-version.ts",
-    "check": "npm run check:i18n && astro check",
+    "check": "npm run check:i18n && npm run check:docs && astro check",
     "check:i18n": "node --experimental-strip-types scripts/check-i18n.ts",
+    "check:docs": "node --experimental-strip-types scripts/check-docs.ts",
+    "docs:sync": "node scripts/sync-docs.ts",
     "fetch:dcr": "node scripts/fetch-dcr-version.ts"
   },
   "devDependencies": {
@@ -19,5 +21,8 @@
     "@types/node": "^26.6.6",
     "astro": "^7.4.13",
     "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^8.1.6"
   }
 }

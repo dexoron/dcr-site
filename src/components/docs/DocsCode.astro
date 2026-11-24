@@ -1,0 +1,39 @@
+---
+/**
+ * Code block chrome for the documentation, reusing the landing terminal bar.
+ *
+ * Mapped onto MDX `pre`. Shell languages get the "Terminal" title, config and
+ * code languages get "Editor" — the two labels used in the Figma docs design.
+ */
+const language = (Astro.props['data-language'] as string | undefined) ?? '';
+
+const SHELL_LANGUAGES = new Set([
+  'sh',
+  'bash',
+  'shell',
+  'zsh',
+  'console',
+  'powershell',
+  'pwsh',
+  'ps1',
+  'cmd',
+  'bat',
+]);
+
+const title = language && !SHELL_LANGUAGES.has(language) ? 'Editor' : 'Terminal';
+---
+
+<div class="terminal docs-code">
+  <div class="terminal__bar">
+    <div class="terminal__dots" aria-hidden="true">
+      <span class="terminal__dot terminal__dot--red"></span>
+      <span class="terminal__dot terminal__dot--yellow"></span>
+      <span class="terminal__dot terminal__dot--green"></span>
+    </div>
+    <span class="terminal__title">{title}</span>
+  </div>
+  <div class="terminal__divider"></div>
+  <div class="docs-code__body">
+    <pre class="docs-code__pre"><slot /></pre>
+  </div>
+</div>

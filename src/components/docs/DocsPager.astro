@@ -1,0 +1,48 @@
+---
+import { docsHref, type DocsItem } from '../../docs/nav';
+import Icon from '../Icon.astro';
+
+interface Props {
+  prev?: DocsItem | null;
+  next?: DocsItem | null;
+}
+
+const { prev, next } = Astro.props;
+---
+
+{prev || next ? (
+  <nav class="docs-pager" aria-label="Documentation pages">
+    {prev ? (
+      <a
+        class="docs-pager__link docs-pager__link--prev"
+        href={docsHref(prev.slug)}
+        rel="prev"
+      >
+        <Icon
+          name="chevronDown"
+          size={16}
+          class="docs-pager__caret docs-pager__caret--prev"
+        />
+        <span>{prev.label}</span>
+      </a>
+    ) : (
+      <span aria-hidden="true"></span>
+    )}
+    {next ? (
+      <a
+        class="docs-pager__link docs-pager__link--next"
+        href={docsHref(next.slug)}
+        rel="next"
+      >
+        <span>{next.label}</span>
+        <Icon
+          name="chevronDown"
+          size={16}
+          class="docs-pager__caret docs-pager__caret--next"
+        />
+      </a>
+    ) : (
+      <span aria-hidden="true"></span>
+    )}
+  </nav>
+) : null}

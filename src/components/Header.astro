@@ -1,5 +1,6 @@
 ---
 import data from '../data/dcr.json';
+import { getCollection } from 'astro:content';
 import {
   languages,
   localizedPath,
@@ -8,28 +9,41 @@ import {
   type Lang,
 } from '../i18n';
 import { DONATE_URL, GITHUB_URL, ISSUES_URL } from '../config';
-import { docsHomePath } from '../docs/nav';
+import { docsHomePath, docsHref } from '../docs/nav';
+import { docsSlugFromId } from '../docs/page-data';
 import Icon from './Icon.astro';
 
 interface Props {
   lang: Lang;
   /** Docs pages use absolute anchors and an internal Documentation link. */
   docs?: boolean;
+  docsSlug?: string;
 }
 
-const { lang, docs = false } = Astro.props;
+const { lang, docs = false, docsSlug = '' } = Astro.props;
 const t = useTranslations(lang);
 const version = data.version;
 
 const homeHref = docs ? localizedPath(lang) : '#top';
-const docsHref = docsHomePath();
+const docsHomeHref = docsHomePath(docs ? lang : 'en');
 const downloadHref = docs ? `${localizedPath(lang)}#download` : '#download';
-const languageEntries = (Object.keys(languages) as Lang[]).map((code) => ({
-  code,
-  label: languages[code],
-  lang: locales[code].htmlLang,
-  href: localizedPath(code),
-}));
+const docsEntries = docs ? await getCollection('docs') : [];
+const availableDocsLanguages = new Set(
+  docsEntries
+    .filter((entry) => {
+      const locale = entry.id.split('/')[0];
+      return docsSlugFromId(entry.id, locale) === docsSlug;
+    })
+    .map((entry) => entry.id.split('/')[0]),
+);
+const languageEntries = (Object.keys(languages) as Lang[])
+  .filter((code) => !docs || availableDocsLanguages.has(code))
+  .map((code) => ({
+    code,
+    label: languages[code],
+    lang: locales[code].htmlLang,
+    href: docs ? docsHref(docsSlug, code) : localizedPath(code),
+  }));
 ---
 
 <header class="site-header" class:list={{ 'site-header--docs': docs }}>
@@ -50,7 +64,7 @@ const languageEntries = (Object.keys(languages) as Lang[]).map((code) => ({
       <nav class="nav">
         <a href={homeHref}>{t.nav.home}</a>
         <a
-          href={docsHref}
+          href={docsHomeHref}
           aria-current={docs ? 'page' : undefined}
         >
           {t.nav.documentation}
@@ -118,9 +132,11 @@ const languageEntries = (Object.keys(languages) as Lang[]).map((code) => ({
     </div>
   </div>
 
-  <div class="mobile-nav" id="mobile-nav" data-mobile-nav hidden>
+</header>
+
+<div class="mobile-nav" id="mobile-nav" data-mobile-nav hidden>
     <a href={homeHref}>{t.nav.home}</a>
-    <a href={docsHref} aria-current={docs ? 'page' : undefined}>
+    <a href={docsHomeHref} aria-current={docs ? 'page' : undefined}>
       {t.nav.documentation}
     </a>
     <a href={downloadHref}>{t.nav.download}</a>
@@ -147,8 +163,7 @@ const languageEntries = (Object.keys(languages) as Lang[]).map((code) => ({
         </a>
       ))}
     </div>
-  </div>
-</header>
+</div>
 
 <script>
   const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');

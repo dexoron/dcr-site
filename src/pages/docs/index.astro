@@ -22,6 +22,7 @@ const { Content } = await render(page.entry);
   current={page.slug}
   prev={page.prev}
   next={page.next}
+  locale="en"
 >
   <Content components={{ h1: Empty, pre: DocsCode, table: DocsTable }} />
 </DocsLayout>

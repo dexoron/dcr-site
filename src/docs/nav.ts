@@ -143,16 +143,16 @@ export function flattenDocsNav(groups: DocsGroup[]): DocsItem[] {
   return groups.flatMap((group) => group.items);
 }
 
-export function docsHomePath(): string {
+export function docsHomePath(locale = 'en'): string {
   const base =
     import.meta.env?.BASE_URL && import.meta.env.BASE_URL !== '/'
       ? import.meta.env.BASE_URL.replace(/\/$/, '')
       : '';
-  return `${base}/docs/`;
+  return locale === 'en' ? `${base}/docs/` : `${base}/docs/${locale}/`;
 }
 
-export function docsHref(slug: string): string {
-  if (!slug) return docsHomePath();
-  const home = docsHomePath();
+export function docsHref(slug: string, locale = 'en'): string {
+  const home = docsHomePath(locale);
+  if (!slug) return home;
   return `${home}${slug}/`;
 }

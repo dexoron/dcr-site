@@ -13,13 +13,11 @@ interface Props {
   lang: Lang;
   title?: string;
   description?: string;
-  /** Render a plain page background (docs) instead of the landing gradient. */
-  plain?: boolean;
   /** Do not emit landing-page hreflang alternates (docs). */
   noAlternates?: boolean;
 }
 
-const { lang, title, description, plain = false, noAlternates = false } = Astro.props;
+const { lang, title, description, noAlternates = false } = Astro.props;
 const t = useTranslations(lang);
 const htmlLang = locales[lang].htmlLang;
 const pageTitle = title ?? t.meta.title;
@@ -170,7 +168,7 @@ const alternates = (Object.keys(languages) as Lang[]).map((code) => ({
     <title>{pageTitle}</title>
   </head>
   <body id="top">
-    {!plain && <div class="page-bg" aria-hidden="true"></div>}
+    <div class="page-bg" aria-hidden="true"></div>
     <slot />
   </body>
 </html>

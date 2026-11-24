@@ -4,26 +4,36 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import DocsCode from '../../components/docs/DocsCode.astro';
 import DocsTable from '../../components/docs/DocsTable.astro';
 import Empty from '../../components/docs/Empty.astro';
-import { loadDocsPages } from '../../docs/page-data';
+import { loadAllDocsPages } from '../../docs/page-data';
 
 export async function getStaticPaths() {
-  const pages = await loadDocsPages();
+  const pages = await loadAllDocsPages();
   return pages
-    .filter((page) => page.slug !== '')
-    .map((page) => ({ params: { slug: page.slug }, props: { page } }));
+    .filter((page) => page.slug !== '' || page.entry.id.split('/')[0] !== 'en')
+    .map((page) => {
+      const locale = page.entry.id.split('/')[0];
+      const slug = locale === 'en'
+        ? page.slug
+        : [locale, page.slug].filter(Boolean).join('/');
+      return { params: { slug }, props: { page, locale } };
+    });
 }
 
-const { page } = Astro.props as { page: Awaited<ReturnType<typeof loadDocsPages>>[number] };
+const { page, locale } = Astro.props as {
+  page: Awaited<ReturnType<typeof loadAllDocsPages>>[number];
+  locale: string;
+};
 const { Content } = await render(page.entry);
 ---
 
 <DocsLayout
-  lang="en"
+  lang={locale as import('../../i18n').Lang}
   title={page.label}
   groups={page.groups}
   current={page.slug}
   prev={page.prev}
   next={page.next}
+  locale={locale}
 >
   <Content components={{ h1: Empty, pre: DocsCode, table: DocsTable }} />
 </DocsLayout>

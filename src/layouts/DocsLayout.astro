@@ -10,6 +10,7 @@ import type { Lang } from '../i18n';
 
 interface Props {
   lang: Lang;
+  locale: string;
   title: string;
   description?: string;
   groups: DocsGroup[];
@@ -18,21 +19,20 @@ interface Props {
   next?: DocsItem | null;
 }
 
-const { lang, title, description, groups, current, prev, next } = Astro.props;
+const { lang, locale, title, description, groups, current, prev, next } = Astro.props;
 ---
 
 <BaseLayout
   lang={lang}
   title={`${title} — DCR Docs`}
   description={description ?? `${title} — DCR documentation`}
-  plain
   noAlternates
 >
   <div class="page docs-page">
-    <Header lang={lang} docs />
+    <Header lang={lang} docs docsSlug={current ?? ''} />
     <div class="docs-shell">
       <aside class="docs-sidebar">
-        <DocsNav groups={groups} current={current} />
+        <DocsNav groups={groups} current={current} locale={locale} />
       </aside>
       <main class="docs-main">
         <details class="docs-mobile-nav">
@@ -41,7 +41,7 @@ const { lang, title, description, groups, current, prev, next } = Astro.props;
             <span class="docs-mobile-nav__hint" aria-hidden="true"></span>
           </summary>
           <div class="docs-mobile-nav__body">
-            <DocsNav groups={groups} current={current} />
+            <DocsNav groups={groups} current={current} locale={locale} />
           </div>
         </details>
         <article class="docs-article">
@@ -49,7 +49,7 @@ const { lang, title, description, groups, current, prev, next } = Astro.props;
           <div class="docs-prose">
             <slot />
           </div>
-          <DocsPager prev={prev} next={next} />
+          <DocsPager prev={prev} next={next} locale={locale} />
         </article>
       </main>
     </div>

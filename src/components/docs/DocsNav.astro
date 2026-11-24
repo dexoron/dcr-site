@@ -5,9 +5,10 @@ import Icon from '../Icon.astro';
 interface Props {
   groups: DocsGroup[];
   current?: string;
+  locale?: string;
 }
 
-const { groups, current } = Astro.props;
+const { groups, current, locale = 'en' } = Astro.props;
 ---
 
 <nav class="docs-nav">
@@ -16,7 +17,7 @@ const { groups, current } = Astro.props;
       <a
         class="docs-nav__link"
         class:list={{ 'docs-nav__item--active': group.items[0].slug === current }}
-        href={docsHref(group.items[0].slug)}
+        href={docsHref(group.items[0].slug, locale)}
         aria-current={group.items[0].slug === current ? 'page' : undefined}
       >
         {group.label}
@@ -35,7 +36,7 @@ const { groups, current } = Astro.props;
             <a
               class="docs-nav__child"
               class:list={{ 'docs-nav__item--active': item.slug === current }}
-              href={docsHref(item.slug)}
+              href={docsHref(item.slug, locale)}
               aria-current={item.slug === current ? 'page' : undefined}
             >
               {item.label}

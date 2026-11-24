@@ -12,21 +12,19 @@ export interface DocsPageData {
   next: ReturnType<typeof flattenDocsNav>[number] | null;
 }
 
-const LOCALE = 'en';
-
-export function docsSlugFromId(id: string): string {
-  const withoutLocale = id === LOCALE ? '' : id.replace(/^en\//, '');
+export function docsSlugFromId(id: string, locale: string): string {
+  const withoutLocale = id === locale ? '' : id.replace(new RegExp(`^${locale}/`), '');
   return withoutLocale === 'index' ? '' : withoutLocale;
 }
 
-export async function loadDocsPages(): Promise<DocsPageData[]> {
+export async function loadDocsPages(locale = 'en'): Promise<DocsPageData[]> {
   const entries = await getCollection('docs', ({ id }) =>
-    id === LOCALE || id.startsWith(`${LOCALE}/`),
+    id === locale || id.startsWith(`${locale}/`),
   );
 
   const meta = entries.map((entry) => ({
     entry,
-    slug: docsSlugFromId(entry.id),
+    slug: docsSlugFromId(entry.id, locale),
     label: entry.data.sidebar_label,
   }));
 
@@ -55,7 +53,17 @@ export async function loadDocsPages(): Promise<DocsPageData[]> {
     );
 }
 
-export async function loadDocsPage(slug: string): Promise<DocsPageData | undefined> {
-  const pages = await loadDocsPages();
+export async function loadDocsPage(
+  slug: string,
+  locale = 'en',
+): Promise<DocsPageData | undefined> {
+  const pages = await loadDocsPages(locale);
   return pages.find((page) => page.slug === slug);
+}
+
+export async function loadAllDocsPages(): Promise<DocsPageData[]> {
+  const entries = await getCollection('docs');
+  const locales = [...new Set(entries.map((entry) => entry.id.split('/')[0]))];
+  const pages = await Promise.all(locales.map((locale) => loadDocsPages(locale)));
+  return pages.flat();
 }

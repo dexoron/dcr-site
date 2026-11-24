@@ -7,31 +7,28 @@
   padding-bottom: 0;
 }
 
-.site-header--docs {
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  background: rgba(26, 26, 31, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-/* `.site-header` is `relative` with equal specificity — restore sticky. */
-.site-header.site-header--docs {
-  position: sticky;
-}
-
 .docs-page .site-footer {
   border-top: 1px solid var(--hairline);
 }
 
 .docs-shell {
+  position: relative;
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-columns: 240px minmax(0, 1fr);
   flex: 1;
   width: 100%;
   max-width: 1440px;
   margin-inline: auto;
+}
+
+.docs-shell::before {
+  position: absolute;
+  inset-block: 0;
+  left: 240px;
+  width: 1px;
+  background: var(--hairline);
+  content: '';
+  pointer-events: none;
 }
 
 /* Sidebar */
@@ -39,7 +36,7 @@
 .docs-sidebar {
   position: sticky;
   top: var(--header-height);
-  max-height: calc(100vh - var(--header-height));
+  max-height: calc(100vh - var(--header-height) - 44px);
   overflow-y: auto;
   padding: 6px 6px 32px;
   scrollbar-width: thin;
@@ -158,7 +155,7 @@
   margin-top: 12px;
 }
 
-.docs-prose > .docs-code + * {
+.docs-prose > :is(.docs-code, .docs-table) + * {
   margin-top: 20px;
 }
 
@@ -213,7 +210,7 @@
   padding: 1px 6px;
   border: 1px solid var(--border);
   border-radius: 4px;
-  background: var(--surface-solid);
+  background: var(--surface);
   color: var(--text);
   font-family: var(--font-mono);
   font-size: 0.9em;
@@ -298,15 +295,15 @@
 /* Code blocks */
 
 .docs-code.terminal {
-  background: var(--surface-solid);
-  border: 0;
-  box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: 0 0 8px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 .docs-code .terminal__bar {
-  background: transparent;
+  background: var(--surface);
 }
 
 .docs-code .terminal__body {
@@ -354,8 +351,12 @@
 
 .docs-table {
   overflow-x: auto;
+  border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  background: var(--surface-solid);
+  background: var(--surface);
+  box-shadow: 0 0 8px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
 }
@@ -379,7 +380,8 @@
   line-height: 1.3;
 }
 
-.docs-table th {  padding: 12px;
+.docs-table th {
+  padding: 12px;
   font-weight: 700;
   text-align: left;
   white-space: nowrap;
@@ -393,11 +395,15 @@
 .docs-table th,
 .docs-table td {
   height: 50px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(46, 46, 53, 0.85);
 }
 
-.docs-table tr:last-child th,
-.docs-table tr:last-child td {
+.docs-table thead th {
+  background: var(--surface);
+  border-bottom: 1px solid rgba(46, 46, 53, 0.85);
+}
+
+.docs-table tbody tr:last-child td {
   border-bottom: 0;
 }
 
@@ -433,11 +439,16 @@
 }
 
 .docs-pager__link--prev {
-  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .docs-pager__link--prev:hover {
-  background: #2a2a30;
+  background: rgba(46, 46, 54, 0.6);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .docs-pager__link--next {
@@ -508,6 +519,10 @@
     display: block;
   }
 
+  .docs-shell::before {
+    display: none;
+  }
+
   .docs-sidebar {
     display: none;
   }
@@ -540,6 +555,34 @@
 
   .docs-prose h3 {
     font-size: 20px;
+  }
+
+  .docs-mobile-nav__summary {
+    min-height: 52px;
+    padding-inline: 16px;
+    font-size: 17px;
+  }
+
+  .docs-mobile-nav__body {
+    padding: 8px 12px 12px;
+  }
+
+  .docs-mobile-nav .docs-nav {
+    gap: 6px;
+  }
+
+  .docs-mobile-nav .docs-nav__link,
+  .docs-mobile-nav .docs-nav__summary,
+  .docs-mobile-nav .docs-nav__child {
+    min-height: 44px;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 16px;
+  }
+
+  .docs-mobile-nav .docs-nav__children {
+    gap: 4px;
+    margin-top: 4px;
   }
 
   .docs-code__pre {

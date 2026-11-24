@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --host 0.0.0.0",
     "predev": "node scripts/fetch-dcr-version.ts && node scripts/sync-docs.ts",
     "prebuild": "node scripts/fetch-dcr-version.ts",
     "build": "astro build",

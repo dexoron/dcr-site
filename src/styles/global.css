@@ -210,7 +210,6 @@ button {
 .page {
   position: relative;
   z-index: 1;
-  padding-bottom: 24px;
 }
 
 .container {
@@ -222,10 +221,23 @@ button {
 
 /* Header */
 .site-header {
-  position: relative;
-  z-index: 20;
+  position: sticky;
+  top: 0;
+  z-index: 40;
   height: var(--header-height);
   border-bottom: 1px solid var(--hairline);
+  background: transparent;
+  isolation: isolate;
+}
+
+.site-header::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--surface);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  content: '';
 }
 
 .site-header__inner {
@@ -368,7 +380,9 @@ button {
   list-style: none;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: rgba(33, 33, 38, 0.98);
+  background: var(--surface);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
@@ -476,10 +490,11 @@ button {
 }
 
 .mobile-nav {
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: var(--header-height);
   left: 0;
   right: 0;
+  z-index: 39;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -488,7 +503,9 @@ button {
   overflow-y: auto;
   padding: 12px;
   border-bottom: 1px solid var(--hairline);
-  background: rgba(22, 22, 27, 0.98);
+  background: var(--surface);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
 }
 
@@ -684,9 +701,9 @@ button {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   background: var(--surface);
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 0 8px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   overflow: hidden;
 }
 
@@ -1182,6 +1199,18 @@ button {
 }
 
 @media (max-width: 1100px) {
+  :root {
+    --header-height: 60px;
+  }
+
+  .site-header {
+    height: var(--header-height);
+  }
+
+  .site-header__inner {
+    padding: 6px 18px 10px;
+  }
+
   .nav,
   .site-header__actions > .lang,
   .site-header__actions > .header-link {
@@ -1192,6 +1221,8 @@ button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 44px;
+    height: 44px;
   }
 }
 
@@ -1242,6 +1273,12 @@ button {
     font-size: 18px;
   }
 
+  .button {
+    min-height: 52px;
+    padding: 14px 24px;
+    font-size: 18px;
+  }
+
   .hero__inner {
     gap: 36px;
     padding-top: 100px;
@@ -1263,7 +1300,6 @@ button {
   .hero__actions .button {
     flex: 1 1 auto;
     min-width: 150px;
-    font-size: 18px;
   }
 
   .features {

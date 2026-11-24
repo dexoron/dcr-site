@@ -5,9 +5,10 @@ import Icon from '../Icon.astro';
 interface Props {
   prev?: DocsItem | null;
   next?: DocsItem | null;
+  locale?: string;
 }
 
-const { prev, next } = Astro.props;
+const { prev, next, locale = 'en' } = Astro.props;
 ---
 
 {prev || next ? (
@@ -15,7 +16,7 @@ const { prev, next } = Astro.props;
     {prev ? (
       <a
         class="docs-pager__link docs-pager__link--prev"
-        href={docsHref(prev.slug)}
+        href={docsHref(prev.slug, locale)}
         rel="prev"
       >
         <Icon
@@ -31,7 +32,7 @@ const { prev, next } = Astro.props;
     {next ? (
       <a
         class="docs-pager__link docs-pager__link--next"
-        href={docsHref(next.slug)}
+        href={docsHref(next.slug, locale)}
         rel="next"
       >
         <span>{next.label}</span>

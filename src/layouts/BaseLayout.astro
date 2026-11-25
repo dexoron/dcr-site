@@ -1,0 +1,174 @@
+---
+import '../styles/global.css';
+import {
+  defaultLang,
+  languages,
+  localizedPath,
+  locales,
+  useTranslations,
+  type Lang,
+} from '../i18n';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  /** Do not emit landing-page hreflang alternates (docs). */
+  noAlternates?: boolean;
+}
+
+const { lang, title, description, noAlternates = false } = Astro.props;
+const t = useTranslations(lang);
+const htmlLang = locales[lang].htmlLang;
+const pageTitle = title ?? t.meta.title;
+const pageDescription = description ?? t.meta.description;
+const alternates = (Object.keys(languages) as Lang[]).map((code) => ({
+  code,
+  lang: locales[code].htmlLang,
+  href: localizedPath(code),
+}));
+---
+
+<!doctype html>
+<html
+  lang={htmlLang}
+  data-lang={lang}
+  data-default-lang={defaultLang}
+  data-locales={Object.keys(languages).join(',')}
+  data-base={import.meta.env.BASE_URL}
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const storageKey = 'dcr-lang';
+
+        // Remember an explicit choice so auto-detection never overrides it.
+        document.addEventListener('click', (event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+
+          const link = target.closest('a[data-lang-code]');
+          if (!link) return;
+
+          const code = link.getAttribute('data-lang-code');
+          if (!code) return;
+
+          try {
+            localStorage.setItem(storageKey, code);
+          } catch {
+            // Storage can be unavailable in private mode.
+          }
+        });
+
+        const current = root.dataset.lang;
+        const defaultLang = root.dataset.defaultLang;
+
+        // Only the default-language landing page redirects. Deep links to a
+        // localized page are always left alone.
+        if (!current || current !== defaultLang) return;
+
+        let base = root.dataset.base || '/';
+        if (!base.endsWith('/')) base += '/';
+
+        const path = window.location.pathname;
+        const isRoot =
+          path === base ||
+          path === `${base}index.html` ||
+          (base !== '/' && path === base.slice(0, -1));
+
+        if (!isRoot) return;
+
+        const supported = (root.dataset.locales || '')
+          .split(',')
+          .filter(Boolean);
+
+        const resolve = (tag) => {
+          if (!tag) return null;
+
+          const value = String(tag).toLowerCase();
+          if (supported.includes(value)) return value;
+
+          const baseTag = value.split('-')[0];
+          if (supported.includes(baseTag)) return baseTag;
+
+          return (
+            supported.find((code) => code.split('-')[0] === baseTag) || null
+          );
+        };
+
+        let target = null;
+
+        try {
+          target = resolve(localStorage.getItem(storageKey));
+        } catch {
+          target = null;
+        }
+
+        if (!target) {
+          const languages =
+            navigator.languages && navigator.languages.length
+              ? navigator.languages
+              : [navigator.language];
+
+          for (const language of languages) {
+            target = resolve(language);
+            if (target) break;
+          }
+        }
+
+        if (!target || target === current) return;
+
+        const prefix = target === defaultLang ? '' : `${target}/`;
+
+        window.location.replace(
+          `${base}${prefix}${window.location.search}${window.location.hash}`,
+        );
+      })();
+    </script>
+    <meta name="description" content={pageDescription} />
+    <meta name="theme-color" content="#1a1a1f" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    {!noAlternates && alternates.map((alternate) => (
+      <link
+        rel="alternate"
+        hreflang={alternate.lang}
+        href={alternate.href}
+      />
+    ))}
+    {!noAlternates && (
+      <link rel="alternate" hreflang="x-default" href={localizedPath(defaultLang)} />
+    )}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href="/fonts/unbounded.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/onest.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/jetbrains-mono.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <title>{pageTitle}</title>
+  </head>
+  <body id="top">
+    <div class="page-bg" aria-hidden="true"></div>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,39 @@
+---
+import { useTranslations, type Lang } from '../i18n';
+import type { IconName } from './icons';
+import Icon from './Icon.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const copy = t.features;
+---
+
+<section class="features" id="features" aria-labelledby="features-title">
+  <div class="container">
+    <div class="section-head section-head--tight">
+      <h2 class="section-title" id="features-title">{copy.title}</h2>
+      <p class="section-lead">
+        {copy.lead.map((line) => <span>{line}</span>)}
+      </p>
+    </div>
+
+    <div class="feature-grid">
+      {copy.items.map((item) => (
+        <article class="feature-cell">
+          <Icon
+            class="feature-cell__icon"
+            name={item.icon as IconName}
+          />
+          <h3 class="feature-cell__title">{item.title}</h3>
+          <p class="feature-cell__text">{item.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <div class="section-rule" aria-hidden="true"></div>
+</section>

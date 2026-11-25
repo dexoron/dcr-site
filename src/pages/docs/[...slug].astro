@@ -1,0 +1,39 @@
+---
+import { render } from 'astro:content';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import DocsCode from '../../components/docs/DocsCode.astro';
+import DocsTable from '../../components/docs/DocsTable.astro';
+import Empty from '../../components/docs/Empty.astro';
+import { loadAllDocsPages } from '../../docs/page-data';
+
+export async function getStaticPaths() {
+  const pages = await loadAllDocsPages();
+  return pages
+    .filter((page) => page.slug !== '' || page.locale !== 'en')
+    .map((page) => {
+      const locale = page.locale;
+      const slug = locale === 'en'
+        ? page.slug
+        : [locale, page.slug].filter(Boolean).join('/');
+      return { params: { slug }, props: { page, locale } };
+    });
+}
+
+const { page, locale } = Astro.props as {
+  page: Awaited<ReturnType<typeof loadAllDocsPages>>[number];
+  locale: string;
+};
+const { Content } = await render(page.entry);
+---
+
+<DocsLayout
+  lang={locale as import('../../i18n').Lang}
+  title={page.label}
+  groups={page.groups}
+  current={page.slug}
+  prev={page.prev}
+  next={page.next}
+  locale={locale}
+>
+  <Content components={{ h1: Empty, pre: DocsCode, table: DocsTable }} />
+</DocsLayout>

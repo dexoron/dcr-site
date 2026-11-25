@@ -1,0 +1,49 @@
+---
+import { docsHref, type DocsGroup } from '../../docs/nav';
+import Icon from '../Icon.astro';
+
+interface Props {
+  groups: DocsGroup[];
+  current?: string;
+  locale?: string;
+}
+
+const { groups, current, locale = 'en' } = Astro.props;
+---
+
+<nav class="docs-nav">
+  {groups.map((group) => (
+    group.kind === 'link' ? (
+      <a
+        class="docs-nav__link"
+        class:list={{ 'docs-nav__item--active': group.items[0].slug === current }}
+        href={docsHref(group.items[0].slug, locale)}
+        aria-current={group.items[0].slug === current ? 'page' : undefined}
+      >
+        {group.label}
+      </a>
+    ) : (
+      <details
+        class="docs-nav__group"
+        open={group.items.some((item) => item.slug === current)}
+      >
+        <summary class="docs-nav__summary">
+          <span>{group.label}</span>
+          <Icon name="chevronDown" size={16} class="docs-nav__caret" />
+        </summary>
+        <div class="docs-nav__children">
+          {group.items.map((item) => (
+            <a
+              class="docs-nav__child"
+              class:list={{ 'docs-nav__item--active': item.slug === current }}
+              href={docsHref(item.slug, locale)}
+              aria-current={item.slug === current ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </details>
+    )
+  ))}
+</nav>

@@ -1,0 +1,196 @@
+---
+import data from '../data/dcr.json';
+import { getCollection } from 'astro:content';
+import {
+  languages,
+  localizedPath,
+  locales,
+  useTranslations,
+  type Lang,
+} from '../i18n';
+import { DONATE_URL, GITHUB_URL, ISSUES_URL } from '../config';
+import { docsHomePath, docsHref } from '../docs/nav';
+import { docsLocaleFromId, docsSlugFromId } from '../docs/page-data';
+import Icon from './Icon.astro';
+
+interface Props {
+  lang: Lang;
+  /** Docs pages use absolute anchors and an internal Documentation link. */
+  docs?: boolean;
+  docsSlug?: string;
+}
+
+const { lang, docs = false, docsSlug = '' } = Astro.props;
+const t = useTranslations(lang);
+const version = data.version;
+
+const homeHref = docs ? localizedPath(lang) : '#top';
+const docsHomeHref = docsHomePath(docs ? lang : 'en');
+const downloadHref = docs ? `${localizedPath(lang)}#download` : '#download';
+const docsEntries = docs ? await getCollection('docs') : [];
+const availableDocsLanguages = new Set(
+  docsEntries
+    .filter((entry) => {
+      const locale = docsLocaleFromId(entry.id);
+      return docsSlugFromId(entry.id, locale) === docsSlug;
+    })
+    .map((entry) => docsLocaleFromId(entry.id)),
+);
+const languageEntries = (Object.keys(languages) as Lang[])
+  .filter((code) => !docs || availableDocsLanguages.has(code))
+  .map((code) => ({
+    code,
+    label: languages[code],
+    lang: locales[code].htmlLang,
+    href: docs ? docsHref(docsSlug, code) : localizedPath(code),
+  }));
+---
+
+<header class="site-header" class:list={{ 'site-header--docs': docs }}>
+  <div class="site-header__inner">
+    <div class="site-header__start">
+      <a class="brand" href={homeHref} aria-label="DCR">
+        <img
+          class="brand__icon"
+          src="/assets/brand/dcr-icon.svg"
+          alt=""
+          width="26"
+          height="26"
+        />
+        <span class="brand__name">DCR</span>
+        <span class="brand__version">v{version}</span>
+      </a>
+
+      <nav class="nav">
+        <a href={homeHref}>{t.nav.home}</a>
+        <a
+          href={docsHomeHref}
+          aria-current={docs ? 'page' : undefined}
+        >
+          {t.nav.documentation}
+        </a>
+        <a href={downloadHref}>{t.nav.download}</a>
+        <a href={ISSUES_URL} target="_blank" rel="noopener noreferrer">
+          {t.nav.support}
+        </a>
+      </nav>
+    </div>
+
+    <div class="site-header__actions">
+      <details class="lang">
+        <summary>
+          <span>{languages[lang]}</span>
+          <Icon name="chevronDown" />
+        </summary>
+        <ul class="lang__menu">
+          {languageEntries.map((entry) => (
+            <li>
+              <a
+                href={entry.href}
+                hreflang={entry.lang}
+                lang={entry.lang}
+                data-lang-code={entry.code}
+                aria-current={entry.code === lang ? 'true' : undefined}
+              >
+                {entry.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+
+      <a
+        class="header-link"
+        href={GITHUB_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icon name="github" />
+        <span>{t.nav.github}</span>
+      </a>
+
+      <a
+        class="header-link"
+        href={DONATE_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icon name="coffee" />
+        <span>{t.nav.donate}</span>
+      </a>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        data-menu-toggle
+      >
+        <span class="sr-only">{t.nav.menu}</span>
+        <span class="menu-toggle__bars" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+</header>
+
+<div class="mobile-nav" id="mobile-nav" data-mobile-nav hidden>
+    <a href={homeHref}>{t.nav.home}</a>
+    <a href={docsHomeHref} aria-current={docs ? 'page' : undefined}>
+      {t.nav.documentation}
+    </a>
+    <a href={downloadHref}>{t.nav.download}</a>
+    <a href={ISSUES_URL} target="_blank" rel="noopener noreferrer">
+      {t.nav.support}
+    </a>
+    <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+      {t.nav.github}
+    </a>
+    <a href={DONATE_URL} target="_blank" rel="noopener noreferrer">
+      {t.nav.donate}
+    </a>
+
+    <div class="mobile-nav__langs">
+      {languageEntries.map((entry) => (
+        <a
+          href={entry.href}
+          hreflang={entry.lang}
+          lang={entry.lang}
+          data-lang-code={entry.code}
+          aria-current={entry.code === lang ? 'true' : undefined}
+        >
+          {entry.label}
+        </a>
+      ))}
+    </div>
+</div>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const panel = document.querySelector<HTMLElement>('[data-mobile-nav]');
+
+  if (toggle && panel) {
+    const setOpen = (open: boolean): void => {
+      toggle.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    panel.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    });
+  }
+
+  document.querySelectorAll<HTMLDetailsElement>('details.lang').forEach((details) => {
+    document.addEventListener('click', (event) => {
+      if (!details.contains(event.target as Node)) details.open = false;
+    });
+  });
+</script>

@@ -2,46 +2,27 @@
   "name": "dcr-site",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "sync": "./scripts/sync-docs.sh",
-    "docusaurus": "docusaurus",
-    "start": "docusaurus start",
-    "build": "docusaurus build",
-    "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy",
-    "clear": "docusaurus clear",
-    "serve": "docusaurus serve",
-    "write-translations": "docusaurus write-translations",
-    "write-heading-ids": "docusaurus write-heading-ids"
-  },
-  "dependencies": {
-    "@docusaurus/core": "3.10.1",
-    "@docusaurus/faster": "3.10.1",
-    "@docusaurus/plugin-pwa": "^3.10.1",
-    "@docusaurus/preset-classic": "3.10.1",
-    "@mdx-js/react": "^3.0.0",
-    "clsx": "^2.0.0",
-    "prism-react-renderer": "^2.3.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "dev": "astro dev --host 0.0.0.0",
+    "predev": "node scripts/fetch-dcr-version.ts && node scripts/sync-docs.ts",
+    "prebuild": "node scripts/fetch-dcr-version.ts",
+    "build": "astro build",
+    "preview": "astro preview",
+    "precheck": "node scripts/fetch-dcr-version.ts",
+    "check": "npm run check:i18n && npm run check:docs && astro check",
+    "check:i18n": "node --experimental-strip-types scripts/check-i18n.ts",
+    "check:docs": "node --experimental-strip-types scripts/check-docs.ts",
+    "docs:sync": "node scripts/sync-docs.ts",
+    "fetch:dcr": "node scripts/fetch-dcr-version.ts"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.10.1",
-    "@docusaurus/types": "3.10.1"
+    "@astrojs/check": "^0.9.12",
+    "@types/node": "^26.6.6",
+    "astro": "^7.4.13",
+    "typescript": "^6.0.3"
   },
-  "browserslist": {
-    "production": [
-      ">0.5%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 3 chrome version",
-      "last 3 firefox version",
-      "last 5 safari version"
-    ]
-  },
-  "engines": {
-    "node": ">=20.0"
+  "dependencies": {
+    "@astrojs/mdx": "^8.1.6"
   }
 }

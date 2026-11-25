@@ -1,0 +1,58 @@
+---
+import '../styles/docs.css';
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import DocsNav from '../components/docs/DocsNav.astro';
+import DocsPager from '../components/docs/DocsPager.astro';
+import type { DocsGroup, DocsItem } from '../docs/nav';
+import type { Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  locale: string;
+  title: string;
+  description?: string;
+  groups: DocsGroup[];
+  current?: string;
+  prev?: DocsItem | null;
+  next?: DocsItem | null;
+}
+
+const { lang, locale, title, description, groups, current, prev, next } = Astro.props;
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${title} — DCR Docs`}
+  description={description ?? `${title} — DCR documentation`}
+  noAlternates
+>
+  <div class="page docs-page">
+    <Header lang={lang} docs docsSlug={current ?? ''} />
+    <div class="docs-shell">
+      <aside class="docs-sidebar">
+        <DocsNav groups={groups} current={current} locale={locale} />
+      </aside>
+      <main class="docs-main">
+        <details class="docs-mobile-nav">
+          <summary class="docs-mobile-nav__summary">
+            <span>{locale === 'ru-RU' ? 'Документация' : 'Documentation'}</span>
+            <span class="docs-mobile-nav__hint" aria-hidden="true"></span>
+          </summary>
+          <div class="docs-mobile-nav__body">
+            <DocsNav groups={groups} current={current} locale={locale} />
+          </div>
+        </details>
+        <article class="docs-article">
+          <h1 class="docs-title" id="docs-title">{title}</h1>
+          <div class="docs-prose">
+            <slot />
+          </div>
+          <DocsPager prev={prev} next={next} locale={locale} />
+        </article>
+      </main>
+    </div>
+    <Footer lang={lang} />
+  </div>
+</BaseLayout>

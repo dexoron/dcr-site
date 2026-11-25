@@ -1,10 +1,12 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { locales } from '../i18n/locales';
 import { buildDocsNav, flattenDocsNav } from './nav';
 
 export type DocsEntry = CollectionEntry<'docs'>;
 
 export interface DocsPageData {
   entry: DocsEntry;
+  locale: string;
   slug: string;
   label: string;
   groups: ReturnType<typeof buildDocsNav>;
@@ -12,14 +14,25 @@ export interface DocsPageData {
   next: ReturnType<typeof flattenDocsNav>[number] | null;
 }
 
+export function docsLocaleFromId(id: string): string {
+  const idLocale = id.split('/')[0];
+  return (
+    Object.keys(locales).find((locale) => locale.toLowerCase() === idLocale.toLowerCase()) ??
+    idLocale
+  );
+}
+
 export function docsSlugFromId(id: string, locale: string): string {
-  const withoutLocale = id === locale ? '' : id.replace(new RegExp(`^${locale}/`), '');
+  const [idLocale, ...segments] = id.split('/');
+  const withoutLocale = idLocale.toLowerCase() === locale.toLowerCase()
+    ? segments.join('/')
+    : id;
   return withoutLocale === 'index' ? '' : withoutLocale;
 }
 
 export async function loadDocsPages(locale = 'en'): Promise<DocsPageData[]> {
   const entries = await getCollection('docs', ({ id }) =>
-    id === locale || id.startsWith(`${locale}/`),
+    docsLocaleFromId(id) === locale,
   );
 
   const meta = entries.map((entry) => ({
@@ -30,6 +43,7 @@ export async function loadDocsPages(locale = 'en'): Promise<DocsPageData[]> {
 
   const groups = buildDocsNav(
     meta.map(({ slug, label }) => ({ slug, label })),
+    locale,
   );
   const flat = flattenDocsNav(groups);
 
@@ -39,6 +53,7 @@ export async function loadDocsPages(locale = 'en'): Promise<DocsPageData[]> {
       const index = flat.findIndex((item) => item.slug === slug);
       return {
         entry,
+        locale,
         slug,
         label,
         groups,
@@ -63,7 +78,7 @@ export async function loadDocsPage(
 
 export async function loadAllDocsPages(): Promise<DocsPageData[]> {
   const entries = await getCollection('docs');
-  const locales = [...new Set(entries.map((entry) => entry.id.split('/')[0]))];
-  const pages = await Promise.all(locales.map((locale) => loadDocsPages(locale)));
+  const docLocales = [...new Set(entries.map((entry) => docsLocaleFromId(entry.id)))];
+  const pages = await Promise.all(docLocales.map((locale) => loadDocsPages(locale)));
   return pages.flat();
 }

@@ -152,8 +152,9 @@ Crowdin.
 - `README.mdx` becomes `index.mdx` (the `/docs` landing page).
 - CRLF is normalised to LF and a trailing newline is ensured.
 - Translations are read from `docs-crowdin-export/<locale>/docs/` (the Crowdin
-  branch) and copied to `src/content/docs/<locale>/`. Only English is wired for
-  now; other locales are added by passing `DCR_DOCS_LOCALES=en,ru-RU,…`.
+  branch) and copied to `src/content/docs/<locale>/`. Sync English by default;
+  include translated locales with `DCR_DOCS_LOCALES=en,ru-RU,…`. Committed
+  locale pages are built without network access.
 - The synced files are committed, so `astro build` and `astro check` work without
   network access. If no source is found, the committed English docs are kept.
 
@@ -166,7 +167,9 @@ Crowdin.
   Getting Started, Commands, Reference, Testing, Recipes, Other, Changelog).
   `npm run check:docs` fails when a configured page is missing or an MDX page is
   not reachable from the navigation.
-- Routes: `/docs/` (Introduction) and `/docs/<slug>/`, one page per MDX file.
+- Routes: `/docs/` and `/docs/<slug>/` for English; translated pages use
+  `/docs/<locale>/` and `/docs/<locale>/<slug>/`. Only pages with an existing
+  translation appear in that locale's navigation and language switcher.
 - The docs layout reuses the landing header and footer. Code blocks reuse the
   terminal chrome from the landing page (shell blocks titled "Terminal", other
   blocks "Editor"); tables use the Figma docs table style; prev/next pager links
@@ -191,7 +194,7 @@ Because the file names use Crowdin locale codes (`ru-RU`, `pt-BR`, `zh-CN`, …)
 
 - English is the only source language. Edit `src/i18n/en.json`, push, and let Crowdin pick it up; do not translate `en.json` by hand.
 - `scripts/crowdin-pull.sh` downloads the latest translations before a build. It reads `CROWDIN_TOKEN` and `CROWDIN_PROJECT_ID` and exits quietly when they are not set, so local builds and forks keep working.
-- In GitLab, define `CROWDIN_TOKEN` (masked) and `CROWDIN_PROJECT_ID` as CI/CD variables. The build job runs `npm run check`, then builds.
+- In GitLab, define `CROWDIN_TOKEN` (masked) and `CROWDIN_PROJECT_ID` as CI/CD variables. The build job runs `npm run check`, then builds. `CROWDIN_BASE_URL` is optional and defaults to `https://api.crowdin.com` (set it only for Crowdin Enterprise).
 - The check in `npm run check:i18n` fails when a pulled locale is not registered in `locales.ts`, so a new Crowdin language is added consciously rather than silently ignored.
 - Documentation translations do not use this JSON flow: the MDX files are translated in the DCR repository and pulled by `npm run docs:sync` (see [Documentation](#documentation)).
 

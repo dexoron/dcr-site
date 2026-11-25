@@ -2,7 +2,7 @@
  * Fetch DCR release facts from GitHub at build time.
  *
  * Authoritative version source: GitHub Releases if present, otherwise the
- * repository's semver tags (the DCR project has no GitHub Releases yet).
+ * repository's semver tags.
  * The result is written to src/data/dcr.json for Astro to import.
  *
  * The build must never fail because GitHub is unavailable: a committed
@@ -146,7 +146,7 @@ async function main(): Promise<void> {
     data.source = resolvedFromGitHub ? 'github' : 'git';
   } else {
     console.warn(
-      `[dcr] Could not resolve the latest version; using placeholder v${data.version}.`,
+      `[dcr] Could not resolve the latest version; using cached v${data.version}.`,
     );
     data.source = 'fallback';
   }

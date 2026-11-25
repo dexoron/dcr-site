@@ -9,9 +9,9 @@ import { loadAllDocsPages } from '../../docs/page-data';
 export async function getStaticPaths() {
   const pages = await loadAllDocsPages();
   return pages
-    .filter((page) => page.slug !== '' || page.entry.id.split('/')[0] !== 'en')
+    .filter((page) => page.slug !== '' || page.locale !== 'en')
     .map((page) => {
-      const locale = page.entry.id.split('/')[0];
+      const locale = page.locale;
       const slug = locale === 'en'
         ? page.slug
         : [locale, page.slug].filter(Boolean).join('/');

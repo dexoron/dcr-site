@@ -10,7 +10,7 @@ import {
 } from '../i18n';
 import { DONATE_URL, GITHUB_URL, ISSUES_URL } from '../config';
 import { docsHomePath, docsHref } from '../docs/nav';
-import { docsSlugFromId } from '../docs/page-data';
+import { docsLocaleFromId, docsSlugFromId } from '../docs/page-data';
 import Icon from './Icon.astro';
 
 interface Props {
@@ -31,10 +31,10 @@ const docsEntries = docs ? await getCollection('docs') : [];
 const availableDocsLanguages = new Set(
   docsEntries
     .filter((entry) => {
-      const locale = entry.id.split('/')[0];
+      const locale = docsLocaleFromId(entry.id);
       return docsSlugFromId(entry.id, locale) === docsSlug;
     })
-    .map((entry) => entry.id.split('/')[0]),
+    .map((entry) => docsLocaleFromId(entry.id)),
 );
 const languageEntries = (Object.keys(languages) as Lang[])
   .filter((code) => !docs || availableDocsLanguages.has(code))

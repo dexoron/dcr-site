@@ -37,7 +37,7 @@ const { lang, locale, title, description, groups, current, prev, next } = Astro.
       <main class="docs-main">
         <details class="docs-mobile-nav">
           <summary class="docs-mobile-nav__summary">
-            <span>Documentation</span>
+            <span>{locale === 'ru-RU' ? 'Документация' : 'Documentation'}</span>
             <span class="docs-mobile-nav__hint" aria-hidden="true"></span>
           </summary>
           <div class="docs-mobile-nav__body">

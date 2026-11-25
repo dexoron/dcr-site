@@ -94,14 +94,28 @@ const GROUP_LAYOUT: Array<{
   { id: 'changelog', label: 'Changelog', kind: 'link', slugs: ['changelog'] },
 ];
 
+const GROUP_LABELS: Record<string, Record<string, string>> = {
+  'ru-RU': {
+    introduction: 'Введение',
+    'getting-started': 'Начало работы',
+    commands: 'Команды',
+    reference: 'Справочник',
+    testing: 'Тестирование',
+    recipes: 'Примеры',
+    other: 'Другое',
+    changelog: 'История изменений',
+  },
+};
+
 export interface DocsEntryMeta {
   slug: string;
   label: string;
 }
 
-export function buildDocsNav(entries: DocsEntryMeta[]): DocsGroup[] {
+export function buildDocsNav(entries: DocsEntryMeta[], locale = 'en'): DocsGroup[] {
   const bySlug = new Map(entries.map((entry) => [entry.slug, entry]));
   const groups: DocsGroup[] = [];
+  const labels = GROUP_LABELS[locale] ?? {};
 
   for (const layout of GROUP_LAYOUT) {
     const items = layout.slugs
@@ -113,7 +127,7 @@ export function buildDocsNav(entries: DocsEntryMeta[]): DocsGroup[] {
     if (items.length === 0) continue;
     groups.push({
       id: layout.id,
-      label: layout.label,
+      label: labels[layout.id] ?? layout.label,
       kind: layout.kind,
       items,
     });
@@ -129,7 +143,7 @@ export function buildDocsNav(entries: DocsEntryMeta[]): DocsGroup[] {
     } else {
       groups.push({
         id: 'other',
-        label: 'Other',
+        label: labels.other ?? 'Other',
         kind: 'group',
         items: leftover,
       });

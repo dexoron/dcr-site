@@ -1,8 +1,8 @@
 {
-  "version": "0.0.0",
-  "versionTag": "v0.0.0",
-  "stars": 0,
+  "version": "0.9.1",
+  "versionTag": "v0.9.1",
+  "stars": 47,
   "license": "GPL-3.0",
-  "fetchedAt": "2026-11-21T00:00:00.000Z",
+  "fetchedAt": "2026-11-25T00:00:00.000Z",
   "source": "fallback"
 }

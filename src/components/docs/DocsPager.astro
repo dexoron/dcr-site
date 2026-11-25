@@ -12,7 +12,10 @@ const { prev, next, locale = 'en' } = Astro.props;
 ---
 
 {prev || next ? (
-  <nav class="docs-pager" aria-label="Documentation pages">
+    <nav
+      class="docs-pager"
+      aria-label={locale === 'ru-RU' ? 'Страницы документации' : 'Documentation pages'}
+    >
     {prev ? (
       <a
         class="docs-pager__link docs-pager__link--prev"

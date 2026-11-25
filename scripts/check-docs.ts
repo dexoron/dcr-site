@@ -9,11 +9,10 @@ import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const docsRoot = join(here, '..', 'src', 'content', 'docs');
-const locale = 'en';
 
 const errors: string[] = [];
 
-const readSlugs = (): Map<string, string> => {
+const readSlugs = (locale: string): Map<string, string> => {
   const ids = new Map<string, string>();
   const dir = join(docsRoot, locale);
 
@@ -39,7 +38,7 @@ const readSlugs = (): Map<string, string> => {
   return ids;
 };
 
-const slugs = readSlugs();
+const slugs = readSlugs('en');
 
 const navSource = readFileSync(join(here, '..', 'src', 'docs', 'nav.ts'), 'utf8');
 const layoutMatch = navSource.match(/GROUP_LAYOUT[\s\S]*?\n\];/);
@@ -70,10 +69,38 @@ for (const slug of slugs.keys()) {
   }
 }
 
+let translatedPages = 0;
+let translatedLocales = 0;
+for (const entry of readdirSync(docsRoot, { withFileTypes: true })) {
+  if (!entry.isDirectory() || entry.name === 'en') continue;
+
+  const localeSlugs = readSlugs(entry.name);
+  translatedLocales += 1;
+  translatedPages += localeSlugs.size;
+  if (!localeSlugs.has('')) {
+    errors.push(`translated docs locale "${entry.name}" is missing index.mdx`);
+  }
+
+  for (const slug of localeSlugs.keys()) {
+    if (!slugs.has(slug)) {
+      errors.push(
+        `translated page "${entry.name}/${slug || 'index'}" has no matching English page`,
+      );
+    }
+    if (!configuredSet.has(slug)) {
+      errors.push(
+        `translated page "${entry.name}/${slug || 'index'}" is not reachable from the navigation`,
+      );
+    }
+  }
+}
+
 if (errors.length) {
   console.error(`docs nav check failed (${errors.length}):`);
   for (const error of errors) console.error(`  - ${error}`);
   process.exit(1);
 }
 
-console.log(`docs nav check passed: ${slugs.size} pages match the navigation.`);
+console.log(
+  `docs nav check passed: ${slugs.size} English pages and ${translatedPages} translated pages across ${translatedLocales} locale(s) match the navigation.`,
+);

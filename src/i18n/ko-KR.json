@@ -15,7 +15,7 @@
   "hero": {
     "titleLines": [
       "Cargo 스타일 빌드 도구",
-      "C와 C++를 위한."
+      "C와 C++ 전용."
     ],
     "description": "하나의 dcr.toml로 C와 C++ 프로젝트를 빌드, 실행, 테스트하고, 의존성은 알아서 관리됩니다. Makefile도, CMake 스크립트도 필요 없습니다. dcr new, dcr build, dcr run만 있으면 됩니다.",
     "primaryAction": "시작하기",

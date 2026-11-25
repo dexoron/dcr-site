@@ -17,7 +17,7 @@
       "Інструмент збірки в стилі Cargo",
       "для C і C++."
     ],
-    "description": "Збирайте, запускайте й тестуйте проєкти на C і C++ з єдиного dcr.toml, а залежностями керуватимемо за вас. Жодних Makefile, жодних скриптів CMake. Лише dcr new, dcr build і dcr run.",
+    "description": "Збирайте, запускайте й тестуйте проєкти на C і C++ з єдиного dcr.toml, а DCR подбає про залежності. Жодних Makefile, жодних скриптів CMake. Лише dcr new, dcr build і dcr run.",
     "primaryAction": "Почати",
     "secondaryAction": "GitHub",
     "license": "GPLv3"

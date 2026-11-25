@@ -15,7 +15,7 @@
   "hero": {
     "titleLines": [
       "Cargo 風のビルドツール",
-      "C と C++ のために。"
+      "C と C++ 向け。"
     ],
     "description": "1 つの dcr.toml から C と C++ のプロジェクトをビルド、実行、テストでき、依存関係も自動で管理されます。Makefile も CMake スクリプトも不要。必要なのは dcr new、dcr build、dcr run だけです。",
     "primaryAction": "始める",

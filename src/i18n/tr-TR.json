@@ -37,7 +37,7 @@
         "description": "`new`, `build`, `run`, `test`, `clean`, `add`, `fmt`, `lint`: tüm iş akışı tek bir araçta."
       },
       {
-        "title": "Yol, Git, kayıt defteri ve sistem bağımlılıkları",
+        "title": "Yol, Git, paket deposu ve sistem bağımlılıkları",
         "description": "Kütüphaneleri yerel bir klasörden, bir Git deposundan, bir kayıt defterinden veya `pkg-config` aracılığıyla sistemden kullanın. `dcr.lock`, Git commit'i dahil olmak üzere tam olarak neyin çözümlendiğini kaydeder."
       },
       {

@@ -123,7 +123,7 @@ for (const code of declared) {
   if (!files.includes(code)) errors.push(`missing src/i18n/${code}.json`);
   const meta = locales[code];
   if (!meta.label.trim()) errors.push(`${code}: empty label in locales.ts`);
-  if (!/^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$/.test(meta.htmlLang)) {
+  if (!/^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8}|-x(?:-[A-Za-z0-9]{1,8})+)*$/i.test(meta.htmlLang)) {
     errors.push(`${code}: invalid htmlLang "${meta.htmlLang}"`);
   }
 }

@@ -37,7 +37,7 @@
         "description": "`new`, `build`, `run`, `test`, `clean`, `add`, `fmt`, `lint`: todo o fluxo de trabalho em uma única ferramenta."
       },
       {
-        "title": "Dependências de caminho, Git, registro e sistema",
+        "title": "Dependências de caminho, Git, registro de pacotes e sistema",
         "description": "Use bibliotecas de uma pasta local, de um repositório Git, de um registro ou do sistema via `pkg-config`. O `dcr.lock` registra exatamente o que foi resolvido, incluindo o commit do Git."
       },
       {

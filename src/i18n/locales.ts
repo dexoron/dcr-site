@@ -10,6 +10,7 @@
  */
 export const locales = {
   en: { label: 'English', htmlLang: 'en' },
+  'en-Simple': { label: 'English (Simple)', htmlLang: 'en' },
 
   // Europe
   'de-DE': { label: 'Deutsch', htmlLang: 'de-DE' },

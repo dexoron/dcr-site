@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "DCR — A Cargo-style build tool for C/C++",
-    "description": "DCR is a Cargo-style build tool and dependency manager for C and C++. One dcr.toml, simple commands: new, build, run, test."
+    "title": "DCR — A Cargo-style build tool for C and C++",
+    "description": "DCR is a Cargo-style build tool and dependency manager for C and C++. One dcr.toml and a few simple commands: new, build, run, test."
   },
   "nav": {
     "home": "Home",
@@ -17,7 +17,7 @@
       "A Cargo-style build tool",
       "for C and C++."
     ],
-    "description": "DCR builds, runs and tests your C/C++ project from a single dcr.toml and manages its dependencies. No Makefiles, no CMake scripts — just dcr new, dcr build and dcr run.",
+    "description": "Build, run, and test C and C++ projects from a single dcr.toml, with dependencies managed for you. No Makefiles, no CMake scripts. Just dcr new, dcr build, and dcr run.",
     "primaryAction": "Get started",
     "secondaryAction": "GitHub",
     "license": "GPLv3"
@@ -39,28 +39,73 @@
       {
         "segments": [
           {
-            "text": "Creating a Project `"
+            "text": "    "
+          },
+          {
+            "text": "Creating",
+            "tone": "green"
+          },
+          {
+            "text": " project `"
           },
           {
             "text": "myapp",
             "tone": "cyan"
           },
           {
-            "text": "`...\nProject `"
+            "text": "`\n     "
+          },
+          {
+            "text": "Created",
+            "tone": "green"
+          },
+          {
+            "text": " directory `myapp`\n     "
+          },
+          {
+            "text": "Created",
+            "tone": "green"
+          },
+          {
+            "text": " dcr.toml\n     "
+          },
+          {
+            "text": "Created",
+            "tone": "green"
+          },
+          {
+            "text": " src/main.c\n "
+          },
+          {
+            "text": "Initialized",
+            "tone": "green"
+          },
+          {
+            "text": " git repository\n     "
+          },
+          {
+            "text": "Created",
+            "tone": "green"
+          },
+          {
+            "text": " project `"
           },
           {
             "text": "myapp",
             "tone": "green"
           },
           {
-            "text": "` successfully created\n\n"
+            "text": "`\n"
           },
           {
-            "text": "Next step:\n",
-            "tone": "green"
+            "text": "info:",
+            "tone": "cyan"
           },
           {
-            "text": "    cd myapp\n    dcr run",
+            "text": " Next steps:\n"
+          },
+          {
+            "text": "  cd myapp\n  dcr run",
             "tone": "cyan"
           }
         ]
@@ -90,35 +135,35 @@
       {
         "segments": [
           {
-            "text": "  "
+            "text": "     "
           },
           {
             "text": "project",
             "tone": "cyan"
           },
           {
-            "text": "   myapp  (debug, x86_64-unknown-linux-gnu)\n  "
+            "text": " myapp (debug, x86_64-unknown-linux-gnu)\n     "
           },
           {
             "text": "compile",
             "tone": "green"
           },
           {
-            "text": "   myapp v0.1.0  [1/1]\n  "
+            "text": " myapp v0.1.0  [1/1]\n        "
           },
           {
             "text": "done",
             "tone": "green"
           },
           {
-            "text": "      in 0.24s\n  "
+            "text": " in 0.24s\n         "
           },
           {
             "text": "run",
             "tone": "green"
           },
           {
-            "text": "       /home/dexoron/tmp/myapp/target/debug/myapp\nHello World!"
+            "text": " /home/dexoron/tmp/myapp/target/x86_64-unknown-linux-gnu/debug/myapp\nHello World!"
           }
         ]
       },
@@ -135,50 +180,50 @@
   "features": {
     "title": "Features",
     "lead": [
-      "Everything you need to build C/C++.",
-      "One tool. One config. One workflow."
+      "Everything you need to build C and C++.",
+      "One tool, one config, one workflow."
     ],
     "items": [
       {
         "icon": "terminal",
         "title": "Simple commands",
-        "description": "`new`, `build`, `run`, `test`, `clean`, `add`, `fmt`: everything in one tool."
+        "description": "`new`, `build`, `run`, `test`, `clean`, `add`, `fmt`, `lint`: the whole workflow in one tool."
       },
       {
         "icon": "gitBranch",
-        "title": "Dependencies from a path, Git or a registry",
-        "description": "Add libraries from a local folder, a Git repository or a registry. A lock file keeps builds reproducible."
+        "title": "Path, Git, registry, and system dependencies",
+        "description": "Use libraries from a local folder, a Git repository, a registry, or the system via `pkg-config`. `dcr.lock` records exactly what was resolved, including the Git commit."
       },
       {
         "icon": "globe",
         "title": "Cross-compilation",
-        "description": "Build for other platforms and architectures from a single project. Set the target by full target triple or a short name."
+        "description": "Build for another OS or architecture from the same project. Set the target with a full target triple or a short name like `windows`."
       },
       {
         "icon": "codeXml",
         "title": "Works with your IDE",
-        "description": "Generate `compile_commands.json` or VS Code and CLion settings with `dcr gen`, and keep your editor."
+        "description": "`dcr gen` produces `compile_commands.json` and ready-made VS Code and CLion configs, so you can keep your editor."
       },
       {
         "icon": "fileCog",
         "title": "One project file",
-        "description": "Name, language, standard, compiler and dependencies live in `dcr.toml` — nothing is scattered across scripts."
+        "description": "Name, language, standard, compiler, and dependencies all live in `dcr.toml`, not scattered across scripts."
       },
       {
         "icon": "bookOpen",
-        "title": "Built-in docs",
-        "description": "Man pages for `dcr` and every command, e.g. `man dcr-build`. They work offline."
+        "title": "Built-in help",
+        "description": "Every command has `--help`, and package installs include man pages such as `man dcr-build`."
       }
     ]
   },
   "quickStart": {
     "title": "Quick Start",
-    "lead": "Create and run a C/C++ project in three steps.",
+    "lead": "Create and run a C or C++ project in three steps.",
     "steps": [
       {
         "number": "1",
         "title": "Create a project",
-        "description": "Start with a C/C++ project that has a ready-made directory structure.",
+        "description": "`dcr new` sets up a project with a `dcr.toml` and a ready-to-build `src/main.c`.",
         "terminal": {
           "title": "Terminal",
           "lines": [
@@ -196,28 +241,45 @@
             {
               "segments": [
                 {
-                  "text": "Creating a Project `"
+                  "text": "    "
+                },
+                {
+                  "text": "Creating",
+                  "tone": "green"
+                },
+                {
+                  "text": " project `"
                 },
                 {
                   "text": "myapp",
                   "tone": "cyan"
                 },
                 {
-                  "text": "`...\nProject `"
+                  "text": "`\n     "
+                },
+                {
+                  "text": "Created",
+                  "tone": "green"
+                },
+                {
+                  "text": " project `"
                 },
                 {
                   "text": "myapp",
                   "tone": "green"
                 },
                 {
-                  "text": "` successfully created\n\n"
+                  "text": "`\n"
                 },
                 {
-                  "text": "Next step:\n",
-                  "tone": "green"
+                  "text": "info:",
+                  "tone": "cyan"
                 },
                 {
-                  "text": "    cd myapp\n    dcr run",
+                  "text": " Next steps:\n"
+                },
+                {
+                  "text": "  cd myapp\n  dcr run",
                   "tone": "cyan"
                 }
               ]
@@ -239,7 +301,7 @@
       {
         "number": "2",
         "title": "Configure",
-        "description": "Describe the project in a short, readable file. No CMake syntax needed.",
+        "description": "Describe the project in one short, readable TOML file. No CMake syntax required.",
         "terminal": {
           "title": "nvim dcr.toml",
           "lines": [
@@ -267,7 +329,7 @@
                   "text": "dcr-version = "
                 },
                 {
-                  "text": "\"0.9.1\"\n",
+                  "text": "\"0.9.6\"\n",
                   "tone": "green"
                 },
                 {
@@ -314,7 +376,7 @@
       {
         "number": "3",
         "title": "Build and run",
-        "description": "One command compiles the project and its dependencies and runs the result.",
+        "description": "`dcr run` builds the project and its dependencies, then runs the result.",
         "terminal": {
           "title": "Terminal",
           "lines": [
@@ -332,35 +394,35 @@
             {
               "segments": [
                 {
-                  "text": "  "
+                  "text": "     "
                 },
                 {
                   "text": "project",
                   "tone": "cyan"
                 },
                 {
-                  "text": "   myapp  (debug)\n  "
+                  "text": " myapp (debug, x86_64-unknown-linux-gnu)\n     "
                 },
                 {
                   "text": "compile",
                   "tone": "green"
                 },
                 {
-                  "text": "   myapp v0.1.0  [1/1]\n  "
+                  "text": " myapp v0.1.0  [1/1]\n        "
                 },
                 {
                   "text": "done",
                   "tone": "green"
                 },
                 {
-                  "text": "      in 0.24s\n  "
+                  "text": " in 0.24s\n         "
                 },
                 {
                   "text": "run",
                   "tone": "green"
                 },
                 {
-                  "text": "       target/debug/myapp\nHello World!"
+                  "text": " /home/user/myapp/target/x86_64-unknown-linux-gnu/debug/myapp\nHello World!"
                 }
               ]
             }
@@ -369,13 +431,13 @@
       }
     ],
     "cta": {
-      "question": "Need custom compiler flags, Qt or MO support, or a bare-metal build?",
+      "question": "Need custom compiler flags, Qt support, or a bare-metal build?",
       "action": "Read the documentation"
     }
   },
   "download": {
     "title": "Download",
-    "lead": "Ready to build?",
+    "lead": "Install DCR with a single command.",
     "platforms": [
       {
         "id": "linux",
@@ -404,20 +466,19 @@
         "commands": [
           "yay -S dcr",
           "brew tap dexoron/dexoron && brew install dcr",
-          "sudo snap install dcrup",
           "nix profile install github:dexoron/dcr",
           "cargo install dcr"
         ]
       }
     ],
-    "then": "Then:",
+    "then": "Then verify:",
     "verifyCommand": "dcr --version",
     "copy": "Copy",
     "copied": "Copied to clipboard",
-    "note": "DCR — a simple build tool for C and C++."
+    "note": "The installer also sets up dcrup, a version manager for DCR."
   },
   "footer": {
-    "license": "GPL-3.0 · Does not cover projects built with DCR",
-    "copyright": "(c) Dexoron.tech 2026"
+    "license": "GPL-3.0 · Projects built with DCR are not covered",
+    "copyright": "© Dexoron.tech 2026"
   }
 }

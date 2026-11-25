@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "DCR — система сборки для C/C++ в стиле Cargo",
-    "description": "DCR — система сборки и менеджер зависимостей для C и C++ в стиле Cargo. Один файл dcr.toml и простые команды: new, build, run, test."
+    "title": "DCR — система сборки для C и C++ в стиле Cargo",
+    "description": "DCR — система сборки и менеджер зависимостей для C и C++ в стиле Cargo. Один файл dcr.toml и несколько простых команд: new, build, run, test."
   },
   "nav": {
     "home": "Главная",
@@ -9,15 +9,15 @@
     "download": "Скачать",
     "support": "Поддержка",
     "github": "GitHub",
-    "donate": "Поддержать",
+    "donate": "Пожертвовать",
     "menu": "Меню"
   },
   "hero": {
     "titleLines": [
-      "Система сборки для C и C++",
-      "в стиле Cargo."
+      "Система сборки в стиле Cargo",
+      "для C и C++."
     ],
-    "description": "DCR собирает, запускает и тестирует C/C++ проекты по одному файлу dcr.toml и сам управляет зависимостями. Без Makefile и скриптов CMake: достаточно команд dcr new, dcr build и dcr run.",
+    "description": "Собирайте, запускайте и тестируйте проекты на C и C++ из одного файла dcr.toml, а зависимости DCR возьмёт на себя. Никаких Makefile и скриптов CMake — только dcr new, dcr build и dcr run.",
     "primaryAction": "Начать",
     "secondaryAction": "GitHub",
     "license": "GPLv3"
@@ -39,28 +39,73 @@
       {
         "segments": [
           {
-            "text": "Creating a Project `"
+            "text": "    "
+          },
+          {
+            "text": "Creating",
+            "tone": "green"
+          },
+          {
+            "text": " project `"
           },
           {
             "text": "myapp",
             "tone": "cyan"
           },
           {
-            "text": "`...\nProject `"
+            "text": "`\n     "
+          },
+          {
+            "text": "Created",
+            "tone": "green"
+          },
+          {
+            "text": " directory `myapp`\n     "
+          },
+          {
+            "text": "Created",
+            "tone": "green"
+          },
+          {
+            "text": " dcr.toml\n     "
+          },
+          {
+            "text": "Created",
+            "tone": "green"
+          },
+          {
+            "text": " src/main.c\n "
+          },
+          {
+            "text": "Initialized",
+            "tone": "green"
+          },
+          {
+            "text": " git repository\n     "
+          },
+          {
+            "text": "Created",
+            "tone": "green"
+          },
+          {
+            "text": " project `"
           },
           {
             "text": "myapp",
             "tone": "green"
           },
           {
-            "text": "` successfully created\n\n"
+            "text": "`\n"
           },
           {
-            "text": "Next step:\n",
-            "tone": "green"
+            "text": "info:",
+            "tone": "cyan"
           },
           {
-            "text": "    cd myapp\n    dcr run",
+            "text": " Next steps:\n"
+          },
+          {
+            "text": "  cd myapp\n  dcr run",
             "tone": "cyan"
           }
         ]
@@ -90,35 +135,35 @@
       {
         "segments": [
           {
-            "text": "  "
+            "text": "     "
           },
           {
             "text": "project",
             "tone": "cyan"
           },
           {
-            "text": "   myapp  (debug, x86_64-unknown-linux-gnu)\n  "
+            "text": " myapp (debug, x86_64-unknown-linux-gnu)\n     "
           },
           {
             "text": "compile",
             "tone": "green"
           },
           {
-            "text": "   myapp v0.1.0  [1/1]\n  "
+            "text": " myapp v0.1.0  [1/1]\n        "
           },
           {
             "text": "done",
             "tone": "green"
           },
           {
-            "text": "      in 0.24s\n  "
+            "text": " in 0.24s\n         "
           },
           {
             "text": "run",
             "tone": "green"
           },
           {
-            "text": "       /home/dexoron/tmp/myapp/target/debug/myapp\nHello World!"
+            "text": " /home/dexoron/tmp/myapp/target/x86_64-unknown-linux-gnu/debug/myapp\nHello World!"
           }
         ]
       },
@@ -135,50 +180,50 @@
   "features": {
     "title": "Возможности",
     "lead": [
-      "Всё, что нужно для сборки C/C++.",
-      "Один инструмент. Один файл настроек. Один процесс."
+      "Всё, что нужно для сборки на C и C++.",
+      "Один инструмент, один конфиг, один рабочий процесс."
     ],
     "items": [
       {
         "icon": "terminal",
         "title": "Простые команды",
-        "description": "`new`, `build`, `run`, `test`, `clean`, `add`, `fmt`: всё в одном инструменте."
+        "description": "`new`, `build`, `run`, `test`, `clean`, `add`, `fmt`, `lint`: весь рабочий процесс в одном инструменте."
       },
       {
         "icon": "gitBranch",
-        "title": "Зависимости из папки, Git или реестра",
-        "description": "Подключайте библиотеки из локальной папки, Git-репозитория или реестра. Lock-файл делает сборки воспроизводимыми."
+        "title": "Зависимости из пути, Git, реестра и системы",
+        "description": "Подключайте библиотеки из локальной папки, Git-репозитория, реестра или из системы через `pkg-config`. Файл `dcr.lock` фиксирует, что именно было подключено, включая коммит Git."
       },
       {
         "icon": "globe",
         "title": "Кросс-компиляция",
-        "description": "Собирайте один проект под другие платформы и архитектуры. Цель задаётся полным target triple или коротким именем."
+        "description": "Собирайте проект под другую ОС или архитектуру. Целевую платформу можно задать полным target triple или коротким именем, например `windows`."
       },
       {
         "icon": "codeXml",
         "title": "Работает с вашей IDE",
-        "description": "Генерируйте `compile_commands.json` или настройки для VS Code и CLion командой `dcr gen` — редактор остаётся вашим."
+        "description": "`dcr gen` создаёт `compile_commands.json` и готовые настройки для VS Code и CLion, так что редактор можно оставить прежним."
       },
       {
         "icon": "fileCog",
         "title": "Один файл проекта",
-        "description": "Имя, язык, стандарт, компилятор и зависимости лежат в `dcr.toml` — ничего не разбросано по скриптам."
+        "description": "Имя, язык, стандарт, компилятор и зависимости хранятся в `dcr.toml`, а не разбросаны по скриптам."
       },
       {
         "icon": "bookOpen",
-        "title": "Документация в комплекте",
-        "description": "Man-страницы для `dcr` и каждой команды, например `man dcr-build`. Работают без интернета."
+        "title": "Справка из коробки",
+        "description": "У каждой команды есть `--help`, а при установке через пакетные менеджеры ставятся man-страницы, например `man dcr-build`."
       }
     ]
   },
   "quickStart": {
     "title": "Быстрый старт",
-    "lead": "Создайте и запустите проект на C/C++ за три шага.",
+    "lead": "Создайте и запустите проект на C или C++ за три шага.",
     "steps": [
       {
         "number": "1",
-        "title": "Создание проекта",
-        "description": "Создайте проект C/C++ с готовой структурой каталогов.",
+        "title": "Создайте проект",
+        "description": "`dcr new` создаёт проект с файлом `dcr.toml` и готовым к сборке `src/main.c`.",
         "terminal": {
           "title": "Терминал",
           "lines": [
@@ -196,28 +241,45 @@
             {
               "segments": [
                 {
-                  "text": "Creating a Project `"
+                  "text": "    "
+                },
+                {
+                  "text": "Creating",
+                  "tone": "green"
+                },
+                {
+                  "text": " project `"
                 },
                 {
                   "text": "myapp",
                   "tone": "cyan"
                 },
                 {
-                  "text": "`...\nProject `"
+                  "text": "`\n     "
+                },
+                {
+                  "text": "Created",
+                  "tone": "green"
+                },
+                {
+                  "text": " project `"
                 },
                 {
                   "text": "myapp",
                   "tone": "green"
                 },
                 {
-                  "text": "` successfully created\n\n"
+                  "text": "`\n"
                 },
                 {
-                  "text": "Next step:\n",
-                  "tone": "green"
+                  "text": "info:",
+                  "tone": "cyan"
                 },
                 {
-                  "text": "    cd myapp\n    dcr run",
+                  "text": " Next steps:\n"
+                },
+                {
+                  "text": "  cd myapp\n  dcr run",
                   "tone": "cyan"
                 }
               ]
@@ -238,8 +300,8 @@
       },
       {
         "number": "2",
-        "title": "Конфигурация",
-        "description": "Опишите проект в коротком понятном файле. Синтаксис CMake не нужен.",
+        "title": "Настройте",
+        "description": "Опишите проект в одном коротком и читаемом TOML-файле. Синтаксис CMake не нужен.",
         "terminal": {
           "title": "nvim dcr.toml",
           "lines": [
@@ -267,7 +329,7 @@
                   "text": "dcr-version = "
                 },
                 {
-                  "text": "\"0.9.1\"\n",
+                  "text": "\"0.9.6\"\n",
                   "tone": "green"
                 },
                 {
@@ -313,8 +375,8 @@
       },
       {
         "number": "3",
-        "title": "Сборка и запуск",
-        "description": "Одна команда компилирует проект вместе с зависимостями и запускает результат.",
+        "title": "Соберите и запустите",
+        "description": "`dcr run` собирает проект и его зависимости, а затем запускает результат.",
         "terminal": {
           "title": "Терминал",
           "lines": [
@@ -332,35 +394,35 @@
             {
               "segments": [
                 {
-                  "text": "  "
+                  "text": "     "
                 },
                 {
                   "text": "project",
                   "tone": "cyan"
                 },
                 {
-                  "text": "   myapp  (debug)\n  "
+                  "text": " myapp (debug, x86_64-unknown-linux-gnu)\n     "
                 },
                 {
                   "text": "compile",
                   "tone": "green"
                 },
                 {
-                  "text": "   myapp v0.1.0  [1/1]\n  "
+                  "text": " myapp v0.1.0  [1/1]\n        "
                 },
                 {
                   "text": "done",
                   "tone": "green"
                 },
                 {
-                  "text": "      in 0.24s\n  "
+                  "text": " in 0.24s\n         "
                 },
                 {
                   "text": "run",
                   "tone": "green"
                 },
                 {
-                  "text": "       target/debug/myapp\nHello World!"
+                  "text": " /home/user/myapp/target/x86_64-unknown-linux-gnu/debug/myapp\nHello World!"
                 }
               ]
             }
@@ -369,13 +431,13 @@
       }
     ],
     "cta": {
-      "question": "Нужны дополнительные флаги компилятора, поддержка Qt / MO или сборка для bare-metal?",
+      "question": "Нужны свои флаги компилятора, поддержка Qt или сборка под bare-metal?",
       "action": "Читать документацию"
     }
   },
   "download": {
     "title": "Скачать",
-    "lead": "Готовы начать сборку?",
+    "lead": "Установите DCR одной командой.",
     "platforms": [
       {
         "id": "linux",
@@ -404,20 +466,19 @@
         "commands": [
           "yay -S dcr",
           "brew tap dexoron/dexoron && brew install dcr",
-          "sudo snap install dcrup",
           "nix profile install github:dexoron/dcr",
           "cargo install dcr"
         ]
       }
     ],
-    "then": "Затем:",
+    "then": "Затем проверьте:",
     "verifyCommand": "dcr --version",
     "copy": "Копировать",
     "copied": "Скопировано в буфер обмена",
-    "note": "DCR — простая система сборки для C и C++."
+    "note": "Установщик также ставит dcrup — менеджер версий DCR."
   },
   "footer": {
     "license": "GPL-3.0 · Не распространяется на проекты, собранные с помощью DCR",
-    "copyright": "(c) Dexoron.tech 2026"
+    "copyright": "© Dexoron.tech 2026"
   }
 }

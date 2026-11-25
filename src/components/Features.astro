@@ -2,6 +2,7 @@
 import { useTranslations, type Lang } from '../i18n';
 import type { IconName } from './icons';
 import Icon from './Icon.astro';
+import InlineCodeText from './InlineCodeText.astro';
 
 interface Props {
   lang: Lang;
@@ -17,7 +18,7 @@ const copy = t.features;
     <div class="section-head section-head--tight">
       <h2 class="section-title" id="features-title">{copy.title}</h2>
       <p class="section-lead">
-        {copy.lead.map((line) => <span>{line}</span>)}
+        {copy.lead.map((line) => <span><InlineCodeText text={line} /></span>)}
       </p>
     </div>
 
@@ -29,7 +30,7 @@ const copy = t.features;
             name={item.icon as IconName}
           />
           <h3 class="feature-cell__title">{item.title}</h3>
-          <p class="feature-cell__text">{item.description}</p>
+          <p class="feature-cell__text"><InlineCodeText text={item.description} /></p>
         </article>
       ))}
     </div>

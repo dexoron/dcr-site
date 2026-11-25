@@ -1,0 +1,484 @@
+{
+  "meta": {
+    "title": "DCR — a build tool for C and C++, like Cargo",
+    "description": "DCR builds C and C++ projects and manages their libraries. It works like Cargo. You need one file, dcr.toml, and a few easy commands: new, build, run, test."
+  },
+  "nav": {
+    "home": "Home",
+    "documentation": "Docs",
+    "download": "Download",
+    "support": "Support",
+    "github": "GitHub",
+    "donate": "Donate",
+    "menu": "Menu"
+  },
+  "hero": {
+    "titleLines": [
+      "A build tool for C and C++",
+      "that works like Cargo."
+    ],
+    "description": "Build, run, and test your C and C++ projects with one file called dcr.toml. DCR also takes care of your libraries. You do not need Makefiles or CMake scripts. Just use dcr new, dcr build, and dcr run.",
+    "primaryAction": "Get started",
+    "secondaryAction": "GitHub",
+    "license": "GPLv3"
+  },
+  "terminal": {
+    "title": "Terminal",
+    "newProject": [
+      {
+        "segments": [
+          {
+            "text": "$",
+            "tone": "prompt"
+          },
+          {
+            "text": " dcr new myapp"
+          }
+        ]
+      },
+      {
+        "segments": [
+          {
+            "text": "    "
+          },
+          {
+            "text": "Creating",
+            "tone": "green"
+          },
+          {
+            "text": " project `"
+          },
+          {
+            "text": "myapp",
+            "tone": "cyan"
+          },
+          {
+            "text": "`\n     "
+          },
+          {
+            "text": "Created",
+            "tone": "green"
+          },
+          {
+            "text": " directory `myapp`\n     "
+          },
+          {
+            "text": "Created",
+            "tone": "green"
+          },
+          {
+            "text": " dcr.toml\n     "
+          },
+          {
+            "text": "Created",
+            "tone": "green"
+          },
+          {
+            "text": " src/main.c\n "
+          },
+          {
+            "text": "Initialized",
+            "tone": "green"
+          },
+          {
+            "text": " git repository\n     "
+          },
+          {
+            "text": "Created",
+            "tone": "green"
+          },
+          {
+            "text": " project `"
+          },
+          {
+            "text": "myapp",
+            "tone": "green"
+          },
+          {
+            "text": "`\n"
+          },
+          {
+            "text": "info:",
+            "tone": "cyan"
+          },
+          {
+            "text": " Next steps:\n"
+          },
+          {
+            "text": "  cd myapp\n  dcr run",
+            "tone": "cyan"
+          }
+        ]
+      },
+      {
+        "segments": [
+          {
+            "text": "$",
+            "tone": "prompt"
+          },
+          {
+            "text": " cd myapp"
+          }
+        ]
+      },
+      {
+        "segments": [
+          {
+            "text": "$",
+            "tone": "prompt"
+          },
+          {
+            "text": " dcr run"
+          }
+        ]
+      },
+      {
+        "segments": [
+          {
+            "text": "     "
+          },
+          {
+            "text": "project",
+            "tone": "cyan"
+          },
+          {
+            "text": " myapp (debug, x86_64-unknown-linux-gnu)\n     "
+          },
+          {
+            "text": "compile",
+            "tone": "green"
+          },
+          {
+            "text": " myapp v0.1.0  [1/1]\n        "
+          },
+          {
+            "text": "done",
+            "tone": "green"
+          },
+          {
+            "text": " in 0.24s\n         "
+          },
+          {
+            "text": "run",
+            "tone": "green"
+          },
+          {
+            "text": " /home/dexoron/tmp/myapp/target/x86_64-unknown-linux-gnu/debug/myapp\nHello World!"
+          }
+        ]
+      },
+      {
+        "segments": [
+          {
+            "text": "$ ",
+            "tone": "prompt"
+          }
+        ]
+      }
+    ]
+  },
+  "features": {
+    "title": "Features",
+    "lead": [
+      "Everything you need to build C and C++.",
+      "One tool. One config file. One simple way to work."
+    ],
+    "items": [
+      {
+        "icon": "terminal",
+        "title": "Easy commands",
+        "description": "Use `new`, `build`, `run`, `test`, `clean`, `add`, `fmt`, and `lint`. All of them are in one tool."
+      },
+      {
+        "icon": "gitBranch",
+        "title": "Libraries from many places",
+        "description": "Add libraries from a folder, a Git repository, a registry, or your system with `pkg-config`. The file `dcr.lock` remembers exactly what you used, including the Git commit."
+      },
+      {
+        "icon": "globe",
+        "title": "Build for other systems",
+        "description": "Build your project for another operating system or CPU. Choose the target with a full target triple or a short name like `windows`."
+      },
+      {
+        "icon": "codeXml",
+        "title": "Works with your editor",
+        "description": "`dcr gen` creates `compile_commands.json` and settings for VS Code and CLion. You can keep using your editor."
+      },
+      {
+        "icon": "fileCog",
+        "title": "One project file",
+        "description": "The name, language, standard, compiler, and libraries are all in `dcr.toml`. Nothing is spread across many scripts."
+      },
+      {
+        "icon": "bookOpen",
+        "title": "Help is built in",
+        "description": "Every command has `--help`. If you install with a package manager, you also get man pages, like `man dcr-build`."
+      }
+    ]
+  },
+  "quickStart": {
+    "title": "Quick Start",
+    "lead": "Create and run a C or C++ project in three steps.",
+    "steps": [
+      {
+        "number": "1",
+        "title": "Create a project",
+        "description": "`dcr new` makes a project with a `dcr.toml` file and a `src/main.c` file that is ready to build.",
+        "terminal": {
+          "title": "Terminal",
+          "lines": [
+            {
+              "segments": [
+                {
+                  "text": "$",
+                  "tone": "prompt"
+                },
+                {
+                  "text": " dcr new myapp"
+                }
+              ]
+            },
+            {
+              "segments": [
+                {
+                  "text": "    "
+                },
+                {
+                  "text": "Creating",
+                  "tone": "green"
+                },
+                {
+                  "text": " project `"
+                },
+                {
+                  "text": "myapp",
+                  "tone": "cyan"
+                },
+                {
+                  "text": "`\n     "
+                },
+                {
+                  "text": "Created",
+                  "tone": "green"
+                },
+                {
+                  "text": " project `"
+                },
+                {
+                  "text": "myapp",
+                  "tone": "green"
+                },
+                {
+                  "text": "`\n"
+                },
+                {
+                  "text": "info:",
+                  "tone": "cyan"
+                },
+                {
+                  "text": " Next steps:\n"
+                },
+                {
+                  "text": "  cd myapp\n  dcr run",
+                  "tone": "cyan"
+                }
+              ]
+            },
+            {
+              "segments": [
+                {
+                  "text": "$",
+                  "tone": "prompt"
+                },
+                {
+                  "text": " cd myapp"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "number": "2",
+        "title": "Set it up",
+        "description": "Describe your project in one short TOML file. You do not need to learn CMake.",
+        "terminal": {
+          "title": "nvim dcr.toml",
+          "lines": [
+            {
+              "segments": [
+                {
+                  "text": "[package]\n",
+                  "tone": "amber"
+                },
+                {
+                  "text": "name = "
+                },
+                {
+                  "text": "\"myapp\"\n",
+                  "tone": "green"
+                },
+                {
+                  "text": "version = "
+                },
+                {
+                  "text": "\"0.1.0\"\n",
+                  "tone": "green"
+                },
+                {
+                  "text": "dcr-version = "
+                },
+                {
+                  "text": "\"0.9.6\"\n",
+                  "tone": "green"
+                },
+                {
+                  "text": "\n[build]\n",
+                  "tone": "amber"
+                },
+                {
+                  "text": "language = "
+                },
+                {
+                  "text": "\"c\"\n",
+                  "tone": "green"
+                },
+                {
+                  "text": "standard = "
+                },
+                {
+                  "text": "\"c11\"\n",
+                  "tone": "green"
+                },
+                {
+                  "text": "compiler = "
+                },
+                {
+                  "text": "\"clang\"\n",
+                  "tone": "green"
+                },
+                {
+                  "text": "kind = "
+                },
+                {
+                  "text": "\"bin\"\n",
+                  "tone": "green"
+                },
+                {
+                  "text": "\n[dependencies]",
+                  "tone": "amber"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "number": "3",
+        "title": "Build and run",
+        "description": "`dcr run` builds your project and its libraries. Then it runs the program.",
+        "terminal": {
+          "title": "Terminal",
+          "lines": [
+            {
+              "segments": [
+                {
+                  "text": "$",
+                  "tone": "prompt"
+                },
+                {
+                  "text": " dcr run"
+                }
+              ]
+            },
+            {
+              "segments": [
+                {
+                  "text": "     "
+                },
+                {
+                  "text": "project",
+                  "tone": "cyan"
+                },
+                {
+                  "text": " myapp (debug, x86_64-unknown-linux-gnu)\n     "
+                },
+                {
+                  "text": "compile",
+                  "tone": "green"
+                },
+                {
+                  "text": " myapp v0.1.0  [1/1]\n        "
+                },
+                {
+                  "text": "done",
+                  "tone": "green"
+                },
+                {
+                  "text": " in 0.24s\n         "
+                },
+                {
+                  "text": "run",
+                  "tone": "green"
+                },
+                {
+                  "text": " /home/user/myapp/target/x86_64-unknown-linux-gnu/debug/myapp\nHello World!"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "cta": {
+      "question": "Do you need your own compiler flags, Qt, or a bare-metal build?",
+      "action": "Read the docs"
+    }
+  },
+  "download": {
+    "title": "Download",
+    "lead": "Install DCR with one command.",
+    "platforms": [
+      {
+        "id": "linux",
+        "label": "Linux",
+        "commands": [
+          "curl -fsSL https://sh.dcr-tool.ru | sh"
+        ]
+      },
+      {
+        "id": "windows",
+        "label": "Windows",
+        "commands": [
+          "irm https://ps1.dcr-tool.ru | iex"
+        ]
+      },
+      {
+        "id": "macos",
+        "label": "macOS",
+        "commands": [
+          "curl -fsSL https://sh.dcr-tool.ru | sh"
+        ]
+      },
+      {
+        "id": "package-manager",
+        "label": "Package Manager",
+        "commands": [
+          "yay -S dcr",
+          "brew tap dexoron/dexoron && brew install dcr",
+          "nix profile install github:dexoron/dcr",
+          "cargo install dcr"
+        ]
+      }
+    ],
+    "then": "Then check it:",
+    "verifyCommand": "dcr --version",
+    "copy": "Copy",
+    "copied": "Copied to clipboard",
+    "note": "The installer also installs dcrup. It helps you switch between DCR versions."
+  },
+  "footer": {
+    "license": "GPL-3.0 · Does not apply to projects built with DCR",
+    "copyright": "© Dexoron.tech 2026"
+  }
+}

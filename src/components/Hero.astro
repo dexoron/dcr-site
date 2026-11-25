@@ -4,6 +4,7 @@ import { useTranslations, type Lang } from '../i18n';
 import { GITHUB_URL } from '../config';
 import Icon from './Icon.astro';
 import Terminal from './Terminal.astro';
+import InlineCodeText from './InlineCodeText.astro';
 
 interface Props {
   lang: Lang;
@@ -37,7 +38,7 @@ const t = useTranslations(lang);
           </>
         ))}
       </h1>
-      <p class="hero__description">{t.hero.description}</p>
+      <p class="hero__description"><InlineCodeText text={t.hero.description} /></p>
     </div>
 
     <div class="hero__actions">

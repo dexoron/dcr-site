@@ -1,4 +1,5 @@
 import enData from './en.json';
+import enSimpleData from './en-simple.json';
 
 // Europe
 import deDEData from './de-DE.json';
@@ -30,6 +31,7 @@ export type {
 // The JSON files are validated by `scripts/check-i18n.ts`, which runs as part of
 // `npm run check`, so these assertions only undo JSON's widened string types.
 const en = enData as Dictionary;
+const enSimple = enSimpleData as Dictionary;
 const deDE = deDEData as Dictionary;
 const esES = esESData as Dictionary;
 const frFR = frFRData as Dictionary;
@@ -44,6 +46,7 @@ const zhCN = zhCNData as Dictionary;
 
 const dictionaries: Record<Lang, Dictionary> = {
   en,
+  'en-Simple': enSimple,
 
   // Europe
   'de-DE': deDE,

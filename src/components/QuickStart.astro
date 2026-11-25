@@ -3,6 +3,7 @@ import { useTranslations, type Lang } from '../i18n';
 import { docsHomePath } from '../docs/nav';
 import Icon from './Icon.astro';
 import Terminal from './Terminal.astro';
+import InlineCodeText from './InlineCodeText.astro';
 
 interface Props {
   lang: Lang;
@@ -21,7 +22,7 @@ const copy = t.quickStart;
   <div class="container">
     <div class="section-head">
       <h2 class="section-title" id="quick-start-title">{copy.title}</h2>
-      <p class="section-lead">{copy.lead}</p>
+      <p class="section-lead"><InlineCodeText text={copy.lead} /></p>
     </div>
 
     <div class="quickstart__steps">
@@ -32,7 +33,7 @@ const copy = t.quickStart;
               <span class="step__number" aria-hidden="true">{step.number}</span>
               <h3 class="step__title">{step.title}</h3>
             </div>
-            <p class="step__text">{step.description}</p>
+            <p class="step__text"><InlineCodeText text={step.description} /></p>
           </div>
           <div class="step__code">
             <Terminal title={step.terminal.title} lines={step.terminal.lines} />
@@ -42,7 +43,7 @@ const copy = t.quickStart;
     </div>
 
     <div class="quickstart__cta">
-      <p class="quickstart__question">{copy.cta.question}</p>
+      <p class="quickstart__question"><InlineCodeText text={copy.cta.question} /></p>
       <a
         class="button button--primary"
         href={docsHomePath()}

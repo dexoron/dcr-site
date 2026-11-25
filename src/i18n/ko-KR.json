@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "DCR — C/C++를 위한 Cargo 스타일 빌드 도구",
-    "description": "DCR은 C와 C++에 현대적이고 예측 가능한 워크플로를 제공합니다. 프로젝트를 한 번만 정의하면 의존성을 관리하고, 어디서든 동일한 간단한 명령어로 빌드할 수 있습니다."
+    "title": "DCR — C와 C++를 위한 Cargo 스타일 빌드 도구",
+    "description": "DCR은 C와 C++를 위한 Cargo 스타일의 빌드 도구이자 의존성 관리자입니다. dcr.toml 하나와 new, build, run, test 같은 간단한 명령어면 충분합니다."
   },
   "nav": {
     "home": "홈",
@@ -14,10 +14,10 @@
   },
   "hero": {
     "titleLines": [
-      "빌드 시스템의 골칫거리 없이",
-      "C/C++를 빌드하세요."
+      "Cargo 스타일 빌드 도구",
+      "C와 C++를 위한."
     ],
-    "description": "DCR은 C와 C++에 현대적이고 예측 가능한 워크플로를 제공합니다. 프로젝트를 한 번만 정의하면 의존성을 관리하고, 어디서든 동일한 간단한 명령어로 빌드할 수 있습니다.",
+    "description": "하나의 dcr.toml로 C와 C++ 프로젝트를 빌드, 실행, 테스트하고, 의존성은 알아서 관리됩니다. Makefile도, CMake 스크립트도 필요 없습니다. dcr new, dcr build, dcr run만 있으면 됩니다.",
     "primaryAction": "시작하기",
     "secondaryAction": "GitHub",
     "license": "GPLv3"
@@ -28,70 +28,70 @@
   "features": {
     "title": "기능",
     "lead": [
-      "빌드에 필요한 모든 것.",
-      "하나의 도구. 하나의 설정. 하나의 워크플로."
+      "C와 C++ 빌드에 필요한 모든 것.",
+      "하나의 도구, 하나의 설정, 하나의 워크플로."
     ],
     "items": [
       {
-        "title": "익숙한 명령어",
-        "description": "build, run, test, clean, add, fmt 등. 알 수 없는 명령어 체인은 없습니다."
+        "title": "간단한 명령어",
+        "description": "`new`, `build`, `run`, `test`, `clean`, `add`, `fmt`, `lint`: 전체 워크플로를 하나의 도구로."
       },
       {
-        "title": "그냥 잘 동작하는 의존성",
-        "description": "로컬 경로, Git 저장소, 레지스트리를 사용할 수 있습니다. DCR은 락 파일로 의존성을 재현 가능하게 유지합니다."
+        "title": "경로, Git, 레지스트리, 시스템 의존성",
+        "description": "로컬 폴더, Git 저장소, 레지스트리 또는 `pkg-config`를 통한 시스템의 라이브러리를 사용할 수 있습니다. `dcr.lock`은 Git 커밋을 포함해 해석된 내용을 정확히 기록합니다."
       },
       {
-        "title": "어디서든 빌드",
-        "description": "프로젝트 설정을 다시 작성하지 않고도 Linux, Windows, macOS, BSD 등 다양한 플랫폼을 대상으로 빌드할 수 있습니다."
+        "title": "크로스 컴파일",
+        "description": "같은 프로젝트에서 다른 운영 체제나 아키텍처용으로 빌드합니다. 전체 타깃 트리플 또는 `windows` 같은 짧은 이름으로 타깃을 지정하세요."
       },
       {
-        "title": "사용 중인 IDE와 함께",
-        "description": "compile_commands.json을 생성하고 VS Code, CLion 등 원하는 에디터를 계속 사용하세요."
+        "title": "사용 중인 IDE와 함께 작동",
+        "description": "`dcr gen`은 `compile_commands.json`과 바로 사용할 수 있는 VS Code 및 CLion 설정을 생성하므로, 쓰던 에디터를 그대로 사용할 수 있습니다."
       },
       {
         "title": "하나의 프로젝트 파일",
-        "description": "빌드 설정을 dcr.toml 하나에 보관하세요. 흩어진 스크립트도, 설정 발굴 작업도 필요 없습니다."
+        "description": "이름, 언어, 표준, 컴파일러, 의존성이 모두 스크립트에 흩어지지 않고 `dcr.toml`에 담깁니다."
       },
       {
-        "title": "문서 포함",
-        "description": "오프라인에서 도움이 필요하신가요? man dcr이 해결해 드립니다."
+        "title": "내장 도움말",
+        "description": "모든 명령어에 `--help`가 있고, 패키지 설치에는 `man dcr-build` 같은 man 페이지가 포함됩니다."
       }
     ]
   },
   "quickStart": {
     "title": "빠른 시작",
-    "lead": "1분 안에 C/C++ 프로젝트를 실행해 보세요.",
+    "lead": "세 단계로 C 또는 C++ 프로젝트를 만들고 실행하세요.",
     "steps": [
       {
-        "title": "초기화",
-        "description": "표준 디렉터리 구조를 갖춘 깨끗한 C/C++ 작업 공간을 만듭니다.",
+        "title": "프로젝트 만들기",
+        "description": "`dcr new`는 `dcr.toml`과 바로 빌드할 수 있는 `src/main.c`가 있는 프로젝트를 설정합니다.",
         "terminal": {
           "title": "터미널"
         }
       },
       {
-        "title": "선언",
-        "description": "사람이 읽기 쉬운 간단한 설정. CMake 문법은 필요 없습니다.",
+        "title": "설정하기",
+        "description": "짧고 읽기 쉬운 TOML 파일 하나에 프로젝트를 기술하세요. CMake 문법은 필요하지 않습니다.",
         "terminal": {
           "title": "nvim dcr.toml"
         }
       },
       {
-        "title": "실행",
-        "description": "명령어 하나로 의존성을 컴파일하고 실행 파일을 실행합니다.",
+        "title": "빌드하고 실행하기",
+        "description": "`dcr run`은 프로젝트와 의존성을 빌드한 다음 결과를 실행합니다.",
         "terminal": {
           "title": "터미널"
         }
       }
     ],
     "cta": {
-      "question": "사용자 정의 빌드 플래그, Qt / MO 처리, 베어메탈 환경이 필요하신가요?",
-      "action": "문서 살펴보기"
+      "question": "사용자 지정 컴파일러 플래그, Qt 지원 또는 베어메탈 빌드가 필요하신가요?",
+      "action": "문서 읽기"
     }
   },
   "download": {
     "title": "다운로드",
-    "lead": "빌드할 준비가 되셨나요?",
+    "lead": "명령어 하나로 DCR을 설치하세요.",
     "platforms": [
       {
         "label": "Linux"
@@ -106,13 +106,13 @@
         "label": "패키지 관리자"
       }
     ],
-    "then": "그다음:",
+    "then": "그다음 확인하세요:",
     "copy": "복사",
-    "copied": "클립보드에 복사되었습니다",
-    "note": "DCR — C/C++와 합리적인 빌드 워크플로 사이의 빠진 퍼즐 조각."
+    "copied": "클립보드에 복사됨",
+    "note": "설치 프로그램은 DCR의 버전 관리자인 dcrup도 함께 설정합니다."
   },
   "footer": {
-    "license": "GPL-3.0 · DCR로 빌드한 프로젝트에는 적용되지 않습니다",
-    "copyright": "(c) Dexoron.tech 2026"
+    "license": "GPL-3.0 · DCR로 만든 프로젝트는 적용 대상이 아닙니다",
+    "copyright": "© Dexoron.tech 2026"
   }
 }

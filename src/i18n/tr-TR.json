@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "DCR — C/C++ için Cargo tarzı derleme aracı",
-    "description": "DCR, C ve C++ için modern ve öngörülebilir bir iş akışı sunar. Projenizi bir kez tanımlayın, bağımlılıkları yönetin ve nerede olursanız olun aynı basit komutlarla derleyin."
+    "title": "DCR — C ve C++ için Cargo tarzı bir derleme aracı",
+    "description": "DCR, C ve C++ için Cargo tarzı bir derleme aracı ve bağımlılık yöneticisidir. Tek bir dcr.toml ve birkaç basit komut: new, build, run, test."
   },
   "nav": {
     "home": "Ana Sayfa",
@@ -14,11 +14,11 @@
   },
   "hero": {
     "titleLines": [
-      "Derleme sistemi derdi olmadan",
-      "C/C++ derleyin."
+      "Cargo tarzı bir derleme aracı",
+      "C ve C++ için."
     ],
-    "description": "DCR, C ve C++ için modern ve öngörülebilir bir iş akışı sunar. Projenizi bir kez tanımlayın, bağımlılıkları yönetin ve nerede olursanız olun aynı basit komutlarla derleyin.",
-    "primaryAction": "Başla",
+    "description": "C ve C++ projelerini tek bir dcr.toml ile derleyin, çalıştırın ve test edin; bağımlılıklar sizin için yönetilir. Makefile yok, CMake betiği yok. Sadece dcr new, dcr build ve dcr run.",
+    "primaryAction": "Başlayın",
     "secondaryAction": "GitHub",
     "license": "GPLv3"
   },
@@ -28,70 +28,70 @@
   "features": {
     "title": "Özellikler",
     "lead": [
-      "Derlemek için ihtiyacınız olan her şey.",
-      "Tek araç. Tek yapılandırma. Tek iş akışı."
+      "C ve C++ derlemek için ihtiyacınız olan her şey.",
+      "Tek araç, tek yapılandırma, tek iş akışı."
     ],
     "items": [
       {
-        "title": "Tanıdık komutlar",
-        "description": "Build, run, test, clean, add, fmt ve daha fazlası. Gizemli komut zincirleri yok."
+        "title": "Basit komutlar",
+        "description": "`new`, `build`, `run`, `test`, `clean`, `add`, `fmt`, `lint`: tüm iş akışı tek bir araçta."
       },
       {
-        "title": "Sorunsuz çalışan bağımlılıklar",
-        "description": "Yerel yolları, Git depolarını veya kayıt defterlerini kullanın. DCR, kilit (lock) dosyasıyla bağımlılıklarınızı tekrarlanabilir tutar."
+        "title": "Yol, Git, kayıt defteri ve sistem bağımlılıkları",
+        "description": "Kütüphaneleri yerel bir klasörden, bir Git deposundan, bir kayıt defterinden veya `pkg-config` aracılığıyla sistemden kullanın. `dcr.lock`, Git commit'i dahil olmak üzere tam olarak neyin çözümlendiğini kaydeder."
       },
       {
-        "title": "Her yere derleyin",
-        "description": "Proje yapılandırmanızı yeniden yazmadan Linux, Windows, macOS, BSD ve diğer platformları hedefleyin."
+        "title": "Çapraz derleme",
+        "description": "Aynı projeden başka bir işletim sistemi veya mimari için derleme yapın. Hedefi tam bir target triple ile ya da `windows` gibi kısa bir adla belirleyin."
       },
       {
-        "title": "IDE'nizle uyumlu",
-        "description": "compile_commands.json üretin ve VS Code, CLion veya tercih ettiğiniz editörü kullanmaya devam edin."
+        "title": "IDE'nizle uyumlu çalışır",
+        "description": "`dcr gen`, `compile_commands.json` dosyasını ve hazır VS Code ile CLion yapılandırmalarını üretir; böylece editörünüzü değiştirmeniz gerekmez."
       },
       {
         "title": "Tek proje dosyası",
-        "description": "Derleme yapılandırmanızı dcr.toml içinde tutun. Dağınık betikler yok. Yapılandırma arkeolojisi yok."
+        "description": "Ad, dil, standart, derleyici ve bağımlılıkların tümü betiklere dağılmak yerine `dcr.toml` içinde yer alır."
       },
       {
-        "title": "Dokümantasyon dahil",
-        "description": "Çevrimdışıyken yardıma mı ihtiyacınız var? man dcr yanınızda."
+        "title": "Yerleşik yardım",
+        "description": "Her komutun `--help` seçeneği vardır ve paket kurulumları `man dcr-build` gibi man sayfalarını içerir."
       }
     ]
   },
   "quickStart": {
     "title": "Hızlı Başlangıç",
-    "lead": "C/C++ projenizi bir dakikadan kısa sürede çalıştırın.",
+    "lead": "Üç adımda bir C veya C++ projesi oluşturun ve çalıştırın.",
     "steps": [
       {
-        "title": "Başlat",
-        "description": "Standart dizin yapısına sahip temiz bir C/C++ çalışma alanı oluşturun.",
+        "title": "Proje oluşturun",
+        "description": "`dcr new`, bir `dcr.toml` ve derlemeye hazır bir `src/main.c` içeren bir proje hazırlar.",
         "terminal": {
           "title": "Terminal"
         }
       },
       {
-        "title": "Tanımla",
-        "description": "Basit, okunabilir yapılandırma. CMake sözdizimine gerek yok.",
+        "title": "Yapılandırın",
+        "description": "Projeyi kısa ve okunabilir tek bir TOML dosyasında tanımlayın. CMake sözdizimi gerekmez.",
         "terminal": {
           "title": "nvim dcr.toml"
         }
       },
       {
-        "title": "Çalıştır",
-        "description": "Bağımlılıkları derlemek ve çalıştırılabilir dosyanızı başlatmak için tek komut.",
+        "title": "Derleyin ve çalıştırın",
+        "description": "`dcr run` projeyi ve bağımlılıklarını derler, ardından sonucu çalıştırır.",
         "terminal": {
           "title": "Terminal"
         }
       }
     ],
     "cta": {
-      "question": "Özel derleme bayrakları, Qt / MO desteği veya bare-metal kurulumlar mı gerekiyor?",
-      "action": "Dokümantasyonu Keşfedin"
+      "question": "Özel derleyici bayraklarına, Qt desteğine veya bare-metal derlemeye mi ihtiyacınız var?",
+      "action": "Dokümantasyonu okuyun"
     }
   },
   "download": {
     "title": "İndir",
-    "lead": "Derlemeye hazır mısınız?",
+    "lead": "DCR'yi tek bir komutla kurun.",
     "platforms": [
       {
         "label": "Linux"
@@ -106,13 +106,13 @@
         "label": "Paket Yöneticisi"
       }
     ],
-    "then": "Ardından:",
+    "then": "Ardından doğrulayın:",
     "copy": "Kopyala",
     "copied": "Panoya kopyalandı",
-    "note": "DCR — C/C++ ile sağlıklı bir derleme iş akışı arasındaki eksik halka."
+    "note": "Yükleyici ayrıca DCR için bir sürüm yöneticisi olan dcrup'ı da kurar."
   },
   "footer": {
-    "license": "GPL-3.0 · DCR ile derlenen projeleri kapsamaz",
-    "copyright": "(c) Dexoron.tech 2026"
+    "license": "GPL-3.0 · DCR ile oluşturulan projeler kapsam dışındadır",
+    "copyright": "© Dexoron.tech 2026"
   }
 }

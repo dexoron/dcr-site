@@ -1,23 +1,23 @@
 {
   "meta": {
-    "title": "DCR — Outil de build de type Cargo pour C/C++",
-    "description": "DCR apporte à C et C++ un flux de travail moderne et prévisible. Définissez votre projet une seule fois, gérez vos dépendances et compilez avec les mêmes commandes simples, où que vous soyez."
+    "title": "DCR — Un outil de build à la Cargo pour C et C++",
+    "description": "DCR est un outil de build et un gestionnaire de dépendances à la Cargo pour C et C++. Un seul dcr.toml et quelques commandes simples : new, build, run, test."
   },
   "nav": {
     "home": "Accueil",
     "documentation": "Documentation",
     "download": "Télécharger",
-    "support": "Support",
+    "support": "Assistance",
     "github": "GitHub",
     "donate": "Faire un don",
     "menu": "Menu"
   },
   "hero": {
     "titleLines": [
-      "Compilez du C/C++ sans le casse-tête",
-      "du système de build."
+      "Un outil de build à la Cargo",
+      "pour C et C++."
     ],
-    "description": "DCR apporte à C et C++ un flux de travail moderne et prévisible. Définissez votre projet une seule fois, gérez vos dépendances et compilez avec les mêmes commandes simples, où que vous soyez.",
+    "description": "Compilez, exécutez et testez vos projets C et C++ à partir d'un seul dcr.toml, les dépendances étant gérées pour vous. Pas de Makefiles, pas de scripts CMake. Juste dcr new, dcr build et dcr run.",
     "primaryAction": "Commencer",
     "secondaryAction": "GitHub",
     "license": "GPLv3"
@@ -28,70 +28,70 @@
   "features": {
     "title": "Fonctionnalités",
     "lead": [
-      "Tout ce qu'il faut pour compiler.",
-      "Un outil. Une configuration. Un flux de travail."
+      "Tout ce qu'il faut pour compiler du C et du C++.",
+      "Un seul outil, une seule configuration, un seul flux de travail."
     ],
     "items": [
       {
-        "title": "Des commandes familières",
-        "description": "Build, run, test, clean, add, fmt, et bien plus. Pas de chaînes de commandes mystérieuses."
+        "title": "Des commandes simples",
+        "description": "`new`, `build`, `run`, `test`, `clean`, `add`, `fmt`, `lint` : tout le flux de travail dans un seul outil."
       },
       {
-        "title": "Des dépendances qui fonctionnent, tout simplement",
-        "description": "Utilisez des chemins locaux, des dépôts Git ou des registres. DCR garantit la reproductibilité de vos dépendances grâce à un fichier de verrouillage (lock)."
+        "title": "Dépendances par chemin, Git, registre et système",
+        "description": "Utilisez des bibliothèques provenant d'un dossier local, d'un dépôt Git, d'un registre ou du système via `pkg-config`. `dcr.lock` enregistre exactement ce qui a été résolu, y compris le commit Git."
       },
       {
-        "title": "Compilez pour toutes les plateformes",
-        "description": "Ciblez Linux, Windows, macOS, BSD et d'autres plateformes sans réécrire la configuration de votre projet."
+        "title": "Compilation croisée",
+        "description": "Compilez pour un autre système d'exploitation ou une autre architecture à partir du même projet. Définissez la cible avec un target triple complet ou un nom court comme `windows`."
       },
       {
         "title": "Compatible avec votre IDE",
-        "description": "Générez compile_commands.json et continuez à utiliser VS Code, CLion ou l'éditeur de votre choix."
+        "description": "`dcr gen` produit `compile_commands.json` ainsi que des configurations prêtes à l'emploi pour VS Code et CLion, pour que vous puissiez garder votre éditeur."
       },
       {
         "title": "Un seul fichier de projet",
-        "description": "Gardez votre configuration de build dans dcr.toml. Pas de scripts éparpillés. Pas d'archéologie de configuration."
+        "description": "Le nom, le langage, le standard, le compilateur et les dépendances se trouvent tous dans `dcr.toml`, et non dispersés dans des scripts."
       },
       {
-        "title": "Documentation incluse",
-        "description": "Besoin d'aide hors ligne ? man dcr s'en charge."
+        "title": "Aide intégrée",
+        "description": "Chaque commande dispose de `--help`, et les installations de paquets incluent des pages de manuel comme `man dcr-build`."
       }
     ]
   },
   "quickStart": {
     "title": "Démarrage rapide",
-    "lead": "Lancez votre projet C/C++ en moins d'une minute.",
+    "lead": "Créez et exécutez un projet C ou C++ en trois étapes.",
     "steps": [
       {
-        "title": "Initialiser",
-        "description": "Créez un espace de travail C/C++ propre avec une structure de répertoires standard.",
+        "title": "Créer un projet",
+        "description": "`dcr new` met en place un projet avec un `dcr.toml` et un `src/main.c` prêt à être compilé.",
         "terminal": {
           "title": "Terminal"
         }
       },
       {
-        "title": "Déclarer",
-        "description": "Une configuration simple et lisible. Aucune syntaxe CMake requise.",
+        "title": "Configurer",
+        "description": "Décrivez le projet dans un fichier TOML court et lisible. Aucune syntaxe CMake requise.",
         "terminal": {
           "title": "nvim dcr.toml"
         }
       },
       {
-        "title": "Exécuter",
-        "description": "Une seule commande pour compiler les dépendances et lancer votre exécutable.",
+        "title": "Compiler et exécuter",
+        "description": "`dcr run` compile le projet et ses dépendances, puis exécute le résultat.",
         "terminal": {
           "title": "Terminal"
         }
       }
     ],
     "cta": {
-      "question": "Besoin de flags de build personnalisés, de la prise en charge de Qt / MO ou de configurations bare-metal ?",
-      "action": "Explorer la documentation"
+      "question": "Besoin d'options de compilation personnalisées, du support de Qt ou d'un build bare-metal ?",
+      "action": "Lire la documentation"
     }
   },
   "download": {
     "title": "Télécharger",
-    "lead": "Prêt à compiler ?",
+    "lead": "Installez DCR avec une seule commande.",
     "platforms": [
       {
         "label": "Linux"
@@ -106,13 +106,13 @@
         "label": "Gestionnaire de paquets"
       }
     ],
-    "then": "Ensuite :",
+    "then": "Vérifiez ensuite :",
     "copy": "Copier",
     "copied": "Copié dans le presse-papiers",
-    "note": "DCR — le chaînon manquant entre C/C++ et un flux de build sain."
+    "note": "L'installateur configure aussi dcrup, un gestionnaire de versions pour DCR."
   },
   "footer": {
-    "license": "GPL-3.0 · Ne couvre pas les projets compilés avec DCR",
-    "copyright": "(c) Dexoron.tech 2026"
+    "license": "GPL-3.0 · Les projets créés avec DCR ne sont pas concernés",
+    "copyright": "© Dexoron.tech 2026"
   }
 }

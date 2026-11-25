@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "DCR — Herramienta de compilación estilo Cargo para C/C++",
-    "description": "DCR aporta un flujo de trabajo moderno y predecible a C y C++. Define tu proyecto una vez, gestiona dependencias y compila con los mismos comandos sencillos estés donde estés."
+    "title": "DCR — Una herramienta de compilación al estilo Cargo para C y C++",
+    "description": "DCR es una herramienta de compilación y gestor de dependencias al estilo Cargo para C y C++. Un solo dcr.toml y unos pocos comandos sencillos: new, build, run, test."
   },
   "nav": {
     "home": "Inicio",
@@ -14,10 +14,10 @@
   },
   "hero": {
     "titleLines": [
-      "Compila C/C++ sin el dolor de cabeza",
-      "del sistema de compilación."
+      "Una herramienta de compilación al estilo Cargo",
+      "para C y C++."
     ],
-    "description": "DCR aporta un flujo de trabajo moderno y predecible a C y C++. Define tu proyecto una vez, gestiona dependencias y compila con los mismos comandos sencillos estés donde estés.",
+    "description": "Compila, ejecuta y prueba proyectos de C y C++ desde un único dcr.toml, con las dependencias gestionadas por ti. Sin Makefiles ni scripts de CMake. Solo dcr new, dcr build y dcr run.",
     "primaryAction": "Empezar",
     "secondaryAction": "GitHub",
     "license": "GPLv3"
@@ -28,70 +28,70 @@
   "features": {
     "title": "Características",
     "lead": [
-      "Todo lo que necesitas para compilar.",
-      "Una herramienta. Una configuración. Un flujo de trabajo."
+      "Todo lo que necesitas para compilar C y C++.",
+      "Una herramienta, una configuración, un flujo de trabajo."
     ],
     "items": [
       {
-        "title": "Comandos familiares",
-        "description": "Build, run, test, clean, add, fmt y más. Sin cadenas de comandos misteriosas."
+        "title": "Comandos sencillos",
+        "description": "`new`, `build`, `run`, `test`, `clean`, `add`, `fmt`, `lint`: todo el flujo de trabajo en una sola herramienta."
       },
       {
-        "title": "Dependencias que simplemente funcionan",
-        "description": "Usa rutas locales, repositorios Git o registros. DCR mantiene tus dependencias reproducibles con un archivo de bloqueo (lock)."
+        "title": "Dependencias de ruta, Git, registro y sistema",
+        "description": "Usa bibliotecas de una carpeta local, un repositorio Git, un registro o del sistema mediante `pkg-config`. `dcr.lock` registra exactamente lo que se resolvió, incluido el commit de Git."
       },
       {
-        "title": "Compila para cualquier lugar",
-        "description": "Apunta a Linux, Windows, macOS, BSD y otras plataformas sin reescribir la configuración de tu proyecto."
+        "title": "Compilación cruzada",
+        "description": "Compila para otro sistema operativo o arquitectura desde el mismo proyecto. Define el destino con un target triple completo o un nombre corto como `windows`."
       },
       {
         "title": "Funciona con tu IDE",
-        "description": "Genera compile_commands.json y sigue usando VS Code, CLion o el editor que prefieras."
+        "description": "`dcr gen` genera `compile_commands.json` y configuraciones listas para VS Code y CLion, para que puedas conservar tu editor."
       },
       {
         "title": "Un único archivo de proyecto",
-        "description": "Mantén la configuración de compilación en dcr.toml. Sin scripts dispersos. Sin arqueología de configuración."
+        "description": "El nombre, el lenguaje, el estándar, el compilador y las dependencias residen en `dcr.toml`, no dispersos entre scripts."
       },
       {
-        "title": "Documentación incluida",
-        "description": "¿Necesitas ayuda sin conexión? man dcr te lo resuelve."
+        "title": "Ayuda integrada",
+        "description": "Cada comando tiene `--help`, y las instalaciones de paquetes incluyen páginas de manual como `man dcr-build`."
       }
     ]
   },
   "quickStart": {
     "title": "Inicio rápido",
-    "lead": "Pon en marcha tu proyecto C/C++ en menos de un minuto.",
+    "lead": "Crea y ejecuta un proyecto de C o C++ en tres pasos.",
     "steps": [
       {
-        "title": "Inicializar",
-        "description": "Crea un espacio de trabajo C/C++ limpio con la estructura de directorios estándar.",
+        "title": "Crear un proyecto",
+        "description": "`dcr new` prepara un proyecto con un `dcr.toml` y un `src/main.c` listo para compilar.",
         "terminal": {
           "title": "Terminal"
         }
       },
       {
-        "title": "Declarar",
-        "description": "Configuración sencilla y legible. No necesitas sintaxis de CMake.",
+        "title": "Configurar",
+        "description": "Describe el proyecto en un archivo TOML corto y legible. No hace falta sintaxis de CMake.",
         "terminal": {
           "title": "nvim dcr.toml"
         }
       },
       {
-        "title": "Ejecutar",
-        "description": "Un solo comando para compilar las dependencias y ejecutar tu binario.",
+        "title": "Compilar y ejecutar",
+        "description": "`dcr run` compila el proyecto y sus dependencias, y después ejecuta el resultado.",
         "terminal": {
           "title": "Terminal"
         }
       }
     ],
     "cta": {
-      "question": "¿Necesitas flags de compilación personalizados, soporte para Qt / MO o entornos bare-metal?",
-      "action": "Explorar la documentación"
+      "question": "¿Necesitas flags de compilador personalizados, compatibilidad con Qt o una compilación bare-metal?",
+      "action": "Leer la documentación"
     }
   },
   "download": {
     "title": "Descargar",
-    "lead": "¿Listo para compilar?",
+    "lead": "Instala DCR con un solo comando.",
     "platforms": [
       {
         "label": "Linux"
@@ -106,13 +106,13 @@
         "label": "Gestor de paquetes"
       }
     ],
-    "then": "Después:",
+    "then": "Luego verifica:",
     "copy": "Copiar",
     "copied": "Copiado al portapapeles",
-    "note": "DCR — la pieza que faltaba entre C/C++ y un flujo de compilación sensato."
+    "note": "El instalador también configura dcrup, un gestor de versiones para DCR."
   },
   "footer": {
-    "license": "GPL-3.0 · No se aplica a los proyectos compilados con DCR",
-    "copyright": "(c) Dexoron.tech 2026"
+    "license": "GPL-3.0 · Los proyectos creados con DCR no están cubiertos",
+    "copyright": "© Dexoron.tech 2026"
   }
 }

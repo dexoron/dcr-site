@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "DCR — 类 Cargo 风格的 C/C++ 构建工具",
-    "description": "DCR 为 C 和 C++ 带来现代、可预测的工作流。只需定义一次项目,即可管理依赖,并在任何环境下使用同样简单的命令进行构建。"
+    "title": "DCR — 适用于 C 和 C++ 的 Cargo 风格构建工具",
+    "description": "DCR 是适用于 C 和 C++ 的 Cargo 风格构建工具和依赖管理器。只需一个 dcr.toml 和几个简单的命令：new、build、run、test。"
   },
   "nav": {
     "home": "首页",
@@ -14,10 +14,10 @@
   },
   "hero": {
     "titleLines": [
-      "告别构建系统的烦恼,",
-      "轻松构建 C/C++。"
+      "Cargo 风格的构建工具",
+      "适用于 C 和 C++。"
     ],
-    "description": "DCR 为 C 和 C++ 带来现代、可预测的工作流。只需定义一次项目,即可管理依赖,并在任何环境下使用同样简单的命令进行构建。",
+    "description": "只需一个 dcr.toml，即可构建、运行和测试 C 与 C++ 项目，依赖由工具为你管理。无需 Makefile，无需 CMake 脚本。只要 dcr new、dcr build 和 dcr run。",
     "primaryAction": "开始使用",
     "secondaryAction": "GitHub",
     "license": "GPLv3"
@@ -26,72 +26,72 @@
     "title": "终端"
   },
   "features": {
-    "title": "特性",
+    "title": "功能特性",
     "lead": [
-      "构建所需的一切。",
-      "一个工具,一份配置,一套流程。"
+      "构建 C 和 C++ 所需的一切。",
+      "一个工具，一份配置，一套工作流。"
     ],
     "items": [
       {
-        "title": "熟悉的命令",
-        "description": "Build、run、test、clean、add、fmt 等等。没有神秘的命令链。"
+        "title": "简单的命令",
+        "description": "`new`、`build`、`run`、`test`、`clean`、`add`、`fmt`、`lint`：整个工作流尽在一个工具中。"
       },
       {
-        "title": "开箱即用的依赖",
-        "description": "支持本地路径、Git 仓库或注册表。DCR 通过锁文件确保依赖可复现。"
+        "title": "路径、Git、注册表和系统依赖",
+        "description": "可使用来自本地文件夹、Git 仓库、注册表的库，或通过 `pkg-config` 使用系统库。`dcr.lock` 会准确记录解析结果，包括 Git 提交。"
       },
       {
-        "title": "随处构建",
-        "description": "无需重写项目配置,即可面向 Linux、Windows、macOS、BSD 等平台构建。"
+        "title": "交叉编译",
+        "description": "从同一个项目为其他操作系统或架构进行构建。可使用完整的目标三元组，或 `windows` 这样的简短名称来指定目标。"
       },
       {
-        "title": "兼容你的 IDE",
-        "description": "生成 compile_commands.json,继续使用 VS Code、CLion 或任何你喜欢的编辑器。"
+        "title": "与你的 IDE 配合使用",
+        "description": "`dcr gen` 会生成 `compile_commands.json` 以及开箱即用的 VS Code 和 CLion 配置，让你可以继续使用自己的编辑器。"
       },
       {
-        "title": "单一项目文件",
-        "description": "将构建配置集中在 dcr.toml 中。没有零散脚本,无需考古式排查配置。"
+        "title": "一个项目文件",
+        "description": "名称、语言、标准、编译器和依赖都集中在 `dcr.toml` 中，而不是分散在各个脚本里。"
       },
       {
-        "title": "自带文档",
-        "description": "需要离线帮助?man dcr 就能满足你。"
+        "title": "内置帮助",
+        "description": "每个命令都有 `--help`，软件包安装还附带 `man dcr-build` 等 man 手册页。"
       }
     ]
   },
   "quickStart": {
     "title": "快速开始",
-    "lead": "不到一分钟,让你的 C/C++ 项目跑起来。",
+    "lead": "三步创建并运行 C 或 C++ 项目。",
     "steps": [
       {
-        "title": "初始化",
-        "description": "创建一个具有标准目录结构的干净 C/C++ 工作区。",
+        "title": "创建项目",
+        "description": "`dcr new` 会创建一个包含 `dcr.toml` 和可直接构建的 `src/main.c` 的项目。",
         "terminal": {
           "title": "终端"
         }
       },
       {
-        "title": "声明",
-        "description": "简单易读的配置,无需 CMake 语法。",
+        "title": "配置",
+        "description": "用一个简短易读的 TOML 文件描述项目，无需 CMake 语法。",
         "terminal": {
           "title": "nvim dcr.toml"
         }
       },
       {
-        "title": "执行",
-        "description": "一条命令即可编译依赖并运行可执行文件。",
+        "title": "构建并运行",
+        "description": "`dcr run` 会构建项目及其依赖，然后运行生成的结果。",
         "terminal": {
           "title": "终端"
         }
       }
     ],
     "cta": {
-      "question": "需要自定义构建参数、Qt / MO 支持或裸机(bare-metal)环境?",
-      "action": "查看文档"
+      "question": "需要自定义编译器参数、Qt 支持或裸机构建吗？",
+      "action": "阅读文档"
     }
   },
   "download": {
     "title": "下载",
-    "lead": "准备好开始构建了吗?",
+    "lead": "只需一条命令即可安装 DCR。",
     "platforms": [
       {
         "label": "Linux"
@@ -106,13 +106,13 @@
         "label": "包管理器"
       }
     ],
-    "then": "然后:",
+    "then": "然后验证：",
     "copy": "复制",
     "copied": "已复制到剪贴板",
-    "note": "DCR — C/C++ 与理智构建流程之间缺失的一环。"
+    "note": "安装程序还会安装 dcrup，它是 DCR 的版本管理器。"
   },
   "footer": {
-    "license": "GPL-3.0 · 不适用于使用 DCR 构建的项目",
-    "copyright": "(c) Dexoron.tech 2026"
+    "license": "GPL-3.0 · 使用 DCR 构建的项目不在此许可范围内",
+    "copyright": "© Dexoron.tech 2026"
   }
 }

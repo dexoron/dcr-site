@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "DCR — C/C++ 向け Cargo スタイルのビルドツール",
-    "description": "DCR は C と C++ に、モダンで予測しやすいワークフローをもたらします。プロジェクトを一度定義すれば、依存関係を管理し、どこでも同じシンプルなコマンドでビルドできます。"
+    "title": "DCR — C と C++ のための Cargo 風ビルドツール",
+    "description": "DCR は C と C++ のための Cargo 風ビルドツール兼依存関係マネージャーです。1 つの dcr.toml と、new、build、run、test といったシンプルなコマンドだけで使えます。"
   },
   "nav": {
     "home": "ホーム",
@@ -14,11 +14,11 @@
   },
   "hero": {
     "titleLines": [
-      "ビルドシステムの悩みなしで、",
-      "C/C++ をビルド。"
+      "Cargo 風のビルドツール",
+      "C と C++ のために。"
     ],
-    "description": "DCR は C と C++ に、モダンで予測しやすいワークフローをもたらします。プロジェクトを一度定義すれば、依存関係を管理し、どこでも同じシンプルなコマンドでビルドできます。",
-    "primaryAction": "はじめる",
+    "description": "1 つの dcr.toml から C と C++ のプロジェクトをビルド、実行、テストでき、依存関係も自動で管理されます。Makefile も CMake スクリプトも不要。必要なのは dcr new、dcr build、dcr run だけです。",
+    "primaryAction": "始める",
     "secondaryAction": "GitHub",
     "license": "GPLv3"
   },
@@ -28,70 +28,70 @@
   "features": {
     "title": "機能",
     "lead": [
-      "ビルドに必要なすべてを。",
-      "1 つのツール。1 つの設定。1 つのワークフロー。"
+      "C と C++ のビルドに必要なものがすべて揃っています。",
+      "1 つのツール、1 つの設定、1 つのワークフロー。"
     ],
     "items": [
       {
-        "title": "おなじみのコマンド",
-        "description": "build、run、test、clean、add、fmt など。謎めいたコマンドの連鎖はありません。"
+        "title": "シンプルなコマンド",
+        "description": "`new`、`build`、`run`、`test`、`clean`、`add`、`fmt`、`lint`：ワークフロー全体を 1 つのツールで。"
       },
       {
-        "title": "ちゃんと動く依存関係",
-        "description": "ローカルパス、Git リポジトリ、レジストリを利用できます。DCR はロックファイルで依存関係の再現性を保ちます。"
+        "title": "パス、Git、レジストリ、システムの依存関係",
+        "description": "ローカルフォルダー、Git リポジトリ、レジストリ、または `pkg-config` 経由でシステムのライブラリを利用できます。`dcr.lock` には、Git コミットを含め、解決された内容が正確に記録されます。"
       },
       {
-        "title": "どこでもビルド",
-        "description": "プロジェクト設定を書き換えることなく、Linux、Windows、macOS、BSD などのプラットフォームを対象にできます。"
+        "title": "クロスコンパイル",
+        "description": "同じプロジェクトから別の OS やアーキテクチャ向けにビルドできます。ターゲットは、完全なターゲットトリプルか、`windows` のような短い名前で指定します。"
       },
       {
-        "title": "お使いの IDE で動作",
-        "description": "compile_commands.json を生成して、VS Code や CLion など、お好みのエディタをそのまま使えます。"
+        "title": "お使いの IDE で使える",
+        "description": "`dcr gen` は `compile_commands.json` と、すぐに使える VS Code および CLion の設定を生成するため、使い慣れたエディターをそのまま使えます。"
       },
       {
         "title": "1 つのプロジェクトファイル",
-        "description": "ビルド設定は dcr.toml にまとめます。散らばったスクリプトも、設定の発掘作業も不要です。"
+        "description": "名前、言語、規格、コンパイラ、依存関係はすべて `dcr.toml` にまとまっており、スクリプトに散らばることはありません。"
       },
       {
-        "title": "ドキュメント付属",
-        "description": "オフラインでヘルプが必要? man dcr があります。"
+        "title": "組み込みヘルプ",
+        "description": "すべてのコマンドに `--help` があり、パッケージのインストールには `man dcr-build` などの man ページも含まれます。"
       }
     ]
   },
   "quickStart": {
     "title": "クイックスタート",
-    "lead": "1 分もかからずに C/C++ プロジェクトを動かしましょう。",
+    "lead": "3 つのステップで C または C++ のプロジェクトを作成して実行します。",
     "steps": [
       {
-        "title": "初期化",
-        "description": "標準的なディレクトリ構成のクリーンな C/C++ ワークスペースを作成します。",
+        "title": "プロジェクトを作成",
+        "description": "`dcr new` は、`dcr.toml` とすぐにビルドできる `src/main.c` を持つプロジェクトを作成します。",
         "terminal": {
           "title": "ターミナル"
         }
       },
       {
-        "title": "宣言",
-        "description": "人間が読みやすいシンプルな設定。CMake の構文は不要です。",
+        "title": "設定",
+        "description": "プロジェクトを、短くて読みやすい 1 つの TOML ファイルに記述します。CMake の構文は不要です。",
         "terminal": {
           "title": "nvim dcr.toml"
         }
       },
       {
-        "title": "実行",
-        "description": "1 つのコマンドで依存関係をコンパイルし、実行ファイルを起動します。",
+        "title": "ビルドして実行",
+        "description": "`dcr run` はプロジェクトとその依存関係をビルドし、結果を実行します。",
         "terminal": {
           "title": "ターミナル"
         }
       }
     ],
     "cta": {
-      "question": "カスタムビルドフラグ、Qt / MO の扱い、ベアメタル環境が必要ですか?",
-      "action": "ドキュメントを見る"
+      "question": "カスタムのコンパイラフラグ、Qt のサポート、ベアメタルビルドが必要ですか？",
+      "action": "ドキュメントを読む"
     }
   },
   "download": {
     "title": "ダウンロード",
-    "lead": "ビルドの準備はできましたか?",
+    "lead": "コマンド 1 つで DCR をインストールできます。",
     "platforms": [
       {
         "label": "Linux"
@@ -106,13 +106,13 @@
         "label": "パッケージマネージャー"
       }
     ],
-    "then": "その後:",
+    "then": "その後、次のコマンドで確認します：",
     "copy": "コピー",
     "copied": "クリップボードにコピーしました",
-    "note": "DCR — C/C++ とまともなビルドワークフローをつなぐ、欠けていたピース。"
+    "note": "インストーラーは、DCR のバージョンマネージャーである dcrup も一緒にセットアップします。"
   },
   "footer": {
-    "license": "GPL-3.0 · DCR でビルドされたプロジェクトには適用されません",
-    "copyright": "(c) Dexoron.tech 2026"
+    "license": "GPL-3.0 · DCR で作成したプロジェクトは対象外です",
+    "copyright": "© Dexoron.tech 2026"
   }
 }

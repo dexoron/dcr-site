@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "DCR — narzędzie do budowania C/C++ w stylu Cargo",
-    "description": "DCR wprowadza do C i C++ nowoczesny, przewidywalny sposób pracy. Zdefiniuj projekt raz, zarządzaj zależnościami i buduj tymi samymi prostymi poleceniami wszędzie."
+    "title": "DCR — Narzędzie do budowania w stylu Cargo dla C i C++",
+    "description": "DCR to narzędzie do budowania i menedżer zależności w stylu Cargo dla C i C++. Jeden plik dcr.toml i kilka prostych poleceń: new, build, run, test."
   },
   "nav": {
     "home": "Strona główna",
@@ -14,11 +14,11 @@
   },
   "hero": {
     "titleLines": [
-      "Buduj C/C++ bez bólu głowy",
-      "z systemem budowania."
+      "Narzędzie do budowania w stylu Cargo",
+      "dla C i C++."
     ],
-    "description": "DCR wprowadza do C i C++ nowoczesny, przewidywalny sposób pracy. Zdefiniuj projekt raz, zarządzaj zależnościami i buduj tymi samymi prostymi poleceniami wszędzie.",
-    "primaryAction": "Zacznij",
+    "description": "Buduj, uruchamiaj i testuj projekty w C i C++ z jednego pliku dcr.toml, a zależnościami zajmiemy się za Ciebie. Bez Makefile'ów i skryptów CMake. Wystarczą dcr new, dcr build i dcr run.",
+    "primaryAction": "Zaczynamy",
     "secondaryAction": "GitHub",
     "license": "GPLv3"
   },
@@ -28,70 +28,70 @@
   "features": {
     "title": "Funkcje",
     "lead": [
-      "Wszystko, czego potrzebujesz do budowania.",
-      "Jedno narzędzie. Jedna konfiguracja. Jeden przepływ pracy."
+      "Wszystko, czego potrzebujesz do budowania w C i C++.",
+      "Jedno narzędzie, jedna konfiguracja, jeden przepływ pracy."
     ],
     "items": [
       {
-        "title": "Znajome polecenia",
-        "description": "Build, run, test, clean, add, fmt i więcej. Żadnych tajemniczych łańcuchów poleceń."
+        "title": "Proste polecenia",
+        "description": "`new`, `build`, `run`, `test`, `clean`, `add`, `fmt`, `lint`: cały przepływ pracy w jednym narzędziu."
       },
       {
-        "title": "Zależności, które po prostu działają",
-        "description": "Używaj lokalnych ścieżek, repozytoriów Git lub rejestrów. DCR zapewnia powtarzalność zależności dzięki plikowi lock."
+        "title": "Zależności ze ścieżki, Git, rejestru i systemu",
+        "description": "Korzystaj z bibliotek z lokalnego folderu, repozytorium Git, rejestru lub z systemu przez `pkg-config`. `dcr.lock` zapisuje dokładnie to, co zostało rozwiązane, łącznie z commitem Git."
       },
       {
-        "title": "Buduj na każdą platformę",
-        "description": "Celuj w Linux, Windows, macOS, BSD i inne platformy bez przepisywania konfiguracji projektu."
+        "title": "Kompilacja skrośna",
+        "description": "Buduj dla innego systemu operacyjnego lub architektury z tego samego projektu. Ustaw cel za pomocą pełnego target triple lub krótkiej nazwy, takiej jak `windows`."
       },
       {
-        "title": "Działa z Twoim IDE",
-        "description": "Generuj compile_commands.json i nadal używaj VS Code, CLion lub dowolnego ulubionego edytora."
+        "title": "Współpracuje z Twoim IDE",
+        "description": "`dcr gen` tworzy `compile_commands.json` oraz gotowe konfiguracje dla VS Code i CLion, dzięki czemu możesz zostać przy swoim edytorze."
       },
       {
         "title": "Jeden plik projektu",
-        "description": "Trzymaj konfigurację budowania w dcr.toml. Bez rozrzuconych skryptów. Bez archeologii konfiguracji."
+        "description": "Nazwa, język, standard, kompilator i zależności znajdują się w `dcr.toml`, a nie są rozproszone po skryptach."
       },
       {
-        "title": "Dokumentacja w zestawie",
-        "description": "Potrzebujesz pomocy offline? man dcr ci pomoże."
+        "title": "Wbudowana pomoc",
+        "description": "Każde polecenie ma `--help`, a instalacje pakietów zawierają strony podręcznika, takie jak `man dcr-build`."
       }
     ]
   },
   "quickStart": {
     "title": "Szybki start",
-    "lead": "Uruchom swój projekt C/C++ w mniej niż minutę.",
+    "lead": "Utwórz i uruchom projekt w C lub C++ w trzech krokach.",
     "steps": [
       {
-        "title": "Inicjalizacja",
-        "description": "Utwórz czyste środowisko C/C++ ze standardową strukturą katalogów.",
+        "title": "Utwórz projekt",
+        "description": "`dcr new` tworzy projekt z plikiem `dcr.toml` i gotowym do zbudowania `src/main.c`.",
         "terminal": {
           "title": "Terminal"
         }
       },
       {
-        "title": "Deklaracja",
-        "description": "Prosta, czytelna konfiguracja. Bez składni CMake.",
+        "title": "Skonfiguruj",
+        "description": "Opisz projekt w jednym krótkim, czytelnym pliku TOML. Składnia CMake nie jest potrzebna.",
         "terminal": {
           "title": "nvim dcr.toml"
         }
       },
       {
-        "title": "Uruchomienie",
-        "description": "Jedno polecenie kompiluje zależności i uruchamia Twój plik wykonywalny.",
+        "title": "Zbuduj i uruchom",
+        "description": "`dcr run` buduje projekt wraz z zależnościami, a następnie uruchamia wynik.",
         "terminal": {
           "title": "Terminal"
         }
       }
     ],
     "cta": {
-      "question": "Potrzebujesz własnych flag budowania, obsługi Qt / MO lub konfiguracji bare-metal?",
-      "action": "Przeglądaj dokumentację"
+      "question": "Potrzebujesz własnych flag kompilatora, obsługi Qt lub kompilacji bare-metal?",
+      "action": "Przeczytaj dokumentację"
     }
   },
   "download": {
     "title": "Pobierz",
-    "lead": "Gotowy do budowania?",
+    "lead": "Zainstaluj DCR jednym poleceniem.",
     "platforms": [
       {
         "label": "Linux"
@@ -106,13 +106,13 @@
         "label": "Menedżer pakietów"
       }
     ],
-    "then": "Następnie:",
+    "then": "Następnie sprawdź:",
     "copy": "Kopiuj",
     "copied": "Skopiowano do schowka",
-    "note": "DCR — brakujące ogniwo między C/C++ a rozsądnym procesem budowania."
+    "note": "Instalator konfiguruje także dcrup, menedżer wersji dla DCR."
   },
   "footer": {
-    "license": "GPL-3.0 · Nie dotyczy projektów zbudowanych za pomocą DCR",
-    "copyright": "(c) Dexoron.tech 2026"
+    "license": "GPL-3.0 · Projekty zbudowane przy użyciu DCR nie są objęte licencją",
+    "copyright": "© Dexoron.tech 2026"
   }
 }

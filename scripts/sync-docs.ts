@@ -2,8 +2,9 @@
  * Sync the documentation MDX sources from dexoron/dcr into Astro content.
  *
  * English is the source language and lives in `docs/` of the DCR repository.
- * Translations are expected in `docs-crowdin-export/<locale>/docs/` (the
- * Crowdin branch) and are copied only when that directory exists.
+ * Translations are expected in `docs-crowdin-export/<locale>/docs/` and are
+ * copied only when that directory exists. The Crowdin export must be merged
+ * into the DCR branch being synced.
  *
  * Local development prefers a sibling checkout (`../dcr`). When it is not
  * available, the repository is cloned sparsely into `.cache/dcr`.
@@ -81,7 +82,14 @@ async function resolveSource(): Promise<string | null> {
     );
     await execFileAsync(
       'git',
-      ['-C', cacheRoot, 'sparse-checkout', 'set', 'docs'],
+      [
+        '-C',
+        cacheRoot,
+        'sparse-checkout',
+        'set',
+        'docs',
+        'docs-crowdin-export',
+      ],
       { timeout: 60_000 },
     );
     return normalizeSourceDir(cacheRoot);

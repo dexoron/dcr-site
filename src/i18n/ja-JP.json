@@ -23,114 +23,7 @@
     "license": "GPLv3"
   },
   "terminal": {
-    "title": "ターミナル",
-    "newProject": [
-      {
-        "segments": [
-          {
-            "text": "$",
-            "tone": "prompt"
-          },
-          {
-            "text": " dcr new myapp"
-          }
-        ]
-      },
-      {
-        "segments": [
-          {
-            "text": "Creating a Project `"
-          },
-          {
-            "text": "myapp",
-            "tone": "cyan"
-          },
-          {
-            "text": "`...\nProject `"
-          },
-          {
-            "text": "myapp",
-            "tone": "green"
-          },
-          {
-            "text": "` successfully created\n\n"
-          },
-          {
-            "text": "Next step:\n",
-            "tone": "green"
-          },
-          {
-            "text": "    cd myapp\n    dcr run",
-            "tone": "cyan"
-          }
-        ]
-      },
-      {
-        "segments": [
-          {
-            "text": "$",
-            "tone": "prompt"
-          },
-          {
-            "text": " cd myapp"
-          }
-        ]
-      },
-      {
-        "segments": [
-          {
-            "text": "$",
-            "tone": "prompt"
-          },
-          {
-            "text": " dcr run"
-          }
-        ]
-      },
-      {
-        "segments": [
-          {
-            "text": "  "
-          },
-          {
-            "text": "project",
-            "tone": "cyan"
-          },
-          {
-            "text": "   myapp  (debug, x86_64-unknown-linux-gnu)\n  "
-          },
-          {
-            "text": "compile",
-            "tone": "green"
-          },
-          {
-            "text": "   myapp v0.1.0  [1/1]\n  "
-          },
-          {
-            "text": "done",
-            "tone": "green"
-          },
-          {
-            "text": "      in 0.24s\n  "
-          },
-          {
-            "text": "run",
-            "tone": "green"
-          },
-          {
-            "text": "       /home/dexoron/tmp/myapp/target/debug/myapp\nHello World!"
-          }
-        ]
-      },
-      {
-        "segments": [
-          {
-            "text": "$ ",
-            "tone": "prompt"
-          }
-        ]
-      }
-    ]
+    "title": "ターミナル"
   },
   "features": {
     "title": "機能",
@@ -140,32 +33,26 @@
     ],
     "items": [
       {
-        "icon": "terminal",
         "title": "おなじみのコマンド",
         "description": "build、run、test、clean、add、fmt など。謎めいたコマンドの連鎖はありません。"
       },
       {
-        "icon": "gitBranch",
         "title": "ちゃんと動く依存関係",
         "description": "ローカルパス、Git リポジトリ、レジストリを利用できます。DCR はロックファイルで依存関係の再現性を保ちます。"
       },
       {
-        "icon": "globe",
         "title": "どこでもビルド",
         "description": "プロジェクト設定を書き換えることなく、Linux、Windows、macOS、BSD などのプラットフォームを対象にできます。"
       },
       {
-        "icon": "codeXml",
         "title": "お使いの IDE で動作",
         "description": "compile_commands.json を生成して、VS Code や CLion など、お好みのエディタをそのまま使えます。"
       },
       {
-        "icon": "fileCog",
         "title": "1 つのプロジェクトファイル",
         "description": "ビルド設定は dcr.toml にまとめます。散らばったスクリプトも、設定の発掘作業も不要です。"
       },
       {
-        "icon": "bookOpen",
         "title": "ドキュメント付属",
         "description": "オフラインでヘルプが必要? man dcr があります。"
       }
@@ -176,195 +63,24 @@
     "lead": "1 分もかからずに C/C++ プロジェクトを動かしましょう。",
     "steps": [
       {
-        "number": "1",
         "title": "初期化",
         "description": "標準的なディレクトリ構成のクリーンな C/C++ ワークスペースを作成します。",
         "terminal": {
-          "title": "ターミナル",
-          "lines": [
-            {
-              "segments": [
-                {
-                  "text": "$",
-                  "tone": "prompt"
-                },
-                {
-                  "text": " dcr new myapp"
-                }
-              ]
-            },
-            {
-              "segments": [
-                {
-                  "text": "Creating a Project `"
-                },
-                {
-                  "text": "myapp",
-                  "tone": "cyan"
-                },
-                {
-                  "text": "`...\nProject `"
-                },
-                {
-                  "text": "myapp",
-                  "tone": "green"
-                },
-                {
-                  "text": "` successfully created\n\n"
-                },
-                {
-                  "text": "Next step:\n",
-                  "tone": "green"
-                },
-                {
-                  "text": "    cd myapp\n    dcr run",
-                  "tone": "cyan"
-                }
-              ]
-            },
-            {
-              "segments": [
-                {
-                  "text": "$",
-                  "tone": "prompt"
-                },
-                {
-                  "text": " cd myapp"
-                }
-              ]
-            }
-          ]
+          "title": "ターミナル"
         }
       },
       {
-        "number": "2",
         "title": "宣言",
         "description": "人間が読みやすいシンプルな設定。CMake の構文は不要です。",
         "terminal": {
-          "title": "nvim dcr.toml",
-          "lines": [
-            {
-              "segments": [
-                {
-                  "text": "[package]\n",
-                  "tone": "amber"
-                },
-                {
-                  "text": "name = "
-                },
-                {
-                  "text": "\"myapp\"\n",
-                  "tone": "green"
-                },
-                {
-                  "text": "version = "
-                },
-                {
-                  "text": "\"0.1.0\"\n",
-                  "tone": "green"
-                },
-                {
-                  "text": "dcr-version = "
-                },
-                {
-                  "text": "\"0.9.1\"\n",
-                  "tone": "green"
-                },
-                {
-                  "text": "\n[build]\n",
-                  "tone": "amber"
-                },
-                {
-                  "text": "language = "
-                },
-                {
-                  "text": "\"c\"\n",
-                  "tone": "green"
-                },
-                {
-                  "text": "standard = "
-                },
-                {
-                  "text": "\"c11\"\n",
-                  "tone": "green"
-                },
-                {
-                  "text": "compiler = "
-                },
-                {
-                  "text": "\"clang\"\n",
-                  "tone": "green"
-                },
-                {
-                  "text": "kind = "
-                },
-                {
-                  "text": "\"bin\"\n",
-                  "tone": "green"
-                },
-                {
-                  "text": "\n[dependencies]",
-                  "tone": "amber"
-                }
-              ]
-            }
-          ]
+          "title": "nvim dcr.toml"
         }
       },
       {
-        "number": "3",
         "title": "実行",
         "description": "1 つのコマンドで依存関係をコンパイルし、実行ファイルを起動します。",
         "terminal": {
-          "title": "ターミナル",
-          "lines": [
-            {
-              "segments": [
-                {
-                  "text": "$",
-                  "tone": "prompt"
-                },
-                {
-                  "text": " dcr run"
-                }
-              ]
-            },
-            {
-              "segments": [
-                {
-                  "text": "  "
-                },
-                {
-                  "text": "project",
-                  "tone": "cyan"
-                },
-                {
-                  "text": "   myapp  (debug)\n  "
-                },
-                {
-                  "text": "compile",
-                  "tone": "green"
-                },
-                {
-                  "text": "   myapp v0.1.0  [1/1]\n  "
-                },
-                {
-                  "text": "done",
-                  "tone": "green"
-                },
-                {
-                  "text": "      in 0.24s\n  "
-                },
-                {
-                  "text": "run",
-                  "tone": "green"
-                },
-                {
-                  "text": "       target/debug/myapp\nHello World!"
-                }
-              ]
-            }
-          ]
+          "title": "ターミナル"
         }
       }
     ],
@@ -378,46 +94,25 @@
     "lead": "ビルドの準備はできましたか?",
     "platforms": [
       {
-        "id": "linux",
-        "label": "Linux",
-        "commands": [
-          "curl -fsSL https://sh.dcr-tool.ru | sh"
-        ]
+        "label": "Linux"
       },
       {
-        "id": "windows",
-        "label": "Windows",
-        "commands": [
-          "irm https://ps1.dcr-tool.ru | iex"
-        ]
+        "label": "Windows"
       },
       {
-        "id": "macos",
-        "label": "macOS",
-        "commands": [
-          "curl -fsSL https://sh.dcr-tool.ru | sh"
-        ]
+        "label": "macOS"
       },
       {
-        "id": "package-manager",
-        "label": "パッケージマネージャー",
-        "commands": [
-          "yay -S dcr",
-          "brew tap dexoron/dexoron && brew install dcr",
-          "sudo snap install dcrup",
-          "nix profile install github:dexoron/dcr",
-          "cargo install dcr"
-        ]
+        "label": "パッケージマネージャー"
       }
     ],
     "then": "その後:",
-    "verifyCommand": "dcr --version",
     "copy": "コピー",
     "copied": "クリップボードにコピーしました",
     "note": "DCR — C/C++ とまともなビルドワークフローをつなぐ、欠けていたピース。"
   },
   "footer": {
     "license": "GPL-3.0 · DCR でビルドされたプロジェクトには適用されません",
-    "copyright": "(c) Dexoron.tech 2026"
+    "copyright": "© Dexoron.tech 2026"
   }
 }

@@ -193,6 +193,7 @@ files:
 Because the file names use Crowdin locale codes (`ru-RU`, `pt-BR`, `zh-CN`, …), no per-language configuration is needed. `%locale%` expands to the code that is also used in `locales.ts`.
 
 - English is the only source language. Edit `src/i18n/en.json`, push, and let Crowdin pick it up; do not translate `en.json` by hand.
+- Terminal output, install commands, platform IDs, and feature icons live in `src/data/landing-static.json`, outside the Crowdin source file. The localized JSON keeps only visitor-facing copy and labels.
 - `scripts/crowdin-pull.sh` downloads the latest translations before a build. It reads `CROWDIN_TOKEN` and `CROWDIN_PROJECT_ID` and exits quietly when they are not set, so local builds and forks keep working.
 - In GitLab, define `CROWDIN_TOKEN` (masked) and `CROWDIN_PROJECT_ID` as CI/CD variables. The build job runs `npm run check`, then builds. `CROWDIN_BASE_URL` is optional and defaults to `https://api.crowdin.com` (set it only for Crowdin Enterprise).
 - The check in `npm run check:i18n` fails when a pulled locale is not registered in `locales.ts`, so a new Crowdin language is added consciously rather than silently ignored.

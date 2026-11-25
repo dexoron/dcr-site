@@ -46,7 +46,7 @@ const zhCN = zhCNData as Dictionary;
 
 const dictionaries: Record<Lang, Dictionary> = {
   en,
-  'en-Simple': enSimple,
+  'en-simple': enSimple,
 
   // Europe
   'de-DE': deDE,

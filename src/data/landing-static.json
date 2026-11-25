@@ -1,0 +1,384 @@
+{
+  "heroTerminal": [
+    {
+      "segments": [
+        {
+          "text": "$",
+          "tone": "prompt"
+        },
+        {
+          "text": " dcr new myapp"
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "text": "    "
+        },
+        {
+          "text": "Creating",
+          "tone": "green"
+        },
+        {
+          "text": " project `"
+        },
+        {
+          "text": "myapp",
+          "tone": "cyan"
+        },
+        {
+          "text": "`\n     "
+        },
+        {
+          "text": "Created",
+          "tone": "green"
+        },
+        {
+          "text": " directory `myapp`\n     "
+        },
+        {
+          "text": "Created",
+          "tone": "green"
+        },
+        {
+          "text": " dcr.toml\n     "
+        },
+        {
+          "text": "Created",
+          "tone": "green"
+        },
+        {
+          "text": " src/main.c\n "
+        },
+        {
+          "text": "Initialized",
+          "tone": "green"
+        },
+        {
+          "text": " git repository\n     "
+        },
+        {
+          "text": "Created",
+          "tone": "green"
+        },
+        {
+          "text": " project `"
+        },
+        {
+          "text": "myapp",
+          "tone": "green"
+        },
+        {
+          "text": "`\n"
+        },
+        {
+          "text": "info:",
+          "tone": "cyan"
+        },
+        {
+          "text": " Next steps:\n"
+        },
+        {
+          "text": "  cd myapp\n  dcr run",
+          "tone": "cyan"
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "text": "$",
+          "tone": "prompt"
+        },
+        {
+          "text": " cd myapp"
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "text": "$",
+          "tone": "prompt"
+        },
+        {
+          "text": " dcr run"
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "text": "     "
+        },
+        {
+          "text": "project",
+          "tone": "cyan"
+        },
+        {
+          "text": " myapp (debug, x86_64-unknown-linux-gnu)\n     "
+        },
+        {
+          "text": "compile",
+          "tone": "green"
+        },
+        {
+          "text": " myapp v0.1.0  [1/1]\n        "
+        },
+        {
+          "text": "done",
+          "tone": "green"
+        },
+        {
+          "text": " in 0.24s\n         "
+        },
+        {
+          "text": "run",
+          "tone": "green"
+        },
+        {
+          "text": " /home/dexoron/tmp/myapp/target/x86_64-unknown-linux-gnu/debug/myapp\nHello World!"
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "text": "$ ",
+          "tone": "prompt"
+        }
+      ]
+    }
+  ],
+  "quickStartTerminals": [
+    [
+      {
+        "segments": [
+          {
+            "text": "$",
+            "tone": "prompt"
+          },
+          {
+            "text": " dcr new myapp"
+          }
+        ]
+      },
+      {
+        "segments": [
+          {
+            "text": "    "
+          },
+          {
+            "text": "Creating",
+            "tone": "green"
+          },
+          {
+            "text": " project `"
+          },
+          {
+            "text": "myapp",
+            "tone": "cyan"
+          },
+          {
+            "text": "`\n     "
+          },
+          {
+            "text": "Created",
+            "tone": "green"
+          },
+          {
+            "text": " project `"
+          },
+          {
+            "text": "myapp",
+            "tone": "green"
+          },
+          {
+            "text": "`\n"
+          },
+          {
+            "text": "info:",
+            "tone": "cyan"
+          },
+          {
+            "text": " Next steps:\n"
+          },
+          {
+            "text": "  cd myapp\n  dcr run",
+            "tone": "cyan"
+          }
+        ]
+      },
+      {
+        "segments": [
+          {
+            "text": "$",
+            "tone": "prompt"
+          },
+          {
+            "text": " cd myapp"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "segments": [
+          {
+            "text": "[package]\n",
+            "tone": "amber"
+          },
+          {
+            "text": "name = "
+          },
+          {
+            "text": "\"myapp\"\n",
+            "tone": "green"
+          },
+          {
+            "text": "version = "
+          },
+          {
+            "text": "\"0.1.0\"\n",
+            "tone": "green"
+          },
+          {
+            "text": "dcr-version = "
+          },
+          {
+            "text": "\"0.9.6\"\n",
+            "tone": "green"
+          },
+          {
+            "text": "\n[build]\n",
+            "tone": "amber"
+          },
+          {
+            "text": "language = "
+          },
+          {
+            "text": "\"c\"\n",
+            "tone": "green"
+          },
+          {
+            "text": "standard = "
+          },
+          {
+            "text": "\"c11\"\n",
+            "tone": "green"
+          },
+          {
+            "text": "compiler = "
+          },
+          {
+            "text": "\"clang\"\n",
+            "tone": "green"
+          },
+          {
+            "text": "kind = "
+          },
+          {
+            "text": "\"bin\"\n",
+            "tone": "green"
+          },
+          {
+            "text": "\n[dependencies]",
+            "tone": "amber"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "segments": [
+          {
+            "text": "$",
+            "tone": "prompt"
+          },
+          {
+            "text": " dcr run"
+          }
+        ]
+      },
+      {
+        "segments": [
+          {
+            "text": "     "
+          },
+          {
+            "text": "project",
+            "tone": "cyan"
+          },
+          {
+            "text": " myapp (debug, x86_64-unknown-linux-gnu)\n     "
+          },
+          {
+            "text": "compile",
+            "tone": "green"
+          },
+          {
+            "text": " myapp v0.1.0  [1/1]\n        "
+          },
+          {
+            "text": "done",
+            "tone": "green"
+          },
+          {
+            "text": " in 0.24s\n         "
+          },
+          {
+            "text": "run",
+            "tone": "green"
+          },
+          {
+            "text": " /home/user/myapp/target/x86_64-unknown-linux-gnu/debug/myapp\nHello World!"
+          }
+        ]
+      }
+    ]
+  ],
+  "featureIcons": [
+    "terminal",
+    "gitBranch",
+    "globe",
+    "codeXml",
+    "fileCog",
+    "bookOpen"
+  ],
+  "quickStartNumbers": [
+    "1",
+    "2",
+    "3"
+  ],
+  "downloadPlatforms": [
+    {
+      "id": "linux",
+      "commands": [
+        "curl -fsSL https://sh.dcr-tool.ru | sh"
+      ]
+    },
+    {
+      "id": "windows",
+      "commands": [
+        "irm https://ps1.dcr-tool.ru | iex"
+      ]
+    },
+    {
+      "id": "macos",
+      "commands": [
+        "curl -fsSL https://sh.dcr-tool.ru | sh"
+      ]
+    },
+    {
+      "id": "package-manager",
+      "commands": [
+        "yay -S dcr",
+        "brew tap dexoron/dexoron && brew install dcr",
+        "nix profile install github:dexoron/dcr",
+        "cargo install dcr"
+      ]
+    }
+  ],
+  "verifyCommand": "dcr --version"
+}

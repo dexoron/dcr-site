@@ -5,6 +5,7 @@ import { GITHUB_URL } from '../config';
 import Icon from './Icon.astro';
 import Terminal from './Terminal.astro';
 import InlineCodeText from './InlineCodeText.astro';
+import { landingStatic } from '../data/landing-static';
 
 interface Props {
   lang: Lang;
@@ -62,7 +63,7 @@ const t = useTranslations(lang);
     <Terminal
       class="hero__terminal"
       title={t.terminal.title}
-      lines={t.terminal.newProject}
+      lines={landingStatic.heroTerminal}
       animated
     />
 

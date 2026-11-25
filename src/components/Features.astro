@@ -3,6 +3,7 @@ import { useTranslations, type Lang } from '../i18n';
 import type { IconName } from './icons';
 import Icon from './Icon.astro';
 import InlineCodeText from './InlineCodeText.astro';
+import { landingStatic } from '../data/landing-static';
 
 interface Props {
   lang: Lang;
@@ -23,11 +24,11 @@ const copy = t.features;
     </div>
 
     <div class="feature-grid">
-      {copy.items.map((item) => (
+      {copy.items.map((item, index) => (
         <article class="feature-cell">
           <Icon
             class="feature-cell__icon"
-            name={item.icon as IconName}
+            name={landingStatic.featureIcons[index] as IconName}
           />
           <h3 class="feature-cell__title">{item.title}</h3>
           <p class="feature-cell__text"><InlineCodeText text={item.description} /></p>

@@ -1,5 +1,6 @@
 ---
 import { useTranslations, type Lang } from '../i18n';
+import { landingStatic } from '../data/landing-static';
 
 interface Props {
   lang: Lang;
@@ -8,6 +9,10 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const copy = t.download;
+const platforms = copy.platforms.map((platform, index) => ({
+  ...platform,
+  ...landingStatic.downloadPlatforms[index],
+}));
 ---
 
 <section class="download" id="download" aria-labelledby="download-title">
@@ -23,7 +28,7 @@ const copy = t.download;
         role="tablist"
         aria-labelledby="download-title"
       >
-        {copy.platforms.map((platform, index) => (
+        {platforms.map((platform, index) => (
           <button
             class="platform-tab"
             type="button"
@@ -41,7 +46,7 @@ const copy = t.download;
 
       <div class="install-panel">
         <div class="install-panel__body">
-          {copy.platforms.map((platform, index) => (
+          {platforms.map((platform, index) => (
             <div
               class="platform-panel"
               id={`platform-panel-${platform.id}`}
@@ -69,11 +74,11 @@ const copy = t.download;
           <p class="install-panel__then">{copy.then}</p>
 
           <div class="install-row">
-            <code>{copy.verifyCommand}</code>
+            <code>{landingStatic.verifyCommand}</code>
             <button
               class="copy-button"
               type="button"
-              data-copy={copy.verifyCommand}
+              data-copy={landingStatic.verifyCommand}
               data-copied-message={copy.copied}
             >
               {copy.copy}

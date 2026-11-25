@@ -23,159 +23,7 @@
     "license": "GPLv3"
   },
   "terminal": {
-    "title": "Terminal",
-    "newProject": [
-      {
-        "segments": [
-          {
-            "text": "$",
-            "tone": "prompt"
-          },
-          {
-            "text": " dcr new myapp"
-          }
-        ]
-      },
-      {
-        "segments": [
-          {
-            "text": "    "
-          },
-          {
-            "text": "Creating",
-            "tone": "green"
-          },
-          {
-            "text": " project `"
-          },
-          {
-            "text": "myapp",
-            "tone": "cyan"
-          },
-          {
-            "text": "`\n     "
-          },
-          {
-            "text": "Created",
-            "tone": "green"
-          },
-          {
-            "text": " directory `myapp`\n     "
-          },
-          {
-            "text": "Created",
-            "tone": "green"
-          },
-          {
-            "text": " dcr.toml\n     "
-          },
-          {
-            "text": "Created",
-            "tone": "green"
-          },
-          {
-            "text": " src/main.c\n "
-          },
-          {
-            "text": "Initialized",
-            "tone": "green"
-          },
-          {
-            "text": " git repository\n     "
-          },
-          {
-            "text": "Created",
-            "tone": "green"
-          },
-          {
-            "text": " project `"
-          },
-          {
-            "text": "myapp",
-            "tone": "green"
-          },
-          {
-            "text": "`\n"
-          },
-          {
-            "text": "info:",
-            "tone": "cyan"
-          },
-          {
-            "text": " Next steps:\n"
-          },
-          {
-            "text": "  cd myapp\n  dcr run",
-            "tone": "cyan"
-          }
-        ]
-      },
-      {
-        "segments": [
-          {
-            "text": "$",
-            "tone": "prompt"
-          },
-          {
-            "text": " cd myapp"
-          }
-        ]
-      },
-      {
-        "segments": [
-          {
-            "text": "$",
-            "tone": "prompt"
-          },
-          {
-            "text": " dcr run"
-          }
-        ]
-      },
-      {
-        "segments": [
-          {
-            "text": "     "
-          },
-          {
-            "text": "project",
-            "tone": "cyan"
-          },
-          {
-            "text": " myapp (debug, x86_64-unknown-linux-gnu)\n     "
-          },
-          {
-            "text": "compile",
-            "tone": "green"
-          },
-          {
-            "text": " myapp v0.1.0  [1/1]\n        "
-          },
-          {
-            "text": "done",
-            "tone": "green"
-          },
-          {
-            "text": " in 0.24s\n         "
-          },
-          {
-            "text": "run",
-            "tone": "green"
-          },
-          {
-            "text": " /home/dexoron/tmp/myapp/target/x86_64-unknown-linux-gnu/debug/myapp\nHello World!"
-          }
-        ]
-      },
-      {
-        "segments": [
-          {
-            "text": "$ ",
-            "tone": "prompt"
-          }
-        ]
-      }
-    ]
+    "title": "Terminal"
   },
   "features": {
     "title": "Features",
@@ -185,32 +33,26 @@
     ],
     "items": [
       {
-        "icon": "terminal",
         "title": "Simple commands",
         "description": "`new`, `build`, `run`, `test`, `clean`, `add`, `fmt`, `lint`: the whole workflow in one tool."
       },
       {
-        "icon": "gitBranch",
         "title": "Path, Git, registry, and system dependencies",
         "description": "Use libraries from a local folder, a Git repository, a registry, or the system via `pkg-config`. `dcr.lock` records exactly what was resolved, including the Git commit."
       },
       {
-        "icon": "globe",
         "title": "Cross-compilation",
         "description": "Build for another OS or architecture from the same project. Set the target with a full target triple or a short name like `windows`."
       },
       {
-        "icon": "codeXml",
         "title": "Works with your IDE",
         "description": "`dcr gen` produces `compile_commands.json` and ready-made VS Code and CLion configs, so you can keep your editor."
       },
       {
-        "icon": "fileCog",
         "title": "One project file",
         "description": "Name, language, standard, compiler, and dependencies all live in `dcr.toml`, not scattered across scripts."
       },
       {
-        "icon": "bookOpen",
         "title": "Built-in help",
         "description": "Every command has `--help`, and package installs include man pages such as `man dcr-build`."
       }
@@ -221,212 +63,24 @@
     "lead": "Create and run a C or C++ project in three steps.",
     "steps": [
       {
-        "number": "1",
         "title": "Create a project",
         "description": "`dcr new` sets up a project with a `dcr.toml` and a ready-to-build `src/main.c`.",
         "terminal": {
-          "title": "Terminal",
-          "lines": [
-            {
-              "segments": [
-                {
-                  "text": "$",
-                  "tone": "prompt"
-                },
-                {
-                  "text": " dcr new myapp"
-                }
-              ]
-            },
-            {
-              "segments": [
-                {
-                  "text": "    "
-                },
-                {
-                  "text": "Creating",
-                  "tone": "green"
-                },
-                {
-                  "text": " project `"
-                },
-                {
-                  "text": "myapp",
-                  "tone": "cyan"
-                },
-                {
-                  "text": "`\n     "
-                },
-                {
-                  "text": "Created",
-                  "tone": "green"
-                },
-                {
-                  "text": " project `"
-                },
-                {
-                  "text": "myapp",
-                  "tone": "green"
-                },
-                {
-                  "text": "`\n"
-                },
-                {
-                  "text": "info:",
-                  "tone": "cyan"
-                },
-                {
-                  "text": " Next steps:\n"
-                },
-                {
-                  "text": "  cd myapp\n  dcr run",
-                  "tone": "cyan"
-                }
-              ]
-            },
-            {
-              "segments": [
-                {
-                  "text": "$",
-                  "tone": "prompt"
-                },
-                {
-                  "text": " cd myapp"
-                }
-              ]
-            }
-          ]
+          "title": "Terminal"
         }
       },
       {
-        "number": "2",
         "title": "Configure",
         "description": "Describe the project in one short, readable TOML file. No CMake syntax required.",
         "terminal": {
-          "title": "nvim dcr.toml",
-          "lines": [
-            {
-              "segments": [
-                {
-                  "text": "[package]\n",
-                  "tone": "amber"
-                },
-                {
-                  "text": "name = "
-                },
-                {
-                  "text": "\"myapp\"\n",
-                  "tone": "green"
-                },
-                {
-                  "text": "version = "
-                },
-                {
-                  "text": "\"0.1.0\"\n",
-                  "tone": "green"
-                },
-                {
-                  "text": "dcr-version = "
-                },
-                {
-                  "text": "\"0.9.6\"\n",
-                  "tone": "green"
-                },
-                {
-                  "text": "\n[build]\n",
-                  "tone": "amber"
-                },
-                {
-                  "text": "language = "
-                },
-                {
-                  "text": "\"c\"\n",
-                  "tone": "green"
-                },
-                {
-                  "text": "standard = "
-                },
-                {
-                  "text": "\"c11\"\n",
-                  "tone": "green"
-                },
-                {
-                  "text": "compiler = "
-                },
-                {
-                  "text": "\"clang\"\n",
-                  "tone": "green"
-                },
-                {
-                  "text": "kind = "
-                },
-                {
-                  "text": "\"bin\"\n",
-                  "tone": "green"
-                },
-                {
-                  "text": "\n[dependencies]",
-                  "tone": "amber"
-                }
-              ]
-            }
-          ]
+          "title": "nvim dcr.toml"
         }
       },
       {
-        "number": "3",
         "title": "Build and run",
         "description": "`dcr run` builds the project and its dependencies, then runs the result.",
         "terminal": {
-          "title": "Terminal",
-          "lines": [
-            {
-              "segments": [
-                {
-                  "text": "$",
-                  "tone": "prompt"
-                },
-                {
-                  "text": " dcr run"
-                }
-              ]
-            },
-            {
-              "segments": [
-                {
-                  "text": "     "
-                },
-                {
-                  "text": "project",
-                  "tone": "cyan"
-                },
-                {
-                  "text": " myapp (debug, x86_64-unknown-linux-gnu)\n     "
-                },
-                {
-                  "text": "compile",
-                  "tone": "green"
-                },
-                {
-                  "text": " myapp v0.1.0  [1/1]\n        "
-                },
-                {
-                  "text": "done",
-                  "tone": "green"
-                },
-                {
-                  "text": " in 0.24s\n         "
-                },
-                {
-                  "text": "run",
-                  "tone": "green"
-                },
-                {
-                  "text": " /home/user/myapp/target/x86_64-unknown-linux-gnu/debug/myapp\nHello World!"
-                }
-              ]
-            }
-          ]
+          "title": "Terminal"
         }
       }
     ],
@@ -440,39 +94,19 @@
     "lead": "Install DCR with a single command.",
     "platforms": [
       {
-        "id": "linux",
-        "label": "Linux",
-        "commands": [
-          "curl -fsSL https://sh.dcr-tool.ru | sh"
-        ]
+        "label": "Linux"
       },
       {
-        "id": "windows",
-        "label": "Windows",
-        "commands": [
-          "irm https://ps1.dcr-tool.ru | iex"
-        ]
+        "label": "Windows"
       },
       {
-        "id": "macos",
-        "label": "macOS",
-        "commands": [
-          "curl -fsSL https://sh.dcr-tool.ru | sh"
-        ]
+        "label": "macOS"
       },
       {
-        "id": "package-manager",
-        "label": "Package Manager",
-        "commands": [
-          "yay -S dcr",
-          "brew tap dexoron/dexoron && brew install dcr",
-          "nix profile install github:dexoron/dcr",
-          "cargo install dcr"
-        ]
+        "label": "Package Manager"
       }
     ],
     "then": "Then verify:",
-    "verifyCommand": "dcr --version",
     "copy": "Copy",
     "copied": "Copied to clipboard",
     "note": "The installer also sets up dcrup, a version manager for DCR."

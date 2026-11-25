@@ -16,6 +16,16 @@ const TONES = new Set([
 
 const here = dirname(fileURLToPath(import.meta.url));
 const i18nDir = join(here, '..', 'src', 'i18n');
+const landingStatic = JSON.parse(
+  readFileSync(join(here, '..', 'src', 'data', 'landing-static.json'), 'utf8'),
+) as {
+  heroTerminal: unknown[];
+  quickStartTerminals: unknown[][];
+  featureIcons: string[];
+  quickStartNumbers: string[];
+  downloadPlatforms: Array<{ id: string; commands: string[] }>;
+  verifyCommand: string;
+};
 
 const errors: string[] = [];
 const report = (locale: string, path: string, message: string): void => {
@@ -125,6 +135,24 @@ for (const file of files) {
 
 const en = read(`${defaultLang}.json`) as Dictionary;
 walkTones(defaultLang, '', en);
+walkTones('landing-static', '', landingStatic);
+
+if (landingStatic.quickStartTerminals.length !== en.quickStart.steps.length) {
+  report('landing-static', 'quickStartTerminals', 'does not match the number of steps');
+}
+if (landingStatic.quickStartNumbers.length !== en.quickStart.steps.length) {
+  report('landing-static', 'quickStartNumbers', 'does not match the number of steps');
+}
+if (landingStatic.featureIcons.length !== en.features.items.length) {
+  report('landing-static', 'featureIcons', 'does not match the number of features');
+}
+if (landingStatic.downloadPlatforms.length !== en.download.platforms.length) {
+  report('landing-static', 'downloadPlatforms', 'does not match the platform labels');
+}
+const downloadIds = landingStatic.downloadPlatforms.map((platform) => platform.id);
+if (new Set(downloadIds).size !== downloadIds.length) {
+  report('landing-static', 'downloadPlatforms', 'contains duplicate platform ids');
+}
 
 for (const code of declared) {
   if (code === defaultLang || !files.includes(code)) continue;
@@ -133,41 +161,6 @@ for (const code of declared) {
 
   compare(code, '', en, dictionary);
   walkTones(code, '', dictionary);
-
-  const codeSamples = (value: Dictionary): unknown => ({
-    newProject: value.terminal.newProject,
-    quickStart: value.quickStart.steps.map((step) => step.terminal.lines),
-  });
-  if (JSON.stringify(codeSamples(dictionary)) !== JSON.stringify(codeSamples(en))) {
-    report(code, 'terminal', 'code samples differ from English');
-  }
-
-  const codeMetadata = (value: Dictionary): unknown => ({
-    icons: value.features.items.map((item) => item.icon),
-    numbers: value.quickStart.steps.map((step) => step.number),
-  });
-  if (
-    JSON.stringify(codeMetadata(dictionary)) !==
-    JSON.stringify(codeMetadata(en))
-  ) {
-    report(code, 'features/quickStart', 'icons or step numbers differ from English');
-  }
-
-  const install = (value: Dictionary): unknown => ({
-    platforms: value.download.platforms.map((platform) => ({
-      id: platform.id,
-      commands: platform.commands,
-    })),
-    verifyCommand: value.download.verifyCommand,
-  });
-  if (JSON.stringify(install(dictionary)) !== JSON.stringify(install(en))) {
-    report(code, 'download', 'install commands differ from English');
-  }
-
-  const ids = dictionary.download.platforms.map((platform) => platform.id);
-  if (new Set(ids).size !== ids.length) {
-    report(code, 'download.platforms', 'contains duplicate platform ids');
-  }
 }
 
 if (errors.length) {

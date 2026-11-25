@@ -11,11 +11,11 @@ export interface CodeLine {
 
 export interface TerminalContent {
   title: string;
-  lines: CodeLine[];
 }
 
 /**
- * Shape of every `src/i18n/<locale>.json` dictionary.
+ * Shape of every `src/i18n/<locale>.json` dictionary. Static terminal output,
+ * commands, and component metadata live outside these Crowdin-managed files.
  *
  * Locale metadata (URL code, native label, `lang` attribute) is not part of a
  * dictionary: it lives in `locales.ts`, so it never reaches Crowdin.
@@ -43,13 +43,11 @@ export interface Dictionary {
   };
   terminal: {
     title: string;
-    newProject: CodeLine[];
   };
   features: {
     title: string;
     lead: string[];
     items: Array<{
-      icon: string;
       title: string;
       description: string;
     }>;
@@ -58,10 +56,9 @@ export interface Dictionary {
     title: string;
     lead: string;
     steps: Array<{
-      number: string;
       title: string;
       description: string;
-      terminal: TerminalContent;
+      terminal: Pick<TerminalContent, 'title'>;
     }>;
     cta: {
       question: string;
@@ -72,12 +69,9 @@ export interface Dictionary {
     title: string;
     lead: string;
     platforms: Array<{
-      id: string;
       label: string;
-      commands: string[];
     }>;
     then: string;
-    verifyCommand: string;
     copy: string;
     copied: string;
     note: string;

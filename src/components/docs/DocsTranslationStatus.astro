@@ -1,0 +1,187 @@
+---
+import progressData from '../../data/docs-translation-progress.json';
+import { locales } from '../../i18n/locales';
+
+interface Props {
+  locale?: string;
+}
+
+const { locale = 'en' } = Astro.props;
+const coverage = Object.entries(locales)
+  .filter(([code]) => code !== 'en')
+  .map(([code, metadata]) => {
+    const progress = progressData.languages[code as keyof typeof progressData.languages];
+    return {
+      locale: code,
+      label: metadata.label,
+      translated: progress?.translated ?? 0,
+      total: progress?.total ?? 0,
+      percentage: progress?.percentage ?? 0,
+    };
+  });
+const isRussian = locale === 'ru-RU';
+const copy = isRussian
+  ? {
+      title: 'Помогите перевести документацию',
+      description: 'Считаем фразы Crowdin, а не физические строки файла: так результат не зависит от переносов и разбиения документации на файлы.',
+      action: 'Помочь с переводом',
+      phrases: 'фраз',
+    }
+  : {
+      title: 'Help translate the documentation',
+      description: 'Progress uses Crowdin phrase units, not physical file lines, so wrapping and file splits do not change the count.',
+      action: 'Help translate',
+      phrases: 'phrases',
+    };
+---
+
+<section class="docs-translation-status" aria-labelledby="docs-translation-title">
+  <div class="docs-translation-status__intro">
+    <div>
+      <h2 id="docs-translation-title">{copy.title}</h2>
+      <p>{copy.description}</p>
+    </div>
+    <a
+      class="docs-translation-status__action"
+      href="https://crowdin.com/project/dcr_site"
+      target="_blank"
+      rel="noreferrer"
+    >
+      {copy.action}
+      <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+
+  <ul class="docs-translation-status__list">
+    {coverage.map((item) => (
+      <li class="docs-translation-status__item">
+        <div class="docs-translation-status__label">
+          <span>{item.label}</span>
+          <span>{item.percentage}% · {item.translated}/{item.total} {copy.phrases}</span>
+        </div>
+        <progress
+          value={item.percentage}
+          max="100"
+          aria-label={`${item.label}: ${item.percentage}%`}
+        ></progress>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .docs-translation-status {
+    margin-block: 28px 8px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+  }
+
+  .docs-translation-status__intro {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .docs-translation-status h2 {
+    margin: 0 0 6px;
+    color: var(--text);
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  .docs-translation-status p {
+    max-width: 660px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .docs-translation-status__action {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 7px;
+    min-height: 40px;
+    padding: 0 13px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .docs-translation-status__action:hover {
+    border-color: var(--blue);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .docs-translation-status__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 24px;
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .docs-translation-status__label {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 6px;
+    color: var(--text);
+    font-size: 13px;
+  }
+
+  .docs-translation-status__label span:last-child {
+    color: var(--muted);
+    text-align: right;
+  }
+
+  .docs-translation-status progress {
+    display: block;
+    width: 100%;
+    height: 6px;
+    overflow: hidden;
+    border: 0;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.12);
+    accent-color: var(--blue);
+  }
+
+  .docs-translation-status progress::-webkit-progress-bar {
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .docs-translation-status progress::-webkit-progress-value {
+    border-radius: 99px;
+    background: var(--blue);
+  }
+
+  .docs-translation-status progress::-moz-progress-bar {
+    border-radius: 99px;
+    background: var(--blue);
+  }
+
+  @media (max-width: 640px) {
+    .docs-translation-status {
+      padding: 16px;
+    }
+
+    .docs-translation-status__intro {
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .docs-translation-status__list {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+</style>

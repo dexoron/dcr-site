@@ -10,4 +10,4 @@ npx --yes @crowdin/cli@5 pull \
   --token "$CROWDIN_TOKEN" \
   --project-id "${CROWDIN_PROJECT_ID:?CROWDIN_PROJECT_ID is required when CROWDIN_TOKEN is set}" \
   --base-url "${CROWDIN_BASE_URL:-https://api.crowdin.com}" \
-  --branch "${CROWDIN_BRANCH:-main}"
+  --branch "${CROWDIN_BRANCH:-[dexoron.dcr-site] main}"

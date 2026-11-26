@@ -31,10 +31,11 @@ The development server runs at <http://localhost:4321>.
 | `npm run check:i18n` | Validate the locale dictionaries only |
 | `npm run check:docs` | Validate the docs navigation against the MDX pages |
 | `npm run docs:sync` | Copy documentation MDX from dexoron/dcr |
+| `npm run docs:progress` | Refresh docs phrase progress from Crowdin |
 | `npm run fetch:dcr` | Refresh `src/data/dcr.json` manually |
 
-`predev` runs the version fetch and the docs sync; `prebuild` and `precheck` run
-the version fetch.
+`predev` syncs docs and refreshes the version; `prebuild` also syncs docs and
+refreshes Crowdin phrase progress before building.
 
 ## Project structure
 
@@ -145,18 +146,21 @@ Crowdin.
 
 ### Syncing the content
 
-`npm run docs:sync` copies `docs/**/*.mdx` into `src/content/docs/en/`:
+`npm run docs:sync` copies the original `docs/**/*.mdx` from the DCR repository
+into `src/content/docs/en/`:
 
 - It uses a sibling checkout (`../dcr`) or `DCR_DOCS_DIR` when available; otherwise
   it clones `docs/` sparsely into `.cache/dcr` (gitignored).
 - `README.mdx` becomes `index.mdx` (the `/docs` landing page).
 - CRLF is normalised to LF and a trailing newline is ensured.
-- Translations are read from `docs-crowdin-export/<locale>/docs/` (the Crowdin
-  branch) and copied to `src/content/docs/<locale>/`. Sync English by default;
-  include translated locales with `DCR_DOCS_LOCALES=en,ru-RU,…`. Committed
-  locale pages are built without network access.
-- The synced files are committed, so `astro build` and `astro check` work without
-  network access. If no source is found, the committed English docs are kept.
+- English MDX is copied from the DCR repository's `master` branch. Crowdin
+  publishes translated MDX files in `docs-crowdin-export/<locale>/docs/` on its
+  `l10n_master` branch. `docs:sync` copies available locale files to
+  `src/content/docs/<locale>/`; missing locale exports leave any committed
+  translations in place.
+- GitLab CI and Cloudflare Pages run `docs:sync` before building, so both the
+  English source and published Crowdin translations are included. If the DCR
+  repository cannot be reached, the committed English docs are kept.
 
 ### Pages and navigation
 
@@ -181,7 +185,7 @@ To change a page, edit it in the DCR repository and run `npm run docs:sync`.
 
 ## Crowdin
 
-`crowdin.yml` maps the source dictionary to every locale file:
+The Site repository's `crowdin.yml` maps landing-page strings to locale files:
 
 ```yaml
 files:
@@ -197,7 +201,14 @@ Because the file names use Crowdin locale codes (`ru-RU`, `pt-BR`, `zh-CN`, …)
 - `scripts/crowdin-pull.sh` downloads the latest translations before a build. It reads `CROWDIN_TOKEN` and `CROWDIN_PROJECT_ID` and exits quietly when they are not set, so local builds and forks keep working.
 - In GitLab, define `CROWDIN_TOKEN` (masked) and `CROWDIN_PROJECT_ID` as CI/CD variables. The build job runs `npm run check`, then builds. `CROWDIN_BASE_URL` is optional and defaults to `https://api.crowdin.com` (set it only for Crowdin Enterprise).
 - The check in `npm run check:i18n` fails when a pulled locale is not registered in `locales.ts`, so a new Crowdin language is added consciously rather than silently ignored.
-- Documentation translations do not use this JSON flow: the MDX files are translated in the DCR repository and pulled by `npm run docs:sync` (see [Documentation](#documentation)).
+- The DCR GitHub repository's `crowdin.yml` maps documentation MDX files and
+  exports translations to `docs-crowdin-export/`. The Site build reads English
+  from `master` and translations from `l10n_master`. The GitLab integration and its
+  `l10n_main` branch continue to handle the Site repository's own files.
+- The docs landing page shows Crowdin phrase progress for the docs folder,
+  separate from the Website strings. Set `CROWDIN_TOKEN` in the Cloudflare Pages
+  build environment to refresh it on each build; without the token, the site
+  keeps the bundled progress snapshot.
 
 ## Assets and fonts
 

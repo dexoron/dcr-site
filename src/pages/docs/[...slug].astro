@@ -4,6 +4,8 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import DocsCode from '../../components/docs/DocsCode.astro';
 import DocsTable from '../../components/docs/DocsTable.astro';
 import Empty from '../../components/docs/Empty.astro';
+import DocsLink from '../../components/docs/DocsLink.astro';
+import DocsTranslationStatus from '../../components/docs/DocsTranslationStatus.astro';
 import { loadAllDocsPages } from '../../docs/page-data';
 
 export async function getStaticPaths() {
@@ -35,5 +37,6 @@ const { Content } = await render(page.entry);
   next={page.next}
   locale={locale}
 >
-  <Content components={{ h1: Empty, pre: DocsCode, table: DocsTable }} />
+  <Content components={{ h1: Empty, a: DocsLink, pre: DocsCode, table: DocsTable }} />
+  {page.slug === '' && <DocsTranslationStatus locale={locale} />}
 </DocsLayout>

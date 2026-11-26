@@ -1,13 +1,12 @@
 /**
  * Sync the documentation MDX sources from dexoron/dcr into Astro content.
  *
- * English is the source language and lives in `docs/` of the DCR repository.
- * Translations are expected in `docs-crowdin-export/<locale>/docs/` and are
- * copied only when that directory exists. The Crowdin export must be merged
- * into the DCR branch being synced.
+ * English docs come from the DCR `master` branch. Crowdin publishes translated
+ * MDX files under `docs-crowdin-export/<locale>/docs/` on `l10n_master`.
  *
- * Local development prefers a sibling checkout (`../dcr`). When it is not
- * available, the repository is cloned sparsely into `.cache/dcr`.
+ * An explicit DCR_DOCS_DIR always wins. A sibling checkout is used only when
+ * it is on the expected branch; otherwise the required branch is cloned into
+ * separate sparse caches.
  *
  * Usage:
  *   npm run docs:sync
@@ -29,12 +28,15 @@ import { fileURLToPath } from 'node:url';
 const execFileAsync = promisify(execFile);
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const outputRoot = join(root, 'src', 'content', 'docs');
-const cacheRoot = join(root, '.cache', 'dcr');
-
-const locales = (process.env.DCR_DOCS_LOCALES ?? 'en')
+const siblingRoot = resolve(root, '..', 'dcr');
+const sourceCacheRoot = join(root, '.cache', 'dcr-source');
+const translationsCacheRoot = join(root, '.cache', 'dcr-translations');
+const locales = (process.env.DCR_DOCS_LOCALES ?? 'en,ru-RU')
   .split(',')
   .map((locale) => locale.trim())
   .filter(Boolean);
+const sourceBranch = process.env.DCR_DOCS_SOURCE_BRANCH ?? 'master';
+const translationsBranch = process.env.DCR_DOCS_TRANSLATION_BRANCH ?? 'l10n_master';
 
 const isFile = async (path: string): Promise<boolean> => {
   try {
@@ -51,32 +53,35 @@ const normalizeSourceDir = async (path: string): Promise<string | null> => {
 };
 
 async function resolveSource(): Promise<string | null> {
-  const candidates = [
-    process.env.DCR_DOCS_DIR,
-    resolve(root, '..', 'dcr'),
-    resolve(root, '..', 'dcr', 'docs'),
-    cacheRoot,
-  ].filter((value): value is string => Boolean(value));
+  if (process.env.DCR_DOCS_DIR) {
+    return normalizeSourceDir(process.env.DCR_DOCS_DIR);
+  }
 
-  for (const candidate of candidates) {
-    const source = await normalizeSourceDir(candidate);
+  const siblingBranch = await getBranchName(siblingRoot);
+  if (siblingBranch === sourceBranch) {
+    const source = await normalizeSourceDir(siblingRoot);
     if (source) return source;
   }
 
+  const cached = await normalizeSourceDir(sourceCacheRoot);
+  if (cached) return cached;
+
   try {
-    console.log('[docs] local DCR checkout not found, cloning docs from GitHub');
-    await mkdir(dirname(cacheRoot), { recursive: true });
-    await rm(cacheRoot, { recursive: true, force: true });
+    console.log(`[docs] fetching English source from DCR ${sourceBranch}`);
+    await mkdir(dirname(sourceCacheRoot), { recursive: true });
+    await rm(sourceCacheRoot, { recursive: true, force: true });
     await execFileAsync(
       'git',
       [
         'clone',
         '--depth',
         '1',
+        '--branch',
+        sourceBranch,
         '--filter=blob:none',
         '--sparse',
         'https://github.com/dexoron/dcr.git',
-        cacheRoot,
+        sourceCacheRoot,
       ],
       { timeout: 120_000 },
     );
@@ -84,17 +89,78 @@ async function resolveSource(): Promise<string | null> {
       'git',
       [
         '-C',
-        cacheRoot,
+        sourceCacheRoot,
         'sparse-checkout',
         'set',
         'docs',
-        'docs-crowdin-export',
       ],
       { timeout: 60_000 },
     );
-    return normalizeSourceDir(cacheRoot);
+    return normalizeSourceDir(sourceCacheRoot);
   } catch (error) {
-    console.warn(`[docs] could not download docs: ${String(error)}`);
+    console.warn(`[docs] could not download English source: ${String(error)}`);
+    return null;
+  }
+}
+
+async function getBranchName(repository: string): Promise<string | null> {
+  try {
+    const { stdout } = await execFileAsync(
+      'git',
+      ['-C', repository, 'branch', '--show-current'],
+      { timeout: 10_000 },
+    );
+    return stdout.trim() || null;
+  } catch {
+    return null;
+  }
+}
+
+async function resolveTranslationsRoot(): Promise<string | null> {
+  if (process.env.DCR_DOCS_TRANSLATIONS_DIR) {
+    return process.env.DCR_DOCS_TRANSLATIONS_DIR;
+  }
+
+  const siblingBranch = await getBranchName(siblingRoot);
+  if (siblingBranch === translationsBranch) {
+    const siblingTranslations = join(siblingRoot, 'docs-crowdin-export');
+    if (await isFile(join(siblingTranslations, 'ru-RU', 'docs', 'README.mdx'))) {
+      return siblingTranslations;
+    }
+  }
+
+  const cachedTranslations = join(translationsCacheRoot, 'docs-crowdin-export');
+  if (await isFile(join(cachedTranslations, 'ru-RU', 'docs', 'README.mdx'))) {
+    return cachedTranslations;
+  }
+
+  try {
+    console.log(`[docs] fetching Crowdin exports from DCR ${translationsBranch}`);
+    await mkdir(dirname(translationsCacheRoot), { recursive: true });
+    await rm(translationsCacheRoot, { recursive: true, force: true });
+    await execFileAsync(
+      'git',
+      [
+        'clone',
+        '--depth',
+        '1',
+        '--branch',
+        translationsBranch,
+        '--filter=blob:none',
+        '--sparse',
+        'https://github.com/dexoron/dcr.git',
+        translationsCacheRoot,
+      ],
+      { timeout: 120_000 },
+    );
+    await execFileAsync(
+      'git',
+      ['-C', translationsCacheRoot, 'sparse-checkout', 'set', 'docs-crowdin-export'],
+      { timeout: 60_000 },
+    );
+    return cachedTranslations;
+  } catch (error) {
+    console.warn(`[docs] could not download Crowdin exports: ${String(error)}`);
     return null;
   }
 }
@@ -116,7 +182,7 @@ async function listMdx(dir: string): Promise<string[]> {
 }
 
 const targetName = (relativePath: string): string => {
-  let name = relativePath.replaceAll('\\', '/').replace(/\.mdx$/, '');
+  let name = relativePath.replaceAll('\\', '/').replace(/(?:\.mdx)+$/, '');
   if (name === 'README') name = 'index';
   return `${name}.mdx`;
 };
@@ -167,39 +233,33 @@ async function main(): Promise<void> {
   }
 
   console.log(`[docs] source: ${source}`);
-  let total = 0;
+  const copied = await copyLocale('en', source, 'docs/');
+  if (copied === 0) {
+    throw new Error('No documentation files were copied.');
+  }
+
+  const translationsRoot = await resolveTranslationsRoot();
+  if (!translationsRoot) {
+    console.warn('[docs] no Crowdin export branch available; keeping existing translations');
+    return;
+  }
 
   for (const locale of locales) {
-    if (locale === 'en') {
-      total += await copyLocale(locale, source, 'docs/');
-      continue;
-    }
+    if (locale === 'en') continue;
 
-    const translationDir = join(
-      source,
-      '..',
-      'docs-crowdin-export',
-      locale,
-      'docs',
-    );
+    const translationDir = join(translationsRoot, locale, 'docs');
     const translationSource = await normalizeSourceDir(translationDir);
 
     if (!translationSource) {
-      console.warn(
-        `[docs] ${locale}: translations not found in docs-crowdin-export/${locale}/docs, skipping`,
-      );
+      console.log(`[docs] ${locale}: no published translation yet, skipping`);
       continue;
     }
 
-    total += await copyLocale(
+    await copyLocale(
       locale,
       translationSource,
       `docs-crowdin-export/${locale}/docs/`,
     );
-  }
-
-  if (total === 0) {
-    throw new Error('No documentation files were copied.');
   }
 }
 

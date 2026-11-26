@@ -1,0 +1,53 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { getCollection } from 'astro:content';
+import { docsHref } from '../../docs/nav';
+import { docsLocaleFromId, docsSlugFromId } from '../../docs/page-data';
+import { locales } from '../../i18n/locales';
+
+type Props = HTMLAttributes<'a'>;
+
+const { href, ...attributes } = Astro.props as Props;
+const docsEntries = await getCollection('docs');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+let currentPath = Astro.url.pathname;
+if (base && currentPath.startsWith(`${base}/`)) {
+  currentPath = currentPath.slice(base.length);
+}
+
+const localeCodes = Object.keys(locales);
+const routeLocale = currentPath.match(/^\/docs\/([^/]+)(?:\/|$)/)?.[1];
+const currentLocale = routeLocale && localeCodes.includes(routeLocale)
+  ? routeLocale
+  : 'en';
+
+function localizeDocsHref(value: Props['href']): Props['href'] {
+  if (typeof value !== 'string' || (value !== '/docs' && !value.startsWith('/docs/'))) {
+    return value;
+  }
+
+  const parsed = new URL(value, 'https://dcr.local');
+  const segments = parsed.pathname.slice('/docs/'.length).split('/').filter(Boolean);
+  let targetLocale = currentLocale;
+
+  if (segments[0] && localeCodes.includes(segments[0])) {
+    targetLocale = segments.shift()!;
+  }
+
+  const slug = segments.join('/');
+  const targetExists = docsEntries.some((entry) => {
+    const entryLocale = docsLocaleFromId(entry.id);
+    return entryLocale === targetLocale && docsSlugFromId(entry.id, entryLocale) === slug;
+  });
+  if (!targetExists && targetLocale !== 'en') targetLocale = 'en';
+
+  const target = docsHref(slug, targetLocale);
+  return `${target}${parsed.search}${parsed.hash}`;
+}
+
+const localizedHref = localizeDocsHref(href);
+---
+
+<a href={localizedHref} {...attributes}>
+  <slot />
+</a>

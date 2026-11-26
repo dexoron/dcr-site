@@ -7,12 +7,15 @@ stages:
 build:
   stage: build
   variables:
-    DCR_DOCS_LOCALES: "en,ru-RU"
+    CROWDIN_BRANCH: "[dexoron.dcr-site] main"
+    DCR_DOCS_SOURCE_BRANCH: "master"
+    DCR_DOCS_TRANSLATION_BRANCH: "l10n_master"
+    DCR_DOCS_LOCALES: "en,en-simple,de-DE,es-ES,fr-FR,ja-JP,ko-KR,pl-PL,pt-BR,ru-RU,tr-TR,uk-UA,zh-CN"
   script:
     - npm ci
+    - npm run docs:sync
     - chmod +x scripts/crowdin-pull.sh
     - ./scripts/crowdin-pull.sh || echo "Crowdin pull skipped or failed, using committed translations"
-    - npm run docs:sync
     - npm run check
     - npm run build
   artifacts:

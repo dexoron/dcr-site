@@ -1,0 +1,17 @@
+{
+  "updatedAt": "2026-11-26T00:00:00.000Z",
+  "languages": {
+    "de-DE": { "translated": 0, "total": 1461, "percentage": 0 },
+    "en-simple": { "translated": 0, "total": 1461, "percentage": 0 },
+    "es-ES": { "translated": 0, "total": 1461, "percentage": 0 },
+    "fr-FR": { "translated": 0, "total": 1461, "percentage": 0 },
+    "ja-JP": { "translated": 0, "total": 1461, "percentage": 0 },
+    "ko-KR": { "translated": 0, "total": 1461, "percentage": 0 },
+    "pl-PL": { "translated": 0, "total": 1461, "percentage": 0 },
+    "pt-BR": { "translated": 0, "total": 1461, "percentage": 0 },
+    "ru-RU": { "translated": 661, "total": 1461, "percentage": 45 },
+    "tr-TR": { "translated": 0, "total": 1461, "percentage": 0 },
+    "uk-UA": { "translated": 0, "total": 1461, "percentage": 0 },
+    "zh-CN": { "translated": 0, "total": 1461, "percentage": 0 }
+  }
+}

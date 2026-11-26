@@ -25,9 +25,13 @@ const t = useTranslations(lang);
 const version = data.version;
 
 const homeHref = docs ? localizedPath(lang) : '#top';
-const docsHomeHref = docsHomePath(docs ? lang : 'en');
+const docsEntries = await getCollection('docs');
+const hasLocalizedDocsHome = docsEntries.some((entry) => {
+  const locale = docsLocaleFromId(entry.id);
+  return locale === lang && docsSlugFromId(entry.id, locale) === '';
+});
+const docsHomeHref = docsHomePath(hasLocalizedDocsHome ? lang : 'en');
 const downloadHref = docs ? `${localizedPath(lang)}#download` : '#download';
-const docsEntries = docs ? await getCollection('docs') : [];
 const availableDocsLanguages = new Set(
   docsEntries
     .filter((entry) => {

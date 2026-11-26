@@ -4,6 +4,8 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import DocsCode from '../../components/docs/DocsCode.astro';
 import DocsTable from '../../components/docs/DocsTable.astro';
 import Empty from '../../components/docs/Empty.astro';
+import DocsLink from '../../components/docs/DocsLink.astro';
+import DocsTranslationStatus from '../../components/docs/DocsTranslationStatus.astro';
 import { loadDocsPage } from '../../docs/page-data';
 
 const page = await loadDocsPage('');
@@ -24,5 +26,6 @@ const { Content } = await render(page.entry);
   next={page.next}
   locale="en"
 >
-  <Content components={{ h1: Empty, pre: DocsCode, table: DocsTable }} />
+  <Content components={{ h1: Empty, a: DocsLink, pre: DocsCode, table: DocsTable }} />
+  <DocsTranslationStatus locale="en" />
 </DocsLayout>

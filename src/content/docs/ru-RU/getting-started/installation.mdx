@@ -4,9 +4,9 @@ sidebar_label: Установка
 
 # Установка
 
-## dcrup (рекомендуется)
+## dcrup (recommended)
 
-`dcrup` устанавливает и переключает версии DCR: стабильную, dev или night. С его помощью можно закрепить конкретную версию или собрать DCR из исходников.
+Install and switch DCR versions (stable / dev / night, pin a version, optional build from source).
 
 ### Linux / macOS / BSD / Windows (bash)
 
@@ -16,7 +16,7 @@ export PATH="$HOME/.dcr/bin:$PATH"
 dcrup install stable
 ```
 
-Установка DCR одной неинтерактивной командой:
+Non-interactive install of DCR in one shot:
 
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.dcr-tool.ru | sh -s -- install stable
@@ -31,63 +31,68 @@ export PATH="$HOME/.dcr/bin:$PATH"
 dcrup install stable
 ```
 
-После `self-install` команда называется `dcrup` (без суффикса `.sh` или `.ps1`). Она устанавливается в `~/.dcr/bin` (Unix) или `%USERPROFILE%\.dcr\bin` (Windows).
+After `self-install`, the command is **`dcrup`** (no `.sh` / `.ps1`) and is installed in `~/.dcr/bin` (Unix) or `%USERPROFILE%\.dcr\bin` (Windows).
 
-### Основные команды dcrup
+### Common dcrup commands
 
 ```sh
-dcrup install stable              # последняя стабильная сборка (cf → gh → sf → ya)
-dcrup install 0.7.3               # закрепить версию 0.7.3@stable
-dcrup install 0.7.3@dev           # v0.7.3-dev; если тега нет — v0.7.3
-dcrup install stable --libc musl  # только Linux: сборка musl (по умолчанию gnu)
-dcrup install stable --mirror cf  # CDN Cloudflare
-dcrup install stable --mirror ya  # CDN Яндекса
-dcrup install stable --force      # переустановить, даже если версия уже есть
-dcrup install stable --build      # собрать через cargo с feature archive
-dcrup install night               # собрать актуальную ветку dev
-dcrup default 0.7.3               # выбрать активную версию
+dcrup install stable              # latest stable prebuilt (auto: cf → gh → sf → ya)
+dcrup install 0.7.3               # pin → 0.7.3@stable
+dcrup install 0.7.3@dev           # v0.7.3-dev (falls back to v0.7.3 if no dev tag)
+dcrup install stable --libc musl  # Linux only: musl asset (default: gnu)
+dcrup install stable --mirror cf  # CloudFlare CDN
+dcrup install stable --mirror ya  # Yandex CDN (RU fallback)
+dcrup install stable --force      # reinstall even if present
+dcrup install stable --build      # cargo build --release --features archive
+dcrup install night               # always build from branch dev HEAD
+dcrup default 0.7.3
 dcrup update
 dcrup list
 dcrup show
 dcrup which
-dcrup uninstall 0.7.3             # удалить одну установленную версию
-dcrup uninstall --all             # удалить все версии
+dcrup uninstall 0.7.3    # remove one installed version
+dcrup uninstall --all    # remove all installed versions
 ```
 
-`dcrup default <версия>` и `dcrup uninstall <версия>` также находят установку `stable-<версия>`, созданную командой `dcrup install stable`. Параметр `--build` использует то же разрешение тегов, что и установка готового бинарного файла, включая переход от `VERSION@dev` к `vVERSION`, если dev-тега нет.
+`dcrup default \<version>` and `dcrup uninstall \<version>` also find a floating
+`stable-\<version>` install created by `dcrup install stable`. `--build` uses
+the same tag resolution as prebuilt installs, including the `VERSION@dev`
+fallback to `vVERSION`.
 
-Дополнительные параметры только для PowerShell:
+PowerShell-only options:
 
 ```powershell
-dcrup install stable --target gnu    # автономная сборка GNU для x86_64
+dcrup install stable --target gnu    # x86_64 self-contained GNU build
 dcrup install stable --no-modify-path
-dcrup install stable --system        # %ProgramData%\dcr (нужны права администратора)
+dcrup install stable --system        # %ProgramData%\dcr (Administrator)
 dcrup self-uninstall
 ```
 
-`--libc` доступен только в Linux-установщике `.sh`. Параметры `--target`, `--system`, `--no-modify-path` и `self-uninstall` доступны только в PowerShell. Переменная `DCRUP_VERSION` задаёт версию по умолчанию, если версия не указана.
+`--libc` is Linux-only (`.sh` installer). `--target`, `--system`, `--no-modify-path`, and
+`self-uninstall` are PowerShell-only. `DCRUP_VERSION` supplies the default spec when no
+version is passed.
 
-Расположение файлов:
+Layout:
 
-- Unix: `~/.dcr/toolchains/<id>/dcr`; ссылка `~/.dcr/bin/dcr` указывает на активную версию.
-- Windows PowerShell: `%USERPROFILE%\.dcr\toolchains\<id>\dcr.exe`; активная копия — `%USERPROFILE%\.dcr\bin\dcr.exe`.
-- Windows bash (Git Bash/MSYS2): та же схема с `dcr.exe`; готовый архив и файл в `bin` содержат суффикс `.exe`.
-- Параметр `--system` или переменная `DCRUP_SYSTEM=1` используют `%ProgramData%\dcr` вместо каталога профиля пользователя.
+* Unix: `~/.dcr/toolchains/\<id>/dcr`, with `~/.dcr/bin/dcr` linked to the active version.
+* Windows PowerShell: `%USERPROFILE%\.dcr\toolchains\<id>\dcr.exe`; `%USERPROFILE%\.dcr\bin\dcr.exe` is the active copy.
+* Windows bash (Git Bash/MSYS2): the same `dcr.exe` layout; the prebuilt asset and bin entry include `.exe`.
+* `--system` / `DCRUP_SYSTEM=1` uses `%ProgramData%\dcr` instead of the user profile.
 
-### Зеркала загрузки
+### Download mirrors
 
-Если не указать зеркало, готовые сборки загружаются по очереди: **cf → gh → sf → ya**.
+Prebuilt installs try **cf → gh → sf → ya** unless you pin a host.
 
-| Код | URL | Описание |
-|------|--------|--------|
-| `cf` | `https://cdn-global.dcr-tool.ru/<tag>/<asset>` | CDN Cloudflare для всего мира |
-| `gh` | `https://github.com/dexoron/dcr/releases/download/<tag>/<asset>` | GitHub Releases |
-| `sf` | `https://sourceforge.net/projects/dcr-tool/files/<tag>/<asset>/download` | SourceForge |
-| `ya` | `https://cdn-ru.dcr-tool.ru/<tag>/<asset>` | зеркало Яндекса, резерв для России |
+| Code | URL                                                                                                          | Notes                      |
+| ---- | ------------------------------------------------------------------------------------------------------------ | -------------------------- |
+| `cf` | `https://cdn-global.dcr-tool.ru/\<tag>/\<asset>`                           | CloudFlare CDN (worldwide) |
+| `gh` | `https://github.com/dexoron/dcr/releases/download/\<tag>/\<asset>`         | GitHub Releases            |
+| `sf` | `https://sourceforge.net/projects/dcr-tool/files/\<tag>/\<asset>/download` | SourceForge                |
+| `ya` | `https://cdn-ru.dcr-tool.ru/\<tag>/\<asset>`                               | Yandex CDN (RU fallback)   |
 
 ```sh
-dcrup install stable --mirror auto   # значение по умолчанию
-export DCRUP_MIRROR=cf               # использовать это зеркало в текущей оболочке
+dcrup install stable --mirror auto   # default
+export DCRUP_MIRROR=cf               # persist for this shell
 ```
 
 ---
@@ -95,7 +100,7 @@ export DCRUP_MIRROR=cf               # использовать это зерк�
 ## Arch Linux (AUR)
 
 ```sh
-yay -S dcr
+ура -S dcr
 ```
 
 ## macOS / Linux (Homebrew)
@@ -111,7 +116,7 @@ brew install dcr
 sudo snap install dcrup
 ```
 
-Если публикация в Snap Store недоступна, можно установить `.snap` из [GitHub Releases](https://github.com/dexoron/dcr/releases/latest) с параметром `--dangerous`.
+> If classic Snap Store publishing is unavailable, install the `.snap` from [GitHub Releases](https://github.com/dexoron/dcr/releases/latest) with `--dangerous`.
 
 ## Nix (flake)
 
@@ -126,37 +131,37 @@ nix profile install github:dexoron/dcr
 cargo install dcr
 ```
 
-Сборки из crates.io могут не включать необязательные возможности. Для создания FAT-образов диска (`[archive]`) используйте готовые релизные бинарные файлы или установите DCR с feature `archive`:
+Note: crates.io builds may omit optional features. For FAT disk images (`[archive]`), prefer release binaries or:
 
 ```sh
 cargo install dcr --features archive
 ```
 
-## Сборка из исходников
+## Из источника
 
 ```sh
 git clone https://github.com/dexoron/dcr.git
 cd dcr
 cargo build --release --features archive
 ln -sf "$PWD/target/release/dcr" ~/.local/bin/dcr
-# или управляйте версиями через dcrup install night / --build
+# or manage versions with dcrup install night / --build
 ```
 
 ## После установки
 
 ```bash
 dcr --version
-dcrup show    # если DCR установлен через dcrup
+dcrup show    # if installed via dcrup
 ```
 
-Страницы руководства (для пакетных установок и релизных архивов):
+Man pages (package installs / release assets):
 
 ```bash
 man dcr
 man dcr-build
 ```
 
-Необязательный реестр можно настроить в `~/.dcr/config.toml`:
+Registry (optional) — `~/.dcr/config.toml`:
 
 ```toml
 [registry.default]
